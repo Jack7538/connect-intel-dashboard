@@ -1,4 +1,6 @@
 (function(){
+  if(window.__connectBootstrapLoaded){ return; }
+  window.__connectBootstrapLoaded = true;
   function get(id){ return document.getElementById(id); }
   function setStatus(text){ var el = get('dataStatus'); if(el){ el.textContent = text; } }
   function showFatal(text){
@@ -34,8 +36,8 @@
     }catch(e){ return ''; }
   }
 
-  setStatus('Data: boot 20260421T0831190900 (loading app.js...)');
-  var appUrl = './app.js?v=20260421T0831190900';
+  setStatus('Data: boot 20260421T0832260900 (loading app.js...)');
+  var appUrl = './app.js?v=20260421T0832260900';
   fetch(appUrl, { cache: 'no-store' }).then(function(r){
     if(!r.ok) throw new Error('HTTP ' + r.status + ' for ' + appUrl);
     return r.text();
