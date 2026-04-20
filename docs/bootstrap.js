@@ -31,7 +31,7 @@
   setStatus('Data: JS started (loading??');
 
   var s = document.createElement('script');
-  s.src = './app.js?v=20260420T1735360900';
+  s.src = './app.js?v=20260420T1739370900';
   s.defer = true;
   s.onload = function(){};
   s.onerror = function(){
