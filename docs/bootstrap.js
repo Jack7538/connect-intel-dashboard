@@ -39,7 +39,7 @@
   }
 
   setStatus('Data: loading app.js...');
-  var appUrl = './app.js?v=20260420T1743230900';
+  var appUrl = './app.js?v=20260420T1745330900';
   fetch(appUrl, { cache: 'no-store' }).then(function(r){
     if(!r.ok) throw new Error('HTTP ' + r.status + ' for ' + appUrl);
     return r.text();
