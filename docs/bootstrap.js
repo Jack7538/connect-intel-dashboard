@@ -38,12 +38,18 @@
     }catch(e){ return ''; }
   }
 
-  setStatus('Data: loading app.js...');
-  var appUrl = './app.js?v=20260420T1745330900';
+  setStatus('Data: boot 20260420T1749520900 (loading app.js...)');
+  var appUrl = './app.js?v=20260420T1749520900';
   fetch(appUrl, { cache: 'no-store' }).then(function(r){
     if(!r.ok) throw new Error('HTTP ' + r.status + ' for ' + appUrl);
     return r.text();
   }).then(function(code){
+    try{
+      // Defensive hotfixes: allow older app bundles to run even if they assume ecords[0] exists.
+      code = String(code||'');
+      code = code.replace(/let\\s+minDate\\s*=\\s*d\\(records\\[0\\]\\.date\\);\\s*let\\s+maxDate\\s*=\\s*d\\(records\\[0\\]\\.date\\);/g, 'let minDate=new Date();let maxDate=new Date();');
+      code = code.replace(/function\\s+recomputeBounds\\(\\)\\s*\\{/g, 'function recomputeBounds(){if(!records||!records.length){return;}' );
+    }catch(e){}
     try{
       // Preflight compile to surface syntax errors with context.
       new Function(code);
