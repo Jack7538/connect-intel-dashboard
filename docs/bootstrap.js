@@ -1,16 +1,12 @@
 (function(){
   function get(id){ return document.getElementById(id); }
-  function setStatus(text){
-    var el = get('dataStatus');
-    if(el){ el.textContent = text; }
-  }
+  function setStatus(text){ var el = get('dataStatus'); if(el){ el.textContent = text; } }
   function showFatal(text){
-    var wrap = get('fatalWrap');
-    var msg = get('fatalMsg');
-    if(wrap && msg){
-      wrap.style.display = 'block';
-      msg.textContent = String(text || 'Unknown error');
-    }
+    try{
+      var wrap = get('fatalWrap');
+      var msg = get('fatalMsg');
+      if(wrap && msg){ wrap.style.display='block'; msg.textContent=String(text||'Unknown error'); }
+    }catch(e){}
   }
   window.addEventListener('error', function(ev){
     try{
@@ -38,33 +34,29 @@
     }catch(e){ return ''; }
   }
 
-  setStatus('Data: boot 20260420T1810350900 (loading app.js...)');
-  var appUrl = './app.js?v=20260420T1810350900';
+  setStatus('Data: boot 20260420T1818220900 (loading app.js...)');
+  var appUrl = './app.js?v=20260420T1818220900';
   fetch(appUrl, { cache: 'no-store' }).then(function(r){
     if(!r.ok) throw new Error('HTTP ' + r.status + ' for ' + appUrl);
     return r.text();
   }).then(function(code){
     try{
-      // Defensive hotfixes: allow older app bundles to run even if they assume records[0] exists.
+      // Defensive hotfix: allow app bundles that assume records[0] exists.
       code = String(code||'');
-      code = code.replace(/let\\s+minDate\\s*=\\s*d\\(records\\[0\\]\\.date\\);\\s*let\\s+maxDate\\s*=\\s*d\\(records\\[0\\]\\.date\\);/g, 'let minDate=new Date();let maxDate=new Date();');
-      code = code.replace(/function\\s+recomputeBounds\\(\\)\\s*\\{/g, 'function recomputeBounds(){if(!records||!records.length){return;}' );
+      code = code.replace(/let\s+minDate\s*=\s*d\(records\[0\]\.date\);\s*let\s+maxDate\s*=\s*d\(records\[0\]\.date\);/g, 'let minDate=new Date();let maxDate=new Date();');
+      code = code.replace(/function\s+recomputeBounds\(\)\s*\{/g, 'function recomputeBounds(){if(!records||!records.length){return;}');
     }catch(e){}
     try{
-      // Preflight compile to surface syntax errors with context.
       new Function(code);
     }catch(e){
       setStatus('Data: ERROR (app.js syntax)');
       var stack = (e && (e.stack || e.message)) ? (e.stack || e.message) : String(e);
-      // Try to extract "anonymous:LINE:COL" from stack.
       var m = String(stack).match(/:(\d+):(\d+)/);
       var line = m ? parseInt(m[1],10) : 1;
       var col = m ? parseInt(m[2],10) : 1;
       showFatal(stack + '\n' + snippet(code, line, col));
       return;
     }
-
-    // Execute via blob URL to keep query-string cache busting stable.
     var blob = new Blob([code], { type: 'text/javascript' });
     var url = URL.createObjectURL(blob);
     var s = document.createElement('script');
