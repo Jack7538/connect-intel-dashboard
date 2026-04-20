@@ -28,15 +28,50 @@
     }catch(e){}
   }, true);
 
-  setStatus('Data: JS started (loading??');
+  function snippet(code, line, col){
+    try{
+      var lines = String(code||'').split(/\r?\n/);
+      var idx = Math.max(0, (line||1)-1);
+      var s = lines[idx] || '';
+      var start = Math.max(0, (col||1)-40);
+      return 'L' + (idx+1) + ':' + (col||1) + ' ' + s.slice(start, start+160);
+    }catch(e){ return ''; }
+  }
 
-  var s = document.createElement('script');
-  s.src = './app.js?v=20260420T1739370900';
-  s.defer = true;
-  s.onload = function(){};
-  s.onerror = function(){
+  setStatus('Data: loading app.js...');
+  var appUrl = './app.js?v=20260420T1743230900';
+  fetch(appUrl, { cache: 'no-store' }).then(function(r){
+    if(!r.ok) throw new Error('HTTP ' + r.status + ' for ' + appUrl);
+    return r.text();
+  }).then(function(code){
+    try{
+      // Preflight compile to surface syntax errors with context.
+      new Function(code);
+    }catch(e){
+      setStatus('Data: ERROR (app.js syntax)');
+      var stack = (e && (e.stack || e.message)) ? (e.stack || e.message) : String(e);
+      // Try to extract "anonymous:LINE:COL" from stack.
+      var m = String(stack).match(/:(\d+):(\d+)/);
+      var line = m ? parseInt(m[1],10) : 1;
+      var col = m ? parseInt(m[2],10) : 1;
+      showFatal(stack + '\n' + snippet(code, line, col));
+      return;
+    }
+
+    // Execute via blob URL to keep query-string cache busting stable.
+    var blob = new Blob([code], { type: 'text/javascript' });
+    var url = URL.createObjectURL(blob);
+    var s = document.createElement('script');
+    s.src = url;
+    s.defer = true;
+    s.onload = function(){ try{ URL.revokeObjectURL(url); }catch(e){} };
+    s.onerror = function(){
+      setStatus('Data: ERROR (failed to run app.js)');
+      showFatal('Failed to execute app.js.');
+    };
+    document.body.appendChild(s);
+  }).catch(function(err){
     setStatus('Data: ERROR (failed to load app.js)');
-    showFatal('Failed to load app.js (syntax or network).');
-  };
-  document.body.appendChild(s);
+    showFatal(err && (err.stack || err.message) ? (err.stack || err.message) : String(err));
+  });
 })();
