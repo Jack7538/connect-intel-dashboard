@@ -73,11 +73,9 @@ let records = embeddedRecords;
 
 async function loadRemoteRecords(){
   try{
-    const res = await fetch('./connect-awareness-dashboard-data.json', {cache:'no-store'});
+    const res = await fetch('connect-awareness-dashboard-data.json', {cache:'no-store'});
     if(!res.ok) throw new Error(`HTTP ${res.status}`);
-    const text = await res.text();
-    const cleaned = text.replace(/^\uFEFF/, '');
-    const data = JSON.parse(cleaned);
+    const data = await res.json();
     if(!Array.isArray(data) || !data.length) throw new Error('Invalid data');
     const norm = data
       .filter(r=>r && r.date && r.source && r.community && r.url)
