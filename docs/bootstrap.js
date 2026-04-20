@@ -38,8 +38,8 @@
     }catch(e){ return ''; }
   }
 
-  setStatus('Data: boot 20260420T1800510900 (loading app.js...)');
-  var appUrl = './app.js?v=20260420T1800510900';
+  setStatus('Data: boot 20260420T1810350900 (loading app.js...)');
+  var appUrl = './app.js?v=20260420T1810350900';
   fetch(appUrl, { cache: 'no-store' }).then(function(r){
     if(!r.ok) throw new Error('HTTP ' + r.status + ' for ' + appUrl);
     return r.text();
