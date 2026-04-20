@@ -61,6 +61,7 @@ Examples:
 
 - Instagram public creator accounts
 - public YouTube creator channels
+- public LinkedIn creator/company pages (posts + comments)
 - public creator landing pages
 - semi-private but accessible creator communities
 
