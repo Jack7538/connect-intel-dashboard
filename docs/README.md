@@ -1,17 +1,25 @@
-# CONNECT dashboard (GitHub Pages)
+# CONNECT shared dashboard (GitHub Pages-ready)
 
-This repository is intended to be published via **GitHub Pages** from the `main` branch `/docs` folder.
+This folder is intended to be published as a static website (recommended: GitHub Pages from the `main` branch `/docs` folder).
 
-## What gets published
+## Contents
 
-- `docs/index.html` — dashboard UI + embedded dataset (fetch to `connect-awareness-dashboard-data.json` is optional; dashboard falls back to embedded records if JSON is missing)
+- `index.html` — dashboard UI (auto-fetches `connect-awareness-dashboard-data.json` and falls back to embedded records)
+- `connect-awareness-dashboard-data.json` — exported dataset used by the dashboard
 
-## Enable GitHub Pages
+## Build locally
 
-Go to `Settings → Pages` and set:
+Run:
 
-- Source: `Deploy from a branch`
-- Branch: `main`
-- Folder: `/docs`
+```powershell
+powershell -ExecutionPolicy Bypass -File D:\AI\scripts\connect_build_public_site.ps1
+```
 
-After that, the share URL will be available on the Pages settings screen.
+## Publish (after repo + remote are set)
+
+Run:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File D:\AI\scripts\connect_publish_git.ps1
+```
+
