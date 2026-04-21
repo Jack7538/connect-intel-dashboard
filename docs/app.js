@@ -200,6 +200,12 @@ function renderStatic(){
     setEy('eyWhite', x.ey.white);
     setEy('eyQuotes', x.ey.quotes);
   }
+  const linkException = document.getElementById('linkException');
+  const linkOps = document.getElementById('linkOps');
+  const linkLog = document.getElementById('linkLog');
+  if(linkException) linkException.textContent = state.lang==='ko' ? '\uC608\uC678 \uD050' : 'Exception Queue';
+  if(linkOps) linkOps.textContent = state.lang==='ko' ? '\uC218\uC9D1 \uC6B4\uC601 \uBAA8\uB378' : 'AI-First Ops';
+  if(linkLog) linkLog.textContent = state.lang==='ko' ? '\uBA58\uC158 \uB85C\uADF8 V2' : 'Mention Log V2';
 
   $('heroTitle').textContent = x.heroTitle;
   $('heroLead').textContent = x.heroLead;
