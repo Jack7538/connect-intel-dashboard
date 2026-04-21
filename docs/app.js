@@ -146,10 +146,73 @@ const i18nKo=Object.assign({}, i18nEn, {
   ey:{fatal:"\uB300\uC26C\uBCF4\uB4DC \uC624\uB958",connect:"CONNECT \uC778\uD154\uB9AC\uC804\uC2A4",k1:"\uC815\uC81C \uC5B8\uAE09",k2:"\uACE0\uC720 \uC0AC\uB78C",k3:"\uACE0\uAC00\uCE58 \uBE44\uC728",k4:"\uBE0C\uB79C\uB4DC \uD68C\uC0C1 \uBE44\uC728",k5:"\uD0D1 \uC18C\uC2A4",k6:"\uD0D1 \uC0AC\uC6A9 \uCF00\uC774\uC2A4",volume:"\uBCC4\uB7C9 \uC694\uC57D",counts:"\uC0C1\uC704 \uAC74\uC218",trend:"\uCD94\uC138",readout:"\uC694\uC57D",sourceMix:"\uC18C\uC2A4 \uBBF9\uC2A4",useCases:"\uC0AC\uC6A9 \uCF00\uC774\uC2A4",matrix:"\uBE0C\uB79C\uB4DC vs \uC720\uD2F8\uB9AC\uD2F0",white:"\uD654\uC774\uD2B8 \uC2A4\uD398\uC774\uC2A4",quotes:"\uC720\uC800 \uC778\uC6A9"}
 });
 const i18n={en:i18nEn,ko:i18nKo};
+// Add small helper formatters/tips without touching the large object literals above.
+i18nEn.densityFmt = (d,m)=>`Avg ${d} · ${m}`;
+i18nKo.densityFmt = (d,m)=>`평균 ${d}점 · ${m}건`;
+i18nEn.k3d = (n)=>`Score 4+ ${n}`;
+i18nEn.k5d = (d,m)=>`Avg ${d} · ${m}`;
+i18nEn.k6d = (c)=>`${c}`;
+i18nEn.quoteCount = (n)=>`${n} shown`;
+
+i18nEn.tips.matrixPct =
+  "Percentages are computed on the currently filtered records.\n\n" +
+  "Explicit brand recall = explicit records / total.\n" +
+  "High-value w/o brand = (score>=4 AND not explicit) / total.\n" +
+  "Brand-value alignment = (score>=4 AND explicit) / total.\n\n" +
+  "All are shares of total (not cumulative).";
+i18nKo.tips.matrixPct =
+  "\uC5EC\uAE30 \uD37C\uC13C\uD2B8\uB294 '\uD604\uC7AC \uD544\uD130\uB41C \uB808\uCF54\uB4DC \uC804\uCCB4'\uB97C \uBD84\uBAA8\uB85C \uD574\uC694.\n\n" +
+  "\uBE0C\uB79C\uB4DC \uC9C1\uC811 \uC5B8\uAE09 = explicit \uB808\uCF54\uB4DC / \uC804\uCCB4.\n" +
+  "\uACE0\uAC00\uCE58(\uBE0C\uB79C\uB4DC \uBBF8\uC5B8\uAE09) = (score>=4 \uC774\uBA74\uC11C explicit \uC544\uB2D8) / \uC804\uCCB4.\n" +
+  "\uBE0C\uB79C\uB4DC-\uAC00\uCE58 \uC77C\uCE58 = (score>=4 \uC774\uACE0 explicit) / \uC804\uCCB4.\n\n" +
+  "\uB2E4 \uC804\uCCB4 \uB300\uBE44 \uBE44\uC728(\uC911\uBCF5\uD569\uACC4 \uC544\uB2D8)\uC774\uC5D0\uC694.";
+i18nEn.tips.quoteScore =
+  "Score (1-5) is a conservative value/usage signal.\n" +
+  "5: clear workflow/purchase/download impact + strong proof.\n" +
+  "4: practical use language (how-to, sourcing, workflow shortcut).\n" +
+  "3: meaningful mention, but limited utility detail.\n" +
+  "2: low info (name-drop, vague, re-share).\n" +
+  "1: owned/placeholder or effectively no signal.";
+i18nKo.tips.quoteScore =
+  "\uC2A4\uCF54\uC5B4(1~5)\uB294 '\uC2E4\uC0AC\uC6A9/\uAC00\uCE58 \uC2E0\uD638'\uB97C \uBCF4\uC218\uC801\uC73C\uB85C \uB9E4\uAE34 \uAC83\uC774\uC5D0\uC694.\n" +
+  "5: \uC6CC\uD06C\uD50C\uB85C/\uAD6C\uB9E4/\uB2E4\uC6B4\uB85C\uB4DC \uD6A8\uACFC\uAC00 \uBA85\uD655\uD558\uACE0 \uC99D\uAC70\uAC00 \uD655\uC2E4\uD574\uC694.\n" +
+  "4: \uC5B4\uB5BB\uAC8C \uC4F0\uB294\uC9C0(\uC18C\uC2F1/\uD65C\uC6A9/\uC9C0\uB984\uAE38)\uAC19\uC740 \uC2E4\uC0AC\uC6A9 \uB9D0\uC774 \uB4DC\uB7EC\uB098\uC694.\n" +
+  "3: \uC758\uBBF8\uB294 \uC788\uC9C0\uB9CC \uC720\uD2F8\uB9AC\uD2F0 \uB514\uD14C\uC77C\uC774 \uBD80\uC871\uD574\uC694.\n" +
+  "2: \uC774\uB984\uB9CC \uD55C \uBC88 \uB098\uC624\uAC70\uB098 \uB9C9\uC5F0\uD574\uC694(\uC815\uBCF4 \uBD80\uC871).\n" +
+  "1: \uC18C\uC720 \uC11C\uD398\uC774\uC2A4/\uD45C\uC2DC\uC6A9 \uB4F1 \uC2E4\uC9C8 \uC2E0\uD638\uAC00 \uAC70\uC758 \uC5C6\uC5B4\uC694.";
+
 const state={lang:'en',preset:'all',start:null,end:null,grain:'auto',quoteMode:'top'};
 const $=id=>{const el=document.getElementById(id);if(!el)throw new Error(`Missing element: #${id}`);return el};
+const $opt=id=>document.getElementById(id);
 const d=v=>new Date(`${v}T00:00:00`);
 const f=x=>x.toISOString().slice(0,10);
+
+function ensureHelpStyles(){
+  if(document.getElementById('helpCss')) return;
+  const style = document.createElement('style');
+  style.id = 'helpCss';
+  style.textContent =
+    ".help{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.60);color:var(--muted);font-size:12px;font-weight:700;cursor:help;position:relative;margin-left:6px;line-height:1}" +
+    ".help:focus{outline:2px solid rgba(45,111,101,.35);outline-offset:2px}" +
+    ".help[data-tip]:hover::after,.help[data-tip]:focus::after{content:attr(data-tip);position:absolute;left:50%;top:120%;transform:translateX(-50%);background:#1c252d;color:#fff;padding:10px 12px;border-radius:12px;max-width:360px;white-space:pre-line;line-height:1.5;z-index:50;box-shadow:0 14px 34px rgba(28,37,45,.18)}" +
+    ".help[data-tip]:hover::before,.help[data-tip]:focus::before{content:'';position:absolute;left:50%;top:110%;transform:translateX(-50%);border:7px solid transparent;border-bottom-color:#1c252d;z-index:51}" +
+    "@media (max-width:720px){.help[data-tip]:hover::after,.help[data-tip]:focus::after{max-width:280px}}";
+  document.head.appendChild(style);
+}
+function ensureHelpAfter(targetId, helpId, tip){
+  const target = $opt(targetId);
+  if(!target) return;
+  let help = $opt(helpId);
+  if(!help){
+    help = document.createElement('span');
+    help.id = helpId;
+    help.className = 'help';
+    help.textContent = '?';
+    help.tabIndex = 0;
+    target.insertAdjacentElement('afterend', help);
+  }
+  help.setAttribute('data-tip', String(tip||''));
+}
 
 function showFatal(err){
   const wrap=document.getElementById('fatalWrap');
@@ -169,6 +232,7 @@ function groupBy(rows,fn){const map=new Map();rows.forEach(r=>{const k=fn(r);map
 function renderStatic(){
   const x = tr();
   document.documentElement.lang = state.lang;
+  ensureHelpStyles();
 
   $('langEnBtn').classList.toggle('active', state.lang === 'en');
   $('langKoBtn').classList.toggle('active', state.lang === 'ko');
@@ -247,6 +311,8 @@ function renderStatic(){
   $('legend2').textContent = x.legend2;
   $('legend1').title = x.tips.qualified;
   $('legend2').title = x.tips.hvShare;
+  ensureHelpAfter('legend1','helpQualified',x.tips.qualified);
+  ensureHelpAfter('legend2','helpHvShare',x.tips.hvShare);
 
   $('readoutTitle').textContent = x.readoutTitle;
   $('readoutBadge').textContent = x.readoutBadge;
@@ -257,6 +323,7 @@ function renderStatic(){
   $('sourceTitle').title = x.tips.sourceDensity;
   $('sourceNote').title = x.tips.sourceDensity;
   $('sourceBadge').title = x.tips.sourceDensity;
+  ensureHelpAfter('sourceTitle','helpSourceDensity',x.tips.sourceDensity + `\n\n${state.lang==='ko'?'표시 형식: 평균 4.0점 · 1건':'Format: Avg 4.0 · 1'}`);
 
   $('useTitle').textContent = x.useTitle;
   $('useNote').textContent = x.useNote;
@@ -264,6 +331,7 @@ function renderStatic(){
 
   $('matrixTitle').textContent = x.matrixTitle;
   $('matrixBadge').textContent = x.matrixBadge;
+  ensureHelpAfter('matrixTitle','helpMatrixPct',x.tips.matrixPct || '');
 
   $('whiteTitle').textContent = x.whiteTitle;
   $('whiteBadge').textContent = x.whiteBadge;
@@ -274,6 +342,7 @@ function renderStatic(){
   $('showTopBtn').textContent = x.showTop;
   $('showAllBtn').textContent = x.showAll;
   $('footnote').textContent = x.footnote;
+  ensureHelpAfter('quoteTitle','helpQuoteScore',x.tips.quoteScore || '');
 }
 function renderKpis(rows){
   const x=tr();
@@ -332,7 +401,20 @@ function renderTrend(points,mode){
   const hvMarks=coords.map(c=>`<circle cx="${c.x}" cy="${c.y2}" r="4" fill="#2d6f65"></circle>`).join('');
   svg.innerHTML=`${grid}<polyline fill="none" stroke="#b55b38" stroke-width="4" points="${line1}"></polyline><polyline fill="none" stroke="#2d6f65" stroke-width="3" stroke-dasharray="8 8" points="${line2}"></polyline>${marks}${hvMarks}<line x1="${pad.left}" y1="${pad.top+chartH}" x2="${width-pad.right}" y2="${pad.top+chartH}" stroke="#1c252d" stroke-opacity=".18"></line>${labels}`
 }
-function renderSource(rows){const x=tr();const items=sourceDensity(rows),svg=$('sourceChart');if(!items.length){svg.innerHTML=`<text x="320" y="160" text-anchor="middle" font-size="16" fill="#66707a">${x.noData}</text>`;return}const left=150,top=28,barH=34,gap=18,maxD=Math.max(...items.map(i=>i.density),1);svg.innerHTML=items.map((it,idx)=>{const y=top+idx*(barH+gap),w=it.density/maxD*360;return `<text x="0" y="${y+22}" font-size="14" fill="#1c252d">${it.name}</text><rect x="${left}" y="${y}" width="${w}" height="${barH}" rx="12" fill="${it.color}"></rect><text x="${left+w+12}" y="${y+22}" font-size="13" fill="#66707a">${it.density.toFixed(1)} / ${it.mentions}</text>`}).join('')}
+function renderSource(rows){
+  const x=tr();
+  const items=sourceDensity(rows),svg=$('sourceChart');
+  if(!items.length){
+    svg.innerHTML=`<text x="320" y="160" text-anchor="middle" font-size="16" fill="#66707a">${x.noData}</text>`;
+    return;
+  }
+  const left=150,top=28,barH=34,gap=18,maxD=Math.max(...items.map(i=>i.density),1);
+  const fmt = x.densityFmt ? x.densityFmt : ((d,m)=>`${d} / ${m}`);
+  svg.innerHTML=items.map((it,idx)=>{
+    const y=top+idx*(barH+gap),w=it.density/maxD*360;
+    return `<text x="0" y="${y+22}" font-size="14" fill="#1c252d">${it.name}</text><rect x="${left}" y="${y}" width="${w}" height="${barH}" rx="12" fill="${it.color}"></rect><text x="${left+w+12}" y="${y+22}" font-size="13" fill="#66707a">${fmt(it.density.toFixed(1), it.mentions)}</text>`
+  }).join('');
+}
 function renderUse(rows){
   const x=tr();
   const allItems=groupBy(rows,r=>r.useCase);
@@ -370,13 +452,14 @@ function renderQuotes(rows){
   const x=tr();
   const sorted=[...rows].sort((a,b)=>b.score!==a.score?b.score-a.score:a.date.localeCompare(b.date));
   const shown=state.quoteMode==='top'?sorted.slice(0,8):sorted;
+  const scoreTip = (x.tips && x.tips.quoteScore) ? String(x.tips.quoteScore).replace(/"/g,'&quot;') : '';
   $('quoteCount').textContent=(x.quoteCount?x.quoteCount(shown.length):`${shown.length} shown`);
   $('quoteMeta').textContent=x.quotesShown(shown.length,rows.length);
   $('showTopBtn').classList.toggle('active',state.quoteMode==='top');
   $('showAllBtn').classList.toggle('active',state.quoteMode==='all');
   $('showTopBtn').classList.toggle('subtle-btn',state.quoteMode!=='top');
   $('showAllBtn').classList.toggle('subtle-btn',state.quoteMode!=='all');
-  $('quotes').innerHTML=shown.length?shown.map(r=>`<details><summary><span>${r.source} &middot; ${r.community} &middot; ${useLabel(r.useCase)}</span><span class="metric-chip ${r.score>=4?'':r.score===3?'mid':'low'}">${x.score} ${r.score}</span></summary><p class="meta">${r.date}</p><blockquote>${r.excerpt}</blockquote><p><strong>${x.interp}:</strong> ${note(r)}</p><p><a href="${r.url}" target="_blank" rel="noreferrer">${x.openSource}</a></p></details>`).join(''):`<div class="item"><p>${x.noData}</p></div>`;
+  $('quotes').innerHTML=shown.length?shown.map(r=>`<details><summary><span>${r.source} &middot; ${r.community} &middot; ${useLabel(r.useCase)}</span><span class="metric-chip ${r.score>=4?'':r.score===3?'mid':'low'}" title="${scoreTip}">${x.score} ${r.score}</span></summary><p class="meta">${r.date}</p><blockquote>${r.excerpt}</blockquote><p><strong>${x.interp}:</strong> ${note(r)}</p><p><a href="${r.url}" target="_blank" rel="noreferrer">${x.openSource}</a></p></details>`).join(''):`<div class="item"><p>${x.noData}</p></div>`;
 }
 function updateInputs(){const {start,end}=resolveRange();$('rangeLabel').textContent=`${f(start)} ~ ${f(end)}`;$('startDate').value=f(start);$('endDate').value=f(end);document.querySelectorAll('.preset').forEach(btn=>btn.classList.toggle('active',btn.dataset.preset===state.preset&&!state.start&&!state.end))}
 function render(){renderStatic();updateInputs();const rows=filtered(),mode=grainMode();renderKpis(rows);renderTables(rows);renderReadout(rows);renderTrend(aggregateTrend(rows,mode),mode);renderSource(rows);renderUse(rows);renderMatrix(rows);renderWhite();renderQuotes(rows)}
