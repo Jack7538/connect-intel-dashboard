@@ -1,0 +1,79 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CONNECT Awareness Dashboard</title>
+<style>
+:root{--bg:#f5efe7;--panel:#fffaf4;--ink:#1c252d;--muted:#66707a;--line:#dccfbe;--accent:#b55b38;--accent2:#2d6f65;--accent3:#6d5e92;--shadow:0 14px 34px rgba(28,37,45,.08);--radius:18px}*{box-sizing:border-box}body{margin:0;font-family:"Segoe UI","Pretendard","Noto Sans KR",sans-serif;color:var(--ink);background:radial-gradient(circle at top left,rgba(181,91,56,.10),transparent 28%),radial-gradient(circle at top right,rgba(45,111,101,.10),transparent 28%),linear-gradient(180deg,#f7f2eb 0%,#f2ece3 100%)}.wrap{max-width:1380px;margin:0 auto;padding:28px 20px 48px}.grid{display:grid;gap:20px}.hero{grid-template-columns:1.25fr .75fr;margin-bottom:20px}.filters{grid-template-columns:1fr auto;margin-bottom:20px}.cards{grid-template-columns:repeat(6,1fr);margin-bottom:20px}.two{grid-template-columns:1fr 1fr;margin-bottom:20px}.panel{background:rgba(255,250,244,.96);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:22px}h1{margin:0 0 14px;font-size:clamp(34px,5vw,56px);line-height:1.02;letter-spacing:-.04em}h2,h3,p{margin-top:0}.eyebrow{margin:0 0 10px;color:var(--muted);font-size:13px;letter-spacing:.16em;text-transform:uppercase}.lead,.note,.meta,td,li{color:var(--muted);line-height:1.7}.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}button,input,select{font:inherit;border:1px solid var(--line);background:rgba(255,255,255,.88);color:var(--ink);border-radius:999px;padding:10px 14px}button{cursor:pointer}button:hover,button.active{background:var(--ink);border-color:var(--ink);color:#fff}.subtle-btn{background:rgba(255,255,255,.65);color:var(--muted)}.range-label{align-self:center;color:var(--muted);font-size:13px;text-align:right}.badge{display:inline-flex;align-items:center;border-radius:999px;padding:7px 12px;background:rgba(28,37,45,.06);color:var(--muted);font-size:12px}.hero-note{background:linear-gradient(135deg,rgba(181,91,56,.08),rgba(45,111,101,.08)),var(--panel)}.hero-note strong{display:block;margin-bottom:10px;font-size:22px;line-height:1.35}.hero-note ul{margin:12px 0 0;padding-left:18px}.kpi{margin:10px 0 6px;font-size:clamp(26px,4vw,40px);font-weight:700;letter-spacing:-.04em}.delta{color:var(--muted);font-size:13px;line-height:1.6}.head{display:flex;align-items:start;justify-content:space-between;gap:12px;margin-bottom:16px}table{width:100%;border-collapse:collapse;font-size:14px}th,td{border-bottom:1px solid var(--line);padding:12px 10px;text-align:left;vertical-align:top}th{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.08em}.item{border:1px solid var(--line);border-radius:14px;padding:14px;background:rgba(255,255,255,.50)}.item+.item{margin-top:12px}.metric-chip{display:inline-flex;align-items:center;border-radius:999px;padding:6px 10px;font-size:12px;font-weight:700;background:rgba(45,111,101,.12);color:var(--accent2)}.metric-chip.mid{background:rgba(109,94,146,.12);color:var(--accent3)}.metric-chip.low{background:rgba(28,37,45,.08);color:var(--muted)}svg{width:100%;height:auto;display:block}.legend{display:flex;flex-wrap:wrap;gap:12px;color:var(--muted);font-size:13px;margin-top:10px}.swatch{width:10px;height:10px;border-radius:50%;display:inline-block;margin-right:6px}.legend-list{display:grid;grid-template-columns:1fr 1fr;gap:8px 14px;margin-top:12px;font-size:13px;color:var(--muted)}.legend-item{display:flex;gap:8px;align-items:baseline}.legend-item .swatch{margin-right:0}.legend-metric{margin-left:auto;color:var(--muted);font-variant-numeric:tabular-nums}.quote-toolbar{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;margin-bottom:14px}details{border:1px solid var(--line);border-radius:14px;padding:14px;background:rgba(255,255,255,.48)}details+details{margin-top:10px}summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:12px;align-items:center;font-weight:700}summary::-webkit-details-marker{display:none}blockquote{margin:14px 0;padding:14px 16px;border-left:4px solid var(--accent);background:rgba(181,91,56,.08);border-radius:0 12px 12px 0;line-height:1.75;color:var(--ink)}a{color:var(--accent2);text-decoration:none}a:hover{text-decoration:underline}.footnote{margin-top:16px;color:var(--muted);font-size:13px;line-height:1.7}@media (max-width:1120px){.hero,.filters,.cards,.two{grid-template-columns:1fr}.range-label{text-align:left}.legend-list{grid-template-columns:1fr}}@media (max-width:720px){.wrap{padding:18px 12px 32px}.cards{grid-template-columns:1fr 1fr}}@media (max-width:520px){.cards{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<section id="fatalWrap" class="panel" style="display:none;border-color:#e2a49a;background:rgba(255,250,244,.98)">
+  <p class="eyebrow" id="eyFatal">Dashboard Error</p>
+  <strong style="display:block;margin:0 0 8px;font-size:18px;line-height:1.4">The dashboard failed to initialize.</strong>
+  <pre id="fatalMsg" style="white-space:pre-wrap;margin:0;color:#7a2f25;font-size:13px;line-height:1.6"></pre>
+</section>
+<section class="grid hero"><div class="panel"><p class="eyebrow" id="eyConnect">CONNECT Intelligence</p><div class="row" style="margin-bottom:14px"><button id="langEnBtn" class="active"></button><button id="langKoBtn" class="subtle-btn"></button></div><h1 id="heroTitle"></h1><p class="lead" id="heroLead"></p></div><div class="panel hero-note"><p class="eyebrow" id="statusEyebrow"></p><strong id="statusTitle"></strong><p class="meta" id="statusBody"></p><ul id="statusList"></ul><p class="note" id="dataStatus" style="margin-top:10px">Data: waiting for JS…</p><noscript><p class="note" style="margin-top:10px;color:#7a2f25">JavaScript is disabled or blocked in this browser. This dashboard needs JavaScript to load data and render charts.</p></noscript><p class="meta" style="margin-top:6px">Build: <span id="buildStamp">2026-04-21T17:04:34+09:00</span></p><div class="row meta" style="margin-top:14px"><a id="linkException" href="connect-awareness-exception-queue.csv">Exception Queue</a><span aria-hidden="true">&middot;</span><a id="linkOps" href="connect-ai-first-collection-operating-model.md">AI-First Ops</a><span aria-hidden="true">&middot;</span><a id="linkLog" href="connect-awareness-mention-log-actual-v2.csv">Mention Log V2</a></div></div></section>
+<section class="grid filters panel"><div class="row"><button class="preset" data-preset="7d" id="p7"></button><button class="preset" data-preset="30d" id="p30"></button><button class="preset" data-preset="90d" id="p90"></button><button class="preset" data-preset="ytd" id="pytd"></button><button class="preset active" data-preset="all" id="pall"></button><select id="grain"><option value="auto"></option><option value="week"></option><option value="month"></option></select></div><div class="range-label"><span id="rangePrefix"></span> <strong id="rangeLabel"></strong></div><div class="row" style="grid-column:1 / -1"><input type="date" id="startDate"><input type="date" id="endDate"><button id="applyRange"></button><button id="resetAll" class="subtle-btn"></button></div></section>
+<section class="grid cards"><div class="panel"><p class="eyebrow" id="eyK1">Qualified Mentions</p><div class="kpi" id="k1">0</div><div class="delta" id="k1d"></div></div><div class="panel"><p class="eyebrow" id="eyK2">Unique People</p><div class="kpi" id="k2">0</div><div class="delta" id="k2d"></div></div><div class="panel"><p class="eyebrow" id="eyK3">High-Value Share</p><div class="kpi" id="k3">0%</div><div class="delta" id="k3d"></div></div><div class="panel"><p class="eyebrow" id="eyK4">Brand Recall Share</p><div class="kpi" id="k4">0%</div><div class="delta" id="k4d"></div></div><div class="panel"><p class="eyebrow" id="eyK5">Top Source</p><div class="kpi" id="k5" style="font-size:30px">-</div><div class="delta" id="k5d"></div></div><div class="panel"><p class="eyebrow" id="eyK6">Top Use Case</p><div class="kpi" id="k6" style="font-size:30px">-</div><div class="delta" id="k6d"></div></div></section>
+<section class="grid two"><div class="panel"><div class="head"><div><p class="eyebrow" id="eyVolume">Volume Summary</p><h2 id="volumeTitle"></h2><p class="note" id="volumeNote"></p></div><span class="badge" id="volumeBadge"></span></div><table><thead><tr><th id="vh1"></th><th id="vh2"></th><th id="vh3"></th></tr></thead><tbody id="volumeSummary"></tbody></table></div><div class="panel"><div class="head"><div><p class="eyebrow" id="eyCounts">Top Counts</p><h2 id="countTitle"></h2><p class="note" id="countNote"></p></div><span class="badge" id="countBadge"></span></div><table><thead><tr><th id="ch1"></th><th id="ch2"></th><th id="ch3"></th></tr></thead><tbody id="countBreakdown"></tbody></table></div></section>
+<section class="grid two"><div class="panel"><div class="head"><div><p class="eyebrow" id="eyTrend">Trend</p><h2 id="trendTitle"></h2><p class="note" id="trendNote"></p></div><span class="badge" id="trendBadge"></span></div><svg id="trendChart" viewBox="0 0 720 260"></svg><div class="legend"><span><i class="swatch" style="background:var(--accent)"></i><span id="legend1"></span></span><span><i class="swatch" style="background:var(--accent2)"></i><span id="legend2"></span></span></div></div><div class="panel"><div class="head"><div><p class="eyebrow" id="eyReadout">Readout</p><h2 id="readoutTitle"></h2></div><span class="badge" id="readoutBadge"></span></div><div id="readout"></div></div></section>
+<section class="grid two"><div class="panel"><div class="head"><div><p class="eyebrow" id="eySourceMix">Source Mix</p><h2 id="sourceTitle"></h2><p class="note" id="sourceNote"></p></div><span class="badge" id="sourceBadge"></span></div><svg id="sourceChart" viewBox="0 0 640 320"></svg></div><div class="panel"><div class="head"><div><p class="eyebrow" id="eyUseCases">Use Cases</p><h2 id="useTitle"></h2><p class="note" id="useNote"></p></div><span class="badge" id="useBadge"></span></div><svg id="useChart" viewBox="0 0 640 320"></svg><div id="useLegend" class="legend-list"></div></div></section>
+<section class="grid two"><div class="panel"><div class="head"><div><p class="eyebrow" id="eyMatrix">Brand vs Utility</p><h2 id="matrixTitle"></h2></div><span class="badge" id="matrixBadge"></span></div><div id="matrix"></div></div><div class="panel"><div class="head"><div><p class="eyebrow" id="eyWhite">White Space</p><h2 id="whiteTitle"></h2></div><span class="badge" id="whiteBadge"></span></div><table><thead><tr><th id="wh1"></th><th id="wh2"></th><th id="wh3"></th><th id="wh4"></th></tr></thead><tbody id="whiteTable"></tbody></table></div></section>
+<section class="panel"><div class="head"><div><p class="eyebrow" id="eyQuotes">Quote Review</p><h2 id="quoteTitle"></h2><p class="note" id="quoteNote"></p></div><span class="badge" id="quoteCount">0</span></div><div class="quote-toolbar"><div class="row"><button id="showTopBtn" class="active"></button><button id="showAllBtn" class="subtle-btn"></button></div><div class="meta" id="quoteMeta"></div></div><div id="quotes"></div><p class="footnote" id="footnote"></p></section>
+</div>
+
+
+<script>
+(function(){
+  function get(id){ return document.getElementById(id); }
+  function setStatus(text){ var el = get('dataStatus'); if(el){ el.textContent = text; } }
+  function showFatal(text){
+    try{
+      var wrap = get('fatalWrap');
+      var msg = get('fatalMsg');
+      if(wrap && msg){ wrap.style.display='block'; msg.textContent=String(text||'Unknown error'); }
+    }catch(e){}
+  }
+  setStatus('Data: inline JS ok (loading bootstrap...)');
+  window.addEventListener('error', function(ev){
+    try{
+      var t = (ev && ev.message) ? ev.message : 'Script error';
+      var where = (ev && ev.filename) ? (' @ ' + ev.filename + ':' + ev.lineno + ':' + ev.colno) : '';
+      setStatus('Data: ERROR (see top panel)');
+      showFatal(t + where);
+    }catch(e){}
+  }, true);
+  window.addEventListener('unhandledrejection', function(ev){
+    try{
+      var r = ev && ev.reason ? ev.reason : '';
+      setStatus('Data: ERROR (see top panel)');
+      showFatal((r && (r.stack || r.message)) || r || 'Unhandled rejection');
+    }catch(e){}
+  }, true);
+  function loadBootstrap(url){
+    try{
+      var s = document.createElement('script');
+      s.src = url;
+      s.defer = true;
+      s.onload = function(){ setStatus('Data: bootstrap loaded (starting...)'); };
+      s.onerror = function(){ setStatus('Data: ERROR (failed to load bootstrap.js)'); showFatal('Failed to load ' + url); };
+      document.body.appendChild(s);
+    }catch(e){
+      setStatus('Data: ERROR (bootstrap injection)');
+      showFatal(e && (e.stack||e.message) ? (e.stack||e.message) : String(e));
+    }
+  }
+  loadBootstrap('./bootstrap.js?v=20260421T1704340900');
+  setTimeout(function(){
+    var el = get('dataStatus');
+    if(el && String(el.textContent||'').indexOf('boot ') !== -1) return;
+    loadBootstrap('./bootstrap.js');
+  }, 2000);
+})();
+</script>
+</body>
+</html>
