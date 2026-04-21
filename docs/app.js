@@ -192,14 +192,27 @@ function ensureHelpStyles(){
   const style = document.createElement('style');
   style.id = 'helpCss';
   style.textContent =
-    ".help{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.60);color:var(--muted);font-size:12px;font-weight:700;cursor:help;position:relative;margin-left:6px;line-height:1}" +
+    ".help{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.60);color:var(--muted);font-size:12px;font-weight:700;cursor:help;position:relative;margin-left:8px;line-height:1;flex:0 0 auto}" +
     ".help:focus{outline:2px solid rgba(45,111,101,.35);outline-offset:2px}" +
-    ".help[data-tip]:hover::after,.help[data-tip]:focus::after{content:attr(data-tip);position:absolute;left:50%;top:120%;transform:translateX(-50%);background:#1c252d;color:#fff;padding:10px 12px;border-radius:12px;max-width:360px;white-space:pre-line;line-height:1.5;z-index:50;box-shadow:0 14px 34px rgba(28,37,45,.18)}" +
-    ".help[data-tip]:hover::before,.help[data-tip]:focus::before{content:'';position:absolute;left:50%;top:110%;transform:translateX(-50%);border:7px solid transparent;border-bottom-color:#1c252d;z-index:51}" +
-    "@media (max-width:720px){.help[data-tip]:hover::after,.help[data-tip]:focus::after{max-width:280px}}";
+    ".help[data-tip]:hover::after,.help[data-tip]:focus::after{content:attr(data-tip);position:absolute;left:0;top:26px;transform:none;background:#1c252d;color:#fff;padding:12px 14px;border-radius:14px;min-width:320px;max-width:560px;white-space:pre-wrap;word-break:keep-all;overflow-wrap:anywhere;line-height:1.55;z-index:50;box-shadow:0 14px 34px rgba(28,37,45,.18)}" +
+    ".help[data-tip]:hover::before,.help[data-tip]:focus::before{content:'';position:absolute;left:10px;top:18px;transform:none;border:7px solid transparent;border-bottom-color:#1c252d;z-index:51}" +
+    "@media (max-width:720px){.help[data-tip]:hover::after,.help[data-tip]:focus::after{min-width:240px;max-width:320px}}";
   document.head.appendChild(style);
 }
-function ensureHelpAfter(targetId, helpId, tip){
+function ensureVizStyles(){
+  if(document.getElementById('vizCss')) return;
+  const style = document.createElement('style');
+  style.id = 'vizCss';
+  style.textContent =
+    "#useChart path{cursor:pointer;transition:transform .12s ease,opacity .12s ease,filter .12s ease,stroke-width .12s ease}" +
+    "#useChart path.is-dim{opacity:.35}" +
+    "#useChart path.is-active{transform:scale(1.04);transform-box:fill-box;transform-origin:center;filter:drop-shadow(0 10px 14px rgba(28,37,45,.14));stroke:#1c252d;stroke-opacity:.18;stroke-width:2}" +
+    "#useLegend .legend-item{border-radius:12px;padding:6px 8px;transition:background .12s ease,box-shadow .12s ease,transform .12s ease}" +
+    "#useLegend .legend-item.is-dim{opacity:.55}" +
+    "#useLegend .legend-item.is-active{background:rgba(28,37,45,.06);box-shadow:0 10px 18px rgba(28,37,45,.10);transform:translateY(-1px)}";
+  document.head.appendChild(style);
+}
+function ensureHelpIn(targetId, helpId, tip){
   const target = $opt(targetId);
   if(!target) return;
   let help = $opt(helpId);
@@ -209,7 +222,7 @@ function ensureHelpAfter(targetId, helpId, tip){
     help.className = 'help';
     help.textContent = '?';
     help.tabIndex = 0;
-    target.insertAdjacentElement('afterend', help);
+    target.appendChild(help);
   }
   help.setAttribute('data-tip', String(tip||''));
 }
@@ -233,6 +246,7 @@ function renderStatic(){
   const x = tr();
   document.documentElement.lang = state.lang;
   ensureHelpStyles();
+  ensureVizStyles();
 
   $('langEnBtn').classList.toggle('active', state.lang === 'en');
   $('langKoBtn').classList.toggle('active', state.lang === 'ko');
@@ -311,8 +325,8 @@ function renderStatic(){
   $('legend2').textContent = x.legend2;
   $('legend1').title = x.tips.qualified;
   $('legend2').title = x.tips.hvShare;
-  ensureHelpAfter('legend1','helpQualified',x.tips.qualified);
-  ensureHelpAfter('legend2','helpHvShare',x.tips.hvShare);
+  ensureHelpIn('legend1','helpQualified',x.tips.qualified);
+  ensureHelpIn('legend2','helpHvShare',x.tips.hvShare);
 
   $('readoutTitle').textContent = x.readoutTitle;
   $('readoutBadge').textContent = x.readoutBadge;
@@ -323,7 +337,7 @@ function renderStatic(){
   $('sourceTitle').title = x.tips.sourceDensity;
   $('sourceNote').title = x.tips.sourceDensity;
   $('sourceBadge').title = x.tips.sourceDensity;
-  ensureHelpAfter('sourceTitle','helpSourceDensity',x.tips.sourceDensity + `\n\n${state.lang==='ko'?'표시 형식: 평균 4.0점 · 1건':'Format: Avg 4.0 · 1'}`);
+  ensureHelpIn('sourceTitle','helpSourceDensity',x.tips.sourceDensity + `\n\n${state.lang==='ko'?'표시 형식: 평균 4.0점 · 1건':'Format: Avg 4.0 · 1'}`);
 
   $('useTitle').textContent = x.useTitle;
   $('useNote').textContent = x.useNote;
@@ -331,7 +345,7 @@ function renderStatic(){
 
   $('matrixTitle').textContent = x.matrixTitle;
   $('matrixBadge').textContent = x.matrixBadge;
-  ensureHelpAfter('matrixTitle','helpMatrixPct',x.tips.matrixPct || '');
+  ensureHelpIn('matrixTitle','helpMatrixPct',x.tips.matrixPct || '');
 
   $('whiteTitle').textContent = x.whiteTitle;
   $('whiteBadge').textContent = x.whiteBadge;
@@ -342,7 +356,7 @@ function renderStatic(){
   $('showTopBtn').textContent = x.showTop;
   $('showAllBtn').textContent = x.showAll;
   $('footnote').textContent = x.footnote;
-  ensureHelpAfter('quoteTitle','helpQuoteScore',x.tips.quoteScore || '');
+  ensureHelpIn('quoteTitle','helpQuoteScore',x.tips.quoteScore || '');
 }
 function renderKpis(rows){
   const x=tr();
@@ -442,9 +456,34 @@ function renderUse(rows){
     start+=angle;
     return{path,color:colors[idx%colors.length],name:it.name,count:it.count}
   });
-  svg.innerHTML=`${slices.map(s=>`<path d="${s.path}" fill="${s.color}"></path>`).join("")}<circle cx="${cx}" cy="${cy}" r="52" fill="#fffaf4"></circle><text x="${cx}" y="${cy-4}" text-anchor="middle" font-size="14" fill="#66707a">${x.centerTop}</text><text x="${cx}" y="${cy+24}" text-anchor="middle" font-size="22" fill="#1c252d">${x.centerBottom}</text>`;
+  svg.innerHTML=`${slices.map(s=>`<path data-use="${s.name}" d="${s.path}" fill="${s.color}"></path>`).join("")}<circle cx="${cx}" cy="${cy}" r="52" fill="#fffaf4"></circle><text x="${cx}" y="${cy-4}" text-anchor="middle" font-size="14" fill="#66707a">${x.centerTop}</text><text x="${cx}" y="${cy+24}" text-anchor="middle" font-size="22" fill="#1c252d">${x.centerBottom}</text>`;
   const more = allItems.length>items.length ? `<div class="meta">+${allItems.length-items.length} more</div>` : '';
-  legend.innerHTML=slices.map(s=>`<div class="legend-item"><i class="swatch" style="background:${s.color}"></i><span>${useLabel(s.name)}</span><span class="legend-metric">${Math.round(s.count/total*100)}% (${s.count})</span></div>`).join("") + more;
+  legend.innerHTML=slices.map(s=>`<div class="legend-item" data-use="${s.name}"><i class="swatch" style="background:${s.color}"></i><span>${useLabel(s.name)}</span><span class="legend-metric">${Math.round(s.count/total*100)}% (${s.count})</span></div>`).join("") + more;
+
+  const paths = Array.from(svg.querySelectorAll('path[data-use]'));
+  const itemsEls = Array.from(legend.querySelectorAll('.legend-item[data-use]'));
+  const setActive = (name)=>{
+    paths.forEach(p=>{
+      const on = p.getAttribute('data-use')===name;
+      p.classList.toggle('is-active', on);
+      p.classList.toggle('is-dim', !!name && !on);
+    });
+    itemsEls.forEach(el=>{
+      const on = el.getAttribute('data-use')===name;
+      el.classList.toggle('is-active', on);
+      el.classList.toggle('is-dim', !!name && !on);
+    });
+  };
+  paths.forEach(p=>{
+    p.addEventListener('mouseenter', ()=>setActive(p.getAttribute('data-use')));
+    p.addEventListener('mouseleave', ()=>setActive(null));
+    p.addEventListener('focus', ()=>setActive(p.getAttribute('data-use')));
+    p.addEventListener('blur', ()=>setActive(null));
+  });
+  itemsEls.forEach(el=>{
+    el.addEventListener('mouseenter', ()=>setActive(el.getAttribute('data-use')));
+    el.addEventListener('mouseleave', ()=>setActive(null));
+  });
 }
 function renderMatrix(rows){const x=tr();const total=rows.length||1,explicit=rows.filter(r=>r.explicit).length/total*100,utilNoBrand=rows.filter(r=>r.score>=4&&!r.explicit).length/total*100,aligned=rows.filter(r=>r.score>=4&&r.explicit).length/total*100,risk=utilNoBrand>explicit?x.riskHigh:x.riskMid;const cards=[{title:x.matrix.a[0],value:pct(explicit),body:x.matrix.a[1],cls:explicit<35?'low':'mid'},{title:x.matrix.b[0],value:pct(utilNoBrand),body:x.matrix.b[1],cls:utilNoBrand>40?'mid':'low'},{title:x.matrix.c[0],value:pct(aligned),body:x.matrix.c[1],cls:aligned>25?'mid':'low'},{title:x.matrix.d[0],value:risk,body:x.matrix.d[1],cls:risk===x.riskHigh?'low':'mid'}];$('matrix').innerHTML=cards.map(c=>`<article class="item"><span class="metric-chip ${c.cls}">${c.value}</span><h3 style="margin-top:12px">${c.title}</h3><p>${c.body}</p></article>`).join('')}
 function renderWhite(){$('whiteTable').innerHTML=whiteRows[state.lang].map(r=>`<tr>${r.map(c=>`<td>${c}</td>`).join('')}</tr>`).join('')}
