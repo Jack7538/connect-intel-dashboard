@@ -63,7 +63,7 @@ function statusCounts(rows){
   return {total, external, owned};
 }
 const whiteRows={en:[["VRChat creator commerce","High","Low","Define one clear problem CONNECT can solve, then collect public proof."],["General CG workflow forums","Medium","Low","Track workflow-comparison threads instead of waiting for brand mentions."],["Instagram creator proof","Medium","Low-Mid","Review credits, captions, and source references instead of hashtag counts."],["YouTube tutorials/comments","High","Low","Expand workflow-led searches in video descriptions and comments."]],ko:[["VRChat creator commerce","High","Low","Define one clear problem CONNECT can solve, then collect public proof."],["General CG workflow forums","Medium","Low","Track workflow-comparison threads instead of waiting for brand mentions."],["Instagram creator proof","Medium","Low-Mid","Review credits, captions, and source references instead of hashtag counts."],["YouTube tutorials/comments","High","Low","Expand workflow-led searches in video descriptions and comments."]]};
-const i18nEn={heroTitle:"CONNECT Awareness And Usage Dashboard",heroLead:"Purpose: track verified public-web awareness and usage signals for CONNECT, then spot where utility shows up vs brand recall.",statusEyebrow:"Current State",statusTitle:"This is a first-pass public backfill dashboard.",statusBody:"The dataset reflects verified public-web evidence, not a full market census. It is enough to establish a baseline and begin weekly accumulation.",presets:{"7d":"Last 7D","30d":"Last 30D","90d":"Last 90D",ytd:"YTD",all:"All"},grain:{auto:"Auto Grain",week:"Weekly Grain",month:"Monthly Grain"},rangePrefix:"Selected Range:",applyRange:"Apply Custom Range",resetAll:"Reset To All",volumeTitle:"Volume Summary",volumeNote:"Absolute counts are shown alongside ratio-based interpretation.",volumeBadge:"Absolute Counts",volumeHeaders:["Metric","Count","Description"],countTitle:"Source / Use Case Counts",countNote:"This shows where the current filtered evidence is concentrated.",countBadge:"Count Breakdown",countHeaders:["Type","Item","Count"],legend1:"Qualified mentions",legend2:"High-value share",tips:{qualified:"Qualified mentions = number of qualified records in the selected time bucket.",hvShare:"High-value share = % of records with value score >= 4 in the bucket.",sourceDensity:"Source value density = average value score (1-5) per source; higher means more practical usage language."},readoutTitle:"Current Readout",readoutBadge:"Leadership Notes",sourceTitle:"Source Value Density",sourceNote:"This compares how much practical value each source carries in the current filtered data.",sourceBadge:"Source Prioritization",useTitle:"Use Case Mix",useNote:"This shows what kinds of problems people connect to CONNECT.",useBadge:"Messaging Input",matrixTitle:"Brand Recall vs Utility Gap",matrixBadge:"Positioning Risk",whiteTitle:"White Space Communities",whiteBadge:"Infiltration Targets",whiteHeaders:["Community","Need","Visibility","Recommended Action"],quoteTitle:"Actual User Quotes",quoteNote:"Default is Top 8 (sorted by value score). Use Show All to review every filtered record.",showTop:"Top 8 Only",showAll:"Show All",footnote:"This is a first-pass public backfill dataset. Treat the numbers as verified public records collected so far, not as total market awareness.",k1:"Filtered, qualified CONNECT mentions in the selected period",k2:"Deduplicated account count in the selected period",k4:"Share of mentions that explicitly call CONNECT by name",noData:"No data in the selected range.",quotesShown:(a,b)=>`${a} shown / ${b} filtered`,rowLabels:{q:["Qualified Mentions","Filtered records classified as real CONNECT-related mentions"],u:["Unique People","Deduplicated account count in the selected period"],h:["High-Value Mentions","Mentions tied to actual use, upload, purchase, workflow shortcut, or creator action"],b:["Explicit Brand Recall","Mentions that directly name CONNECT as a platform or destination"],l:["Low-Value Mentions","Low-information showcase or owned-surface records"]},typeLabels:{source:"Source",use:"Use Case"},useMap:{asset_browsing:"Asset Browsing",workflow_efficiency:"Workflow Efficiency",purchase:"Purchase",download:"Download",fabric_sourcing:"Fabric Sourcing",creator_posting:"Creator Posting",commercial_project:"Commercial Project",comparison_evaluation:"Comparison Evaluation",avatar_deployment:"Avatar Deployment",contest_participation:"Contest Participation",platform_positioning:"Platform Positioning",legacy_confusion:"Legacy Confusion"},readout:{a:"Top current use case",b:"Most value-dense source",c:"Brand recall vs practical usage",aBody:(u)=>`${u} is the most frequent current use case. CONNECT is still appearing more as a practical problem-solving surface than as a broadly recalled brand.`,bBody:(s)=>`${s} is the strongest current source in this dataset. The source mix is still narrow, but it remains the clearest place where practical usage language appears.`,cBody:(b,h)=>`Explicit brand recall is ${b}, while high-value usage is ${h}. Utility still appears to be ahead of brand memory.`},matrix:{a:["Explicit brand recall","Share of records that call CONNECT directly by name"],b:["High-value usage without clear brand recall","Records where practical value is strong even when brand memory is weak"],c:["Brand-value alignment","Records where strong usage and clear CONNECT recall appear together"],d:["Positioning risk","Risk that utility continues to outrun brand memory"]},openSource:"Open source",interp:"Interpretation",trend:{week:"Weekly Trend",month:"Monthly Trend"},trendNote:{week:"The filtered data is grouped by week.",month:"The filtered data is grouped by month."},centerTop:"Current Data",centerBottom:"Use Cases",score:"Score",riskHigh:"High",riskMid:"Mid"};
+const i18nEn={heroTitle:"CONNECT Awareness And Usage Dashboard",heroLead:"Purpose: track verified public-web awareness and usage signals for CONNECT, then spot where utility shows up vs brand recall.",statusEyebrow:"Current State",statusTitle:"This is a first-pass public backfill dashboard.",statusBody:"The dataset reflects verified public-web evidence, not a full market census. It is enough to establish a baseline and begin weekly accumulation.",presets:{"7d":"Last 7D","30d":"Last 30D","90d":"Last 90D",ytd:"YTD",all:"All"},grain:{auto:"Auto Grain",week:"Weekly Grain",month:"Monthly Grain"},rangePrefix:"Selected Range:",applyRange:"Apply Custom Range",resetAll:"Reset To All",volumeTitle:"Volume Summary",volumeNote:"Absolute counts are shown alongside ratio-based interpretation.",volumeBadge:"Absolute Counts",volumeHeaders:["Metric","Count","Description"],countTitle:"Source / Use Case Counts",countNote:"This shows where the current filtered evidence is concentrated.",countBadge:"Count Breakdown",countHeaders:["Type","Item","Count"],legend1:"Qualified mentions",legend2:"High-value share",tips:{qualified:"Qualified mentions = number of qualified records in the selected time bucket.",hvShare:"High-value share = % of records with value score >= 4 in the bucket.",sourceDensity:"Source value density = average value score (1-5) per source; higher means more practical usage language."},readoutTitle:"Current Readout",readoutBadge:"Leadership Notes",sourceTitle:"Source Value Density",sourceNote:"This compares how much practical value each source carries in the current filtered data.",sourceBadge:"Source Prioritization",useTitle:"Use Case Mix",useNote:"This shows what kinds of problems people connect to CONNECT.",useBadge:"Messaging Input",matrixTitle:"Brand Recall vs Utility Gap",matrixBadge:"Positioning Risk",whiteTitle:"White Space Communities",whiteBadge:"Infiltration Targets",whiteHeaders:["Community","Need","Visibility","Recommended Action"],quoteTitle:"Actual User Quotes",quoteNote:"Default is Top 8 (sorted by value score). Use Show All to review every filtered record.",showTop:"Top 8 Only",showAll:"Show All",footnote:"This is a first-pass public backfill dataset. Treat the numbers as verified public records collected so far, not as total market awareness.",k1:"Filtered, qualified CONNECT mentions in the selected period",k2:"Deduplicated account count in the selected period",k4:"Share of mentions that explicitly call CONNECT by name",noData:"No data in the selected range.",quotesShown:(a,b)=>`${a} shown / ${b} filtered`,rowLabels:{q:["Qualified Mentions","Filtered records classified as real CONNECT-related mentions"],u:["Unique People","Deduplicated account count in the selected period"],h:["High-Value Mentions","Mentions tied to actual use, upload, purchase, workflow shortcut, or creator action"],b:["Explicit Brand Recall","Mentions that directly name CONNECT as a platform or destination"],l:["Low-Value Mentions","Low-information showcase or owned-surface records"]},typeLabels:{source:"Source",use:"Use Case"},useMap:{asset_browsing:"Asset Browsing",workflow_efficiency:"Workflow Efficiency",purchase:"Purchase",download:"Download",fabric_sourcing:"Fabric Sourcing",creator_posting:"Creator Posting",commercial_project:"Commercial Project",comparison_evaluation:"Comparison Evaluation",avatar_deployment:"Avatar Deployment",contest_participation:"Contest Participation",platform_positioning:"Platform Positioning",legacy_confusion:"Legacy Confusion"},readout:{a:"Top current use case",b:"Most value-dense source",c:"Brand recall vs practical usage",aBody:(u)=>`${u} is the most frequent current use case. CONNECT is still appearing more as a practical problem-solving surface than as a broadly recalled brand.`,bBody:(s)=>`${s} is the strongest current source in this dataset. The source mix is still narrow, but it remains the clearest place where practical usage language appears.`,cBody:(b,h)=>`Explicit brand recall is ${b}, while high-value usage is ${h}. Utility still appears to be ahead of brand memory.`},matrix:{a:["Explicit brand recall","Share of records that call CONNECT directly by name"],b:["High-value usage without clear brand recall","Records where practical value is strong even when brand memory is weak"],c:["Brand-value alignment","Records where strong usage and clear CONNECT recall appear together"],d:["Positioning risk","Risk that utility continues to outrun brand memory"]},openSource:"Open source",interp:"Interpretation",trend:{week:"Weekly Trend",month:"Monthly Trend"},trendNote:{week:"The filtered data is grouped by week.",month:"The filtered data is grouped by month."},centerTop:"Current Data",centerBottom:"Use Cases",score:"Score",riskHigh:"High",riskMid:"Mid",ey:{fatal:"Dashboard Error",connect:"CONNECT Intelligence",k1:"Qualified Mentions",k2:"Unique People",k3:"High-Value Share",k4:"Brand Recall Share",k5:"Top Source",k6:"Top Use Case",volume:"Volume Summary",counts:"Top Counts",trend:"Trend",readout:"Readout",sourceMix:"Source Mix",useCases:"Use Cases",matrix:"Brand vs Utility",white:"White Space",quotes:"Quote Review"}};
 const i18nKo=Object.assign({}, i18nEn, {
   heroTitle:"CONNECT \uC778\uC9C0\uB3C4 \uBC0F \uC0AC\uC6A9\uAC00\uCE58 \uB300\uC26C\uBCF4\uB4DC",
   heroLead:"\uBAA9\uC801: \uACF5\uAC1C \uC6F9\uC5D0\uC11C \uD655\uC778\uB41C CONNECT \uC778\uC9C0\uB3C4/\uC0AC\uC6A9 \uC2E0\uD638\uB97C \uC218\uC9D1\uD558\uACE0, \uC720\uD2F8\uB9AC\uD2F0(\uC2E4\uC0AC\uC6A9)\uC640 \uBE0C\uB79C\uB4DC \uD68C\uC0C1\uC744 \uBE44\uAD50\uD569\uB2C8\uB2E4.",
@@ -104,7 +104,8 @@ const i18nKo=Object.assign({}, i18nEn, {
   quoteNote:"\uAE30\uBCF8\uC740 \uAC00\uCE58 \uC810\uC218 \uC21C \uC0C1\uC704 8\uAC1C\uB9CC \uBCF4\uC5EC\uC90D\uB2C8\uB2E4. '\uC804\uCCB4 \uBCF4\uAE30'\uB85C \uD544\uD130 \uB808\uCF54\uB4DC\uB97C \uBAA8\uB450 \uD655\uC778\uD560 \uC218 \uC788\uC2B5\uB2C8\uB2E4.",
   showTop:"\uC0C1\uC704 8\uAC1C\uB9CC",
   showAll:"\uC804\uCCB4 \uBCF4\uAE30",
-  footnote:"\uC774 \uB370\uC774\uD130\uC14B\uC740 \uACF5\uAC1C \uC6F9 \uBC31\uD544(\uCD08\uC548)\uC785\uB2C8\uB2E4. \uC2DC\uC7A5 \uC804\uCCB4 \uC778\uC9C0\uB3C4\uAC00 \uC544\uB2C8\uB77C, \uD604\uC7AC\uAE4C\uC9C0 \uC218\uC9D1\uB41C \uD655\uC778 \uACF5\uAC1C \uB808\uCF54\uB4DC \uAE30\uBC18\uC73C\uB85C \uD574\uC11D\uD574 \uC8FC\uC138\uC694."
+  footnote:"\uC774 \uB370\uC774\uD130\uC14B\uC740 \uACF5\uAC1C \uC6F9 \uBC31\uD544(\uCD08\uC548)\uC785\uB2C8\uB2E4. \uC2DC\uC7A5 \uC804\uCCB4 \uC778\uC9C0\uB3C4\uAC00 \uC544\uB2C8\uB77C, \uD604\uC7AC\uAE4C\uC9C0 \uC218\uC9D1\uB41C \uD655\uC778 \uACF5\uAC1C \uB808\uCF54\uB4DC \uAE30\uBC18\uC73C\uB85C \uD574\uC11D\uD574 \uC8FC\uC138\uC694.",
+  ey:{fatal:"\uB300\uC26C\uBCF4\uB4DC \uC624\uB958",connect:"CONNECT \uC778\uD154\uB9AC\uC804\uC2A4",k1:"\uC815\uC81C \uC5B8\uAE09",k2:"\uACE0\uC720 \uC0AC\uB78C",k3:"\uACE0\uAC00\uCE58 \uBE44\uC728",k4:"\uBE0C\uB79C\uB4DC \uD68C\uC0C1 \uBE44\uC728",k5:"\uD0D1 \uC18C\uC2A4",k6:"\uD0D1 \uC0AC\uC6A9 \uCF00\uC774\uC2A4",volume:"\uBCC4\uB7C9 \uC694\uC57D",counts:"\uC0C1\uC704 \uAC74\uC218",trend:"\uCD94\uC138",readout:"\uC694\uC57D",sourceMix:"\uC18C\uC2A4 \uBBF9\uC2A4",useCases:"\uC0AC\uC6A9 \uCF00\uC774\uC2A4",matrix:"\uBE0C\uB79C\uB4DC vs \uC720\uD2F8\uB9AC\uD2F0",white:"\uD654\uC774\uD2B8 \uC2A4\uD398\uC774\uC2A4",quotes:"\uC720\uC800 \uC778\uC6A9"}
 });
 const i18n={en:i18nEn,ko:i18nKo};
 const state={lang:'en',preset:'all',start:null,end:null,grain:'auto',quoteMode:'top'};
@@ -127,7 +128,109 @@ function resolveRange(){let s,e;if(state.start&&state.end){s=d(state.start);e=d(
 function filtered(){const {start,end}=resolveRange();return records.filter(r=>{const x=d(r.date);return x>=start&&x<=end})} function daysInRange(){const {start,end}=resolveRange();return Math.round((end-start)/86400000)+1} function grainMode(){if(state.grain!=='auto')return state.grain;return daysInRange()<=120?'week':'month'} function weekStart(dateObj){const c=new Date(dateObj);const day=c.getDay();const diff=day===0?-6:1-day;c.setDate(c.getDate()+diff);return c} function bucket(dateObj,mode){if(mode==='month')return `${dateObj.getFullYear()}-${String(dateObj.getMonth()+1).padStart(2,'0')}`;const ws=weekStart(dateObj);return `${ws.getFullYear()}-${String(ws.getMonth()+1).padStart(2,'0')}-${String(ws.getDate()).padStart(2,'0')}`}
 function aggregateTrend(rows,mode){const map=new Map();rows.forEach(r=>{const key=bucket(d(r.date),mode);if(!map.has(key))map.set(key,{label:key,mentions:0,hv:0});const it=map.get(key);it.mentions+=1;if(r.score>=4)it.hv+=1});return [...map.values()].sort((a,b)=>a.label.localeCompare(b.label)).map(it=>({label:it.label,mentions:it.mentions,hvShare:it.mentions?it.hv/it.mentions*100:0}))}
 function groupBy(rows,fn){const map=new Map();rows.forEach(r=>{const k=fn(r);map.set(k,(map.get(k)||0)+1)});return [...map.entries()].map(([name,count])=>({name,count})).sort((a,b)=>b.count-a.count||a.name.localeCompare(b.name))} function sourceDensity(rows){const map=new Map();rows.forEach(r=>{if(!map.has(r.source))map.set(r.source,{name:r.source,mentions:0,total:0});const it=map.get(r.source);it.mentions+=1;it.total+=r.score});const colors=['#b55b38','#2d6f65','#6d5e92','#d89b2b','#5b6778'];return [...map.values()].sort((a,b)=>(b.total/b.mentions)-(a.total/a.mentions)).map((it,i)=>({name:it.name,mentions:it.mentions,density:it.total/it.mentions,color:colors[i%colors.length]}))}
-function renderStatic(){const x=tr();document.documentElement.lang=state.lang;$('langEnBtn').classList.toggle('active',state.lang==='en');$('langKoBtn').classList.toggle('active',state.lang==='ko');$('langEnBtn').classList.toggle('subtle-btn',state.lang!=='en');$('langKoBtn').classList.toggle('subtle-btn',state.lang!=='ko');$('langEnBtn').textContent='English';$('langKoBtn').textContent='\uD55C\uAD6D\uC5B4';$('heroTitle').textContent=x.heroTitle;$('heroLead').textContent=x.heroLead;$('statusEyebrow').textContent=x.statusEyebrow;$('statusTitle').textContent=x.statusTitle;$('statusBody').textContent=x.statusBody;const c=statusCounts(records);const statusItems=state.lang==='ko'?[`\uC2E4\uC81C \uB85C\uB4DC\uB41C \uB808\uCF54\uB4DC: ${c.total}`,`\uC678\uBD80 \uACF5\uAC1C \uC5B8\uAE09: ${c.external}`,`Owned / \uACF5\uC2DD \uB808\uCF54\uB4DC: ${c.owned}`]:[`Actual records loaded: ${c.total}`,`External public mentions: ${c.external}`,`Owned / official records: ${c.owned}`];$('statusList').innerHTML=statusItems.map(v=>`<li>${v}</li>`).join('');$('p7').textContent=x.presets['7d'];$('p30').textContent=x.presets['30d'];$('p90').textContent=x.presets['90d'];$('pytd').textContent=x.presets.ytd;$('pall').textContent=x.presets.all;$('grain').options[0].text=x.grain.auto;$('grain').options[1].text=x.grain.week;$('grain').options[2].text=x.grain.month;$('rangePrefix').textContent=x.rangePrefix;$('applyRange').textContent=x.applyRange;$('resetAll').textContent=x.resetAll;$('volumeTitle').textContent=x.volumeTitle;$('volumeNote').textContent=x.volumeNote;$('volumeBadge').textContent=x.volumeBadge;[$('vh1').textContent,$('vh2').textContent,$('vh3').textContent]=x.volumeHeaders;$('countTitle').textContent=x.countTitle;$('countNote').textContent=x.countNote;$('countBadge').textContent=x.countBadge;[$('ch1').textContent,$('ch2').textContent,$('ch3').textContent]=x.countHeaders;$('legend1').textContent=x.legend1;$('legend2').textContent=x.legend2;$('legend1').title=x.tips.qualified;$('legend2').title=x.tips.hvShare;$('readoutTitle').textContent=x.readoutTitle;$('readoutBadge').textContent=x.readoutBadge;$('sourceTitle').textContent=x.sourceTitle;$('sourceNote').textContent=x.sourceNote;$('sourceBadge').textContent=x.sourceBadge;$('sourceTitle').title=x.tips.sourceDensity;$('sourceNote').title=x.tips.sourceDensity;$('sourceBadge').title=x.tips.sourceDensity;$('useTitle').textContent=x.useTitle;$('useNote').textContent=x.useNote;$('useBadge').textContent=x.useBadge;$('matrixTitle').textContent=x.matrixTitle;$('matrixBadge').textContent=x.matrixBadge;$('whiteTitle').textContent=x.whiteTitle;$('whiteBadge').textContent=x.whiteBadge;[$('wh1').textContent,$('wh2').textContent,$('wh3').textContent,$('wh4').textContent]=x.whiteHeaders;$('quoteTitle').textContent=x.quoteTitle;$('quoteNote').textContent=x.quoteNote;$('showTopBtn').textContent=x.showTop;$('showAllBtn').textContent=x.showAll;$('footnote').textContent=x.footnote}
+function renderStatic(){
+  const x = tr();
+  document.documentElement.lang = state.lang;
+
+  $('langEnBtn').classList.toggle('active', state.lang === 'en');
+  $('langKoBtn').classList.toggle('active', state.lang === 'ko');
+  $('langEnBtn').classList.toggle('subtle-btn', state.lang !== 'en');
+  $('langKoBtn').classList.toggle('subtle-btn', state.lang !== 'ko');
+  $('langEnBtn').textContent = 'English';
+  $('langKoBtn').textContent = '\uD55C\uAD6D\uC5B4';
+
+  if(x.ey){
+    const setEy = (id, value)=>{
+      const el = document.getElementById(id);
+      if(el && value){ el.textContent = value; }
+    };
+    setEy('eyFatal', x.ey.fatal);
+    setEy('eyConnect', x.ey.connect);
+    setEy('eyK1', x.ey.k1);
+    setEy('eyK2', x.ey.k2);
+    setEy('eyK3', x.ey.k3);
+    setEy('eyK4', x.ey.k4);
+    setEy('eyK5', x.ey.k5);
+    setEy('eyK6', x.ey.k6);
+    setEy('eyVolume', x.ey.volume);
+    setEy('eyCounts', x.ey.counts);
+    setEy('eyTrend', x.ey.trend);
+    setEy('eyReadout', x.ey.readout);
+    setEy('eySourceMix', x.ey.sourceMix);
+    setEy('eyUseCases', x.ey.useCases);
+    setEy('eyMatrix', x.ey.matrix);
+    setEy('eyWhite', x.ey.white);
+    setEy('eyQuotes', x.ey.quotes);
+  }
+
+  $('heroTitle').textContent = x.heroTitle;
+  $('heroLead').textContent = x.heroLead;
+  $('statusEyebrow').textContent = x.statusEyebrow;
+  $('statusTitle').textContent = x.statusTitle;
+  $('statusBody').textContent = x.statusBody;
+
+  const c = statusCounts(records);
+  const statusItems = state.lang === 'ko'
+    ? [`\uC2E4\uC81C \uB85C\uB4DC\uB41C \uB808\uCF54\uB4DC: ${c.total}`, `\uC678\uBD80 \uACF5\uAC1C \uC5B8\uAE09: ${c.external}`, `Owned / \uACF5\uC2DD \uB808\uCF54\uB4DC: ${c.owned}`]
+    : [`Actual records loaded: ${c.total}`, `External public mentions: ${c.external}`, `Owned / official records: ${c.owned}`];
+  $('statusList').innerHTML = statusItems.map(v=>`<li>${v}</li>`).join('');
+
+  $('p7').textContent = x.presets['7d'];
+  $('p30').textContent = x.presets['30d'];
+  $('p90').textContent = x.presets['90d'];
+  $('pytd').textContent = x.presets.ytd;
+  $('pall').textContent = x.presets.all;
+
+  $('grain').options[0].text = x.grain.auto;
+  $('grain').options[1].text = x.grain.week;
+  $('grain').options[2].text = x.grain.month;
+
+  $('rangePrefix').textContent = x.rangePrefix;
+  $('applyRange').textContent = x.applyRange;
+  $('resetAll').textContent = x.resetAll;
+
+  $('volumeTitle').textContent = x.volumeTitle;
+  $('volumeNote').textContent = x.volumeNote;
+  $('volumeBadge').textContent = x.volumeBadge;
+  [$('vh1').textContent, $('vh2').textContent, $('vh3').textContent] = x.volumeHeaders;
+
+  $('countTitle').textContent = x.countTitle;
+  $('countNote').textContent = x.countNote;
+  $('countBadge').textContent = x.countBadge;
+  [$('ch1').textContent, $('ch2').textContent, $('ch3').textContent] = x.countHeaders;
+
+  $('legend1').textContent = x.legend1;
+  $('legend2').textContent = x.legend2;
+  $('legend1').title = x.tips.qualified;
+  $('legend2').title = x.tips.hvShare;
+
+  $('readoutTitle').textContent = x.readoutTitle;
+  $('readoutBadge').textContent = x.readoutBadge;
+
+  $('sourceTitle').textContent = x.sourceTitle;
+  $('sourceNote').textContent = x.sourceNote;
+  $('sourceBadge').textContent = x.sourceBadge;
+  $('sourceTitle').title = x.tips.sourceDensity;
+  $('sourceNote').title = x.tips.sourceDensity;
+  $('sourceBadge').title = x.tips.sourceDensity;
+
+  $('useTitle').textContent = x.useTitle;
+  $('useNote').textContent = x.useNote;
+  $('useBadge').textContent = x.useBadge;
+
+  $('matrixTitle').textContent = x.matrixTitle;
+  $('matrixBadge').textContent = x.matrixBadge;
+
+  $('whiteTitle').textContent = x.whiteTitle;
+  $('whiteBadge').textContent = x.whiteBadge;
+  [$('wh1').textContent, $('wh2').textContent, $('wh3').textContent, $('wh4').textContent] = x.whiteHeaders;
+
+  $('quoteTitle').textContent = x.quoteTitle;
+  $('quoteNote').textContent = x.quoteNote;
+  $('showTopBtn').textContent = x.showTop;
+  $('showAllBtn').textContent = x.showAll;
+  $('footnote').textContent = x.footnote;
+}
 function renderKpis(rows){const x=tr();const mentions=rows.length;const people=new Set(rows.map(r=>r.account)).size;const hv=rows.filter(r=>r.score>=4).length;const br=rows.filter(r=>r.explicit).length;const topS=sourceDensity(rows)[0];const topU=groupBy(rows,r=>r.useCase)[0];$('k1').textContent=mentions;$('k1d').textContent=x.k1;$('k2').textContent=people;$('k2d').textContent=x.k2;$('k3').textContent=pct(mentions?hv/mentions*100:0);$('k3d').textContent=`score 4+ ${hv}`;$('k4').textContent=pct(mentions?br/mentions*100:0);$('k4d').textContent=x.k4;$('k5').textContent=topS?topS.name:'-';$('k5d').textContent=topS?`${topS.density.toFixed(1)} / ${topS.mentions}`:x.noData;$('k6').textContent=topU?useLabel(topU.name):'-';$('k6d').textContent=topU?`${topU.count}`:x.noData}
 function renderTables(rows){const x=tr();const volume=[[x.rowLabels.q[0],rows.length,x.rowLabels.q[1]],[x.rowLabels.u[0],new Set(rows.map(r=>r.account)).size,x.rowLabels.u[1]],[x.rowLabels.h[0],rows.filter(r=>r.score>=4).length,x.rowLabels.h[1]],[x.rowLabels.b[0],rows.filter(r=>r.explicit).length,x.rowLabels.b[1]],[x.rowLabels.l[0],rows.filter(r=>r.score<=2).length,x.rowLabels.l[1]]];$('volumeSummary').innerHTML=volume.map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td></tr>`).join('');const breakdown=[];groupBy(rows,r=>r.source).slice(0,4).forEach(it=>breakdown.push([x.typeLabels.source,it.name,it.count]));groupBy(rows,r=>r.useCase).slice(0,6).forEach(it=>breakdown.push([x.typeLabels.use,useLabel(it.name),it.count]));$('countBreakdown').innerHTML=breakdown.map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td></tr>`).join('')}
 function renderReadout(rows){const x=tr();const mentions=rows.length||1;const hv=rows.filter(r=>r.score>=4).length;const br=rows.filter(r=>r.explicit).length;const topS=sourceDensity(rows)[0]?.name||x.noData;const topU=useLabel(groupBy(rows,r=>r.useCase)[0]?.name||x.noData);const cards=[{title:x.readout.a,body:x.readout.aBody(topU)},{title:x.readout.b,body:x.readout.bBody(topS)},{title:x.readout.c,body:x.readout.cBody(pct(br/mentions*100),pct(hv/mentions*100))}];$('readout').innerHTML=cards.map(c=>`<article class="item"><h3>${c.title}</h3><p>${c.body}</p></article>`).join('')}
