@@ -573,10 +573,30 @@ function renderUse(rows){
   const slices=items.map((it,idx)=>{
     const angle=it.count/total*360,p1=polar(start,radius),p2=polar(start+angle,radius),large=angle>180?1:0;
     const path=`M ${cx} ${cy} L ${p1.x} ${p1.y} A ${radius} ${radius} 0 ${large} 1 ${p2.x} ${p2.y} Z`;
+    const mid = start + angle/2;
     start+=angle;
-    return{path,color:colors[idx%colors.length],name:it.name,count:it.count}
+    return{path,color:colors[idx%colors.length],name:it.name,count:it.count,angle,mid}
   });
-  svg.innerHTML=`${slices.map(s=>`<path data-use="${s.name}" d="${s.path}" fill="${s.color}"></path>`).join("")}<circle cx="${cx}" cy="${cy}" r="64" fill="#fffaf4"></circle><text x="${cx}" y="${cy-6}" text-anchor="middle" font-size="14" fill="#66707a">${x.centerTop}</text><text x="${cx}" y="${cy+26}" text-anchor="middle" font-size="22" fill="#1c252d">${x.centerBottom}</text>`;
+  const labelRadius = 98;
+  const labelMinAngle = 40; // show labels only when there's enough room
+  const labelMax = 4;
+  const labels = slices
+    .filter(s=>s.angle>=labelMinAngle)
+    .sort((a,b)=>b.angle-a.angle)
+    .slice(0,labelMax)
+    .map(s=>{
+      const p = polar(s.mid, labelRadius);
+      const text = useLabel(s.name);
+      const fs = text.length > 10 ? 11 : 13;
+      return `<text x="${p.x}" y="${p.y}" text-anchor="middle" dominant-baseline="middle" font-size="${fs}" font-weight="800" fill="#ffffff" stroke="rgba(28,37,45,.28)" stroke-width="4" paint-order="stroke" pointer-events="none">${text}</text>`;
+    }).join("");
+
+  svg.innerHTML=
+    `${slices.map(s=>`<path data-use="${s.name}" d="${s.path}" fill="${s.color}"></path>`).join("")}` +
+    `${labels}` +
+    `<circle cx="${cx}" cy="${cy}" r="64" fill="#fffaf4"></circle>` +
+    `<text x="${cx}" y="${cy-6}" text-anchor="middle" font-size="14" fill="#66707a">${x.centerTop}</text>` +
+    `<text x="${cx}" y="${cy+26}" text-anchor="middle" font-size="22" fill="#1c252d">${x.centerBottom}</text>`;
   const more = allItems.length>items.length ? `<div class="meta">+${allItems.length-items.length} more</div>` : '';
   legend.innerHTML=slices.map(s=>`<div class="legend-item" data-use="${s.name}"><i class="swatch" style="background:${s.color}"></i><span>${useLabel(s.name)}</span><span class="legend-metric">${Math.round(s.count/total*100)}% (${s.count})</span></div>`).join("") + more;
 
