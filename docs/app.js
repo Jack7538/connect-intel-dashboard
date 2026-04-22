@@ -14,17 +14,23 @@ function setDataLoad(mode, ok, count, error){
   dataLoad = { mode, ok, count, error: error||'' };
   const el = document.getElementById('dataStatus');
   if(!el) return;
-  const lang = (typeof state!=='undefined' && state && state.lang) ? state.lang : (document.documentElement && document.documentElement.lang ? document.documentElement.lang : 'en');
+  const lang = (typeof state!=='undefined' && state && state.lang)
+    ? state.lang
+    : (document.documentElement && document.documentElement.lang ? document.documentElement.lang : 'en');
+
   if(mode==='remote' && ok){
-    el.textContent = lang==='ko' ? `데이터: 원격 JSON 로드 완료 (${count}건)` : `Data: remote JSON loaded (${count} records)`;
+    el.textContent = lang==='ko'
+      ? `\uB370\uC774\uD130: \uC6D0\uACA9 JSON \uB85C\uB4DC \uC644\uB8CC (${count}\uAC74)`
+      : `Data: remote JSON loaded (${count} records)`;
+    return;
+  }
+
+  const msg = dataLoad.error ? `; remote failed: ${dataLoad.error}` : '';
+  if(lang==='ko'){
+    const kmsg = dataLoad.error ? `; \uC6D0\uACA9 \uB85C\uB4DC \uC2E4\uD328: ${dataLoad.error}` : '';
+    el.textContent = `\uB370\uC774\uD130: \uB0B4\uC7A5 \uBC31\uC5C5 \uC0AC\uC6A9 (${count}\uAC74)${kmsg}`;
   }else{
-    const msg = dataLoad.error ? `; remote failed: ${dataLoad.error}` : '';
-    if(lang==='ko'){
-      const kmsg = dataLoad.error ? `; 원격 로드 실패: ${dataLoad.error}` : '';
-      el.textContent = `데이터: 내장 백업 사용 (${count}건)${kmsg}`;
-    }else{
-      el.textContent = `Data: embedded fallback (${count} records)${msg}`;
-    }
+    el.textContent = `Data: embedded fallback (${count} records)${msg}`;
   }
 }
 
@@ -68,8 +74,21 @@ function statusCounts(rows){
   const external = total - owned;
   return {total, external, owned};
 }
-const whiteRows={en:[["VRChat creator commerce","High","Low","Define one clear problem CONNECT can solve, then collect public proof."],["General CG workflow forums","Medium","Low","Track workflow-comparison threads instead of waiting for brand mentions."],["Instagram creator proof","Medium","Low-Mid","Review credits, captions, and source references instead of hashtag counts."],["YouTube tutorials/comments","High","Low","Expand workflow-led searches in video descriptions and comments."]],ko:[["VRChat 크리에이터 커머스","높음","낮음","CONNECT가 풀 수 있는 문제 하나를 먼저 정하고, 공개 증거를 차곡차곡 모아요."],["일반 CG 워크플로 커뮤니티","중간","낮음","브랜드 언급을 기다리기보다 ‘워크플로 비교’ 스레드를 먼저 추적해요."],["인스타 크리에이터 프루프","중간","낮음-보통","해시태그보다 크레딧/캡션/출처 링크를 중심으로 확인해요."],["유튜브 튜토리얼/댓글","높음","낮음","설명란/댓글에서 워크플로 키워드로 검색을 확장해요."]]};
-const i18nEn={heroTitle:"CONNECT Awareness And Usage Dashboard",heroLead:"Purpose: track verified public-web awareness and usage signals for CONNECT, then spot where utility shows up vs brand recall.",statusEyebrow:"Current State",statusTitle:"This is a first-pass public backfill dashboard.",statusBody:"The dataset reflects verified public-web evidence, not a full market census. It is enough to establish a baseline and begin weekly accumulation.",presets:{"7d":"Last 7D","30d":"Last 30D","90d":"Last 90D",ytd:"YTD",all:"All"},grain:{auto:"Auto Grain",week:"Weekly Grain",month:"Monthly Grain"},rangePrefix:"Selected Range:",applyRange:"Apply Custom Range",resetAll:"Reset To All",volumeTitle:"Volume Summary",volumeNote:"Absolute counts are shown alongside ratio-based interpretation.",volumeBadge:"Absolute Counts",volumeHeaders:["Metric","Count","Description"],countTitle:"Source / Use Case Counts",countNote:"This shows where the current filtered evidence is concentrated.",countBadge:"Count Breakdown",countHeaders:["Type","Item","Count"],legend1:"Qualified mentions",legend2:"High-value share",tips:{qualified:"Qualified mentions = number of qualified records in the selected time bucket.",hvShare:"High-value share = % of records with value score >= 4 in the bucket.",sourceDensity:"Source value density = average value score (1-5) per source; higher means more practical usage language."},readoutTitle:"Current Readout",readoutBadge:"Leadership Notes",sourceTitle:"Source Value Density",sourceNote:"This compares how much practical value each source carries in the current filtered data.",sourceBadge:"Source Prioritization",useTitle:"Use Case Mix",useNote:"This shows what kinds of problems people connect to CONNECT.",useBadge:"Messaging Input",matrixTitle:"Brand Recall vs Utility Gap",matrixBadge:"Positioning Risk",whiteTitle:"White Space Communities",whiteBadge:"Infiltration Targets",whiteHeaders:["Community","Need","Visibility","Recommended Action"],quoteTitle:"Actual User Quotes",quoteNote:"Default is Top 8 (sorted by value score). Use Show All to review every filtered record.",showTop:"Top 8 Only",showAll:"Show All",footnote:"This is a first-pass public backfill dataset. Treat the numbers as verified public records collected so far, not as total market awareness.",k1:"Filtered, qualified CONNECT mentions in the selected period",k2:"Deduplicated account count in the selected period",k4:"Share of mentions that explicitly call CONNECT by name",noData:"No data in the selected range.",quotesShown:(a,b)=>`${a} shown / ${b} filtered`,rowLabels:{q:["Qualified Mentions","Filtered records classified as real CONNECT-related mentions"],u:["Unique People","Deduplicated account count in the selected period"],h:["High-Value Mentions","Mentions tied to actual use, upload, purchase, workflow shortcut, or creator action"],b:["Explicit Brand Recall","Mentions that directly name CONNECT as a platform or destination"],l:["Low-Value Mentions","Low-information showcase or owned-surface records"]},typeLabels:{source:"Source",use:"Use Case"},useMap:{asset_browsing:"Asset Browsing",workflow_efficiency:"Workflow Efficiency",purchase:"Purchase",download:"Download",fabric_sourcing:"Fabric Sourcing",creator_posting:"Creator Posting",commercial_project:"Commercial Project",comparison_evaluation:"Comparison Evaluation",avatar_deployment:"Avatar Deployment",contest_participation:"Contest Participation",platform_positioning:"Platform Positioning",legacy_confusion:"Legacy Confusion"},readout:{a:"Top current use case",b:"Most value-dense source",c:"Brand recall vs practical usage",aBody:(u)=>`${u} is the most frequent current use case. CONNECT is still appearing more as a practical problem-solving surface than as a broadly recalled brand.`,bBody:(s)=>`${s} is the strongest current source in this dataset. The source mix is still narrow, but it remains the clearest place where practical usage language appears.`,cBody:(b,h)=>`Explicit brand recall is ${b}, while high-value usage is ${h}. Utility still appears to be ahead of brand memory.`},matrix:{a:["Explicit brand recall","Share of records that call CONNECT directly by name"],b:["High-value usage without clear brand recall","Records where practical value is strong even when brand memory is weak"],c:["Brand-value alignment","Records where strong usage and clear CONNECT recall appear together"],d:["Positioning risk","Risk that utility continues to outrun brand memory"]},openSource:"Open source",interp:"Interpretation",trend:{week:"Weekly Trend",month:"Monthly Trend"},trendNote:{week:"The filtered data is grouped by week.",month:"The filtered data is grouped by month."},centerTop:"Current Data",centerBottom:"Use Cases",score:"Score",riskHigh:"High",riskMid:"Mid",ey:{fatal:"Dashboard Error",connect:"CONNECT Intelligence",k1:"Qualified Mentions",k2:"Unique People",k3:"High-Value Share",k4:"Brand Recall Share",k5:"Top Source",k6:"Top Use Case",volume:"Volume Summary",counts:"Top Counts",trend:"Trend",readout:"Readout",sourceMix:"Source Mix",useCases:"Use Cases",matrix:"Brand vs Utility",white:"White Space",quotes:"Quote Review"}};
+const whiteRows={
+  en:[
+    ["VRChat creator commerce","High","Low","Define one clear problem CONNECT can solve, then collect public proof."],
+    ["General CG workflow forums","Medium","Low","Track workflow-comparison threads instead of waiting for brand mentions."],
+    ["Instagram creator proof","Medium","Low-Mid","Review credits, captions, and source references instead of hashtag counts."],
+    ["YouTube tutorials/comments","High","Low","Expand workflow-led searches in video descriptions and comments."]
+  ],
+  ko:[
+    ["\uC720\uD2F8\uB9AC\uD2F0\uAC00 \uD544\uC694\uD55C VRChat \uD06C\uB9AC\uC5D0\uC774\uD130 \uCEE4\uBA38\uC2A4","\uB192\uC74C","\uB0AE\uC74C","CONNECT\uAC00 \uD574\uACB0\uD558\uB294 \u2018\uD55C \uAC00\uC9C0 \uBB38\uC81C\u2019\uB97C \uBA3C\uC800 \uC815\uC758\uD558\uACE0, \uACF5\uAC1C \uC99D\uAC70(\uCEA1\uCC98/\uB9C1\uD06C)\uB97C \uAFB8\uC900\uD788 \uBAA8\uC544\uC8FC\uC138\uC694."],
+    ["\uC77C\uBC18 CG \uC6CC\uD06C\uD50C\uB85C \uCEE4\uBBA4\uB2C8\uD2F0","\uC911\uAC04","\uB0AE\uC74C","\uBE0C\uB79C\uB4DC \uC5B8\uAE09\uC744 \uAE30\uB2E4\uB9AC\uAE30\uBCF4\uB2E4 \u2018\uBE44\uAD50/\uC6CC\uD06C\uD50C\uB85C\u2019 \uC9C8\uBB38 \uC2A4\uB808\uB4DC\uB97C \uC6B0\uC120 \uCD94\uC801\uD574\uC694."],
+    ["\uC778\uC2A4\uD0C0 \uD06C\uB9AC\uC5D0\uC774\uD130 \uC99D\uAC70","\uC911\uAC04","\uB0AE\uC74C-\uBCF4\uD1B5","\uD574\uC2DC\uD0DC\uADF8\uBCF4\uB2E4 \uD06C\uB808\uB518/\uCEA1\uC158/\uCD9C\uCC98 \uB9C1\uD06C\uC5D0\uC11C CONNECT \uC5B8\uAE09\uC744 \uCC3E\uB294 \uBC29\uC2DD\uC774 \uD6A8\uC728\uC801\uC774\uC5B4\uC694."],
+    ["\uC720\uD29C\uBE0C \uD29C\uD1A0\uB9AC\uC5BC/\uB313\uAE00","\uB192\uC74C","\uB0AE\uC74C","\uC124\uBA85/\uB313\uAE00\uC5D0 \uB0A8\uB294 \uD0A4\uC6CC\uB4DC \uAE30\uBC18\uC73C\uB85C \uAC80\uC0C9 \uBC94\uC704\uB97C \uD655\uC7A5\uD574\uC694."]
+  ]
+};
+const i18nEn={heroTitle:"CONNECT Awareness And Usage Dashboard",heroLead:"Purpose: track verified public-web awareness and usage signals for CONNECT, then spot where utility shows up vs brand recall.",statusEyebrow:"Current State",statusTitle:"This is a first-pass public backfill dashboard.",statusBody:"The dataset reflects verified public-web evidence, not a full market census. It is enough to establish a baseline and begin weekly accumulation.",presets:{"7d":"Last 7D","30d":"Last 30D","90d":"Last 90D",ytd:"YTD",all:"All"},grain:{auto:"Auto Grain",week:"Weekly Grain",month:"Monthly Grain"},rangePrefix:"Selected Range:",includeOwned:"Include Owned",includeOwnedTip:"Include owned/official pages in metrics. Turn off to focus on external signals.",applyRange:"Apply Custom Range",resetAll:"Reset To All",volumeTitle:"Volume Summary",volumeNote:"Absolute counts are shown alongside ratio-based interpretation.",volumeBadge:"Absolute Counts",volumeHeaders:["Metric","Count","Description"],countTitle:"Source / Use Case Counts",countNote:"This shows where the current filtered evidence is concentrated.",countBadge:"Count Breakdown",countHeaders:["Type","Item","Count"],legend1:"Qualified mentions",legend2:"High-value share",tips:{qualified:"Qualified mentions = number of qualified records in the selected time bucket.",hvShare:"High-value share = % of records with value score >= 4 in the bucket.",sourceDensity:"Source value density = average value score (1-5) per source; higher means more practical usage language."},readoutTitle:"Current Readout",readoutBadge:"Leadership Notes",sourceTitle:"Source Value Density",sourceNote:"This compares how much practical value each source carries in the current filtered data.",sourceBadge:"Source Prioritization",useTitle:"Use Case Mix",useNote:"This shows what kinds of problems people connect to CONNECT.",useBadge:"Messaging Input",matrixTitle:"Brand Recall vs Utility Gap",matrixBadge:"Positioning Risk",whiteTitle:"White Space Communities",whiteBadge:"Infiltration Targets",whiteHeaders:["Community","Need","Visibility","Recommended Action"],quoteTitle:"Actual User Quotes",quoteNote:"Default is Top 8 (sorted by value score). Use Show All to review every filtered record.",showTop:"Top 8 Only",showAll:"Show All",footnote:"This is a first-pass public backfill dataset. Treat the numbers as verified public records collected so far, not as total market awareness.",k1:"Filtered, qualified CONNECT mentions in the selected period",k2:"Deduplicated account count in the selected period",k4:"Share of mentions that explicitly call CONNECT by name",noData:"No data in the selected range.",quotesShown:(a,b)=>`${a} shown / ${b} filtered`,rowLabels:{q:["Qualified Mentions","Filtered records classified as real CONNECT-related mentions"],u:["Unique People","Deduplicated account count in the selected period"],h:["High-Value Mentions","Mentions tied to actual use, upload, purchase, workflow shortcut, or creator action"],b:["Explicit Brand Recall","Mentions that directly name CONNECT as a platform or destination"],l:["Low-Value Mentions","Low-information showcase or owned-surface records"]},typeLabels:{source:"Source",use:"Use Case"},useMap:{asset_browsing:"Asset Browsing",workflow_efficiency:"Workflow Efficiency",purchase:"Purchase",download:"Download",fabric_sourcing:"Fabric Sourcing",creator_posting:"Creator Posting",commercial_project:"Commercial Project",comparison_evaluation:"Comparison Evaluation",avatar_deployment:"Avatar Deployment",contest_participation:"Contest Participation",platform_positioning:"Platform Positioning",legacy_confusion:"Legacy Confusion"},readout:{a:"Top current use case",b:"Most value-dense source",c:"Brand recall vs practical usage",aBody:(u)=>`${u} is the most frequent current use case. CONNECT is still appearing more as a practical problem-solving surface than as a broadly recalled brand.`,bBody:(s)=>`${s} is the strongest current source in this dataset. The source mix is still narrow, but it remains the clearest place where practical usage language appears.`,cBody:(b,h)=>`Explicit brand recall is ${b}, while high-value usage is ${h}. Utility still appears to be ahead of brand memory.`},matrix:{a:["Explicit brand recall","Share of records that call CONNECT directly by name"],b:["High-value usage without clear brand recall","Records where practical value is strong even when brand memory is weak"],c:["Brand-value alignment","Records where strong usage and clear CONNECT recall appear together"],d:["Positioning risk","Risk that utility continues to outrun brand memory"]},openSource:"Open source",interp:"Interpretation",trend:{week:"Weekly Trend",month:"Monthly Trend"},trendNote:{week:"The filtered data is grouped by week.",month:"The filtered data is grouped by month."},centerTop:"Current Data",centerBottom:"Use Cases",score:"Score",riskHigh:"High",riskMid:"Mid",ey:{fatal:"Dashboard Error",connect:"CONNECT Intelligence",k1:"Qualified Mentions",k2:"Unique People",k3:"High-Value Share",k4:"Brand Recall Share",k5:"Top Source",k6:"Top Use Case",volume:"Volume Summary",counts:"Top Counts",trend:"Trend",readout:"Readout",sourceMix:"Source Mix",useCases:"Use Cases",matrix:"Brand vs Utility",white:"White Space",quotes:"Quote Review"}};
 const i18nKo=Object.assign({}, i18nEn, {
   heroTitle:"CONNECT \uC778\uC9C0\uB3C4 \uBC0F \uC0AC\uC6A9\uAC00\uCE58 \uB300\uC26C\uBCF4\uB4DC",
   heroLead:"\uBAA9\uC801: \uACF5\uAC1C \uC6F9\uC5D0\uC11C \uD655\uC778\uB41C CONNECT \uC778\uC9C0\uB3C4/\uC0AC\uC6A9 \uC2E0\uD638\uB97C \uC218\uC9D1\uD558\uACE0, \uC720\uD2F8\uB9AC\uD2F0(\uC2E4\uC0AC\uC6A9)\uC640 \uBE0C\uB79C\uB4DC \uD68C\uC0C1\uC744 \uBE44\uAD50\uD569\uB2C8\uB2E4.",
@@ -147,12 +166,12 @@ const i18nKo=Object.assign({}, i18nEn, {
 });
 const i18n={en:i18nEn,ko:i18nKo};
 // Add small helper formatters/tips without touching the large object literals above.
-i18nEn.densityFmt = (d,m)=>`Avg ${d} · ${m}`;
-i18nKo.densityFmt = (d,m)=>`평균 ${d}점 · ${m}건`;
-i18nEn.k3d = (n)=>`Score 4+ ${n}`;
-i18nEn.k5d = (d,m)=>`Avg ${d} · ${m}`;
-i18nEn.k6d = (c)=>`${c}`;
-i18nEn.quoteCount = (n)=>`${n} shown`;
+i18nEn.densityFmt = (d,m)=>('Avg ' + d + ' \u00B7 ' + m + ' mentions');
+i18nKo.densityFmt = (d,m)=>('\uD3C9\uADE0 ' + d + ' \u00B7 ' + m + '\uAC74');
+i18nEn.k3d = (n)=>('Score 4+ ' + n);
+i18nEn.k5d = (d,m)=>('Avg ' + d + ' \u00B7 ' + m + ' mentions');
+i18nEn.k6d = (c)=>(String(c));
+i18nEn.quoteCount = (n)=>(n + ' shown');
 i18nEn.useDetailHint = 'Hover a segment to see what it means.';
 i18nKo.useDetailHint = '\uB3C4\uB11B \uC601\uC5ED\uC5D0 \uD638\uBC84\uD558\uBA74 \uB73B\uACFC \uC608\uC2DC\uAC00 \uB098\uC640\uC694.';
 i18nEn.useShortMap = {
@@ -196,8 +215,8 @@ i18nEn.useDef = {
   comparison_evaluation: 'Comparing CONNECT vs alternatives (pros/cons, migration, evaluation).',
   avatar_deployment: 'Avatar/pose/motion usage tied to CONNECT content or workflow.',
   contest_participation: 'Contest-related participation tied to CONNECT.',
-  platform_positioning: 'Explaining/introducing CONNECT (what it is / where to go / “it’s on CONNECT”). More “positioning” than hands-on use.',
-  legacy_confusion: 'Legacy naming or migration confusion (e.g., “Connect Clo-set” redirects).',
+  platform_positioning: 'Explaining/introducing CONNECT (what it is / where to go / ??????on CONNECT??. More ????좊쵂itioning??than hands-on use.',
+  legacy_confusion: 'Legacy naming or migration confusion (e.g., ???驪볦퀗ect Clo-set??redirects).',
   other: 'Other / long tail use cases collapsed for readability.'
 };
 i18nKo.useDef = {
@@ -243,7 +262,7 @@ i18nKo.tips.quoteScore =
   "2: \uC774\uB984\uB9CC \uD55C \uBC88 \uB098\uC624\uAC70\uB098 \uB9C9\uC5F0\uD574\uC694(\uC815\uBCF4 \uBD80\uC871).\n" +
   "1: \uC18C\uC720 \uC11C\uD398\uC774\uC2A4/\uD45C\uC2DC\uC6A9 \uB4F1 \uC2E4\uC9C8 \uC2E0\uD638\uAC00 \uAC70\uC758 \uC5C6\uC5B4\uC694.";
 
-const state={lang:'en',preset:'all',start:null,end:null,grain:'auto',quoteMode:'top',quotePage:1,sourceFilter:'all',quoteSourceFilter:'all'};
+const state={lang:'en',preset:'all',start:null,end:null,grain:'auto',quoteMode:'top',quotePage:1,sourceFilter:'all',quoteSourceFilter:'all',includeOwned:true};
 const $=id=>{const el=document.getElementById(id);if(!el)throw new Error(`Missing element: #${id}`);return el};
 const $opt=id=>document.getElementById(id);
 const d=v=>new Date(`${v}T00:00:00`);
@@ -314,7 +333,7 @@ function tr(){return i18n[state.lang]||i18n.en} function useLabel(k){return tr()
 function useShortLabel(k){const x=tr();return (x.useShortMap && x.useShortMap[k]) || useLabel(k)}
 function recomputeBounds(){if(!records||!records.length){return;}minDate=records.reduce((m,r)=>d(r.date)<m?d(r.date):m,d(records[0].date));maxDate=records.reduce((m,r)=>d(r.date)>m?d(r.date):m,d(records[0].date))}
 function resolveRange(){let s,e;if(state.start&&state.end){s=d(state.start);e=d(state.end)}else{e=maxDate;if(state.preset==='7d'){s=new Date(e);s.setDate(e.getDate()-6)}else if(state.preset==='30d'){s=new Date(e);s.setDate(e.getDate()-29)}else if(state.preset==='90d'){s=new Date(e);s.setDate(e.getDate()-89)}else if(state.preset==='ytd'){s=new Date(e.getFullYear(),0,1)}else{s=minDate}}if(s<minDate)s=minDate;if(e>maxDate)e=maxDate;if(e<s)[s,e]=[e,s];return{start:s,end:e}}
-function filtered(){const {start,end}=resolveRange();return records.filter(r=>{const x=d(r.date);if(!(x>=start&&x<=end)) return false; if(state.sourceFilter && state.sourceFilter!=='all' && r.source!==state.sourceFilter) return false; return true})} function daysInRange(){const {start,end}=resolveRange();return Math.round((end-start)/86400000)+1} function grainMode(){if(state.grain!=='auto')return state.grain;return daysInRange()<=120?'week':'month'} function weekStart(dateObj){const c=new Date(dateObj);const day=c.getDay();const diff=day===0?-6:1-day;c.setDate(c.getDate()+diff);return c} function bucket(dateObj,mode){if(mode==='month')return `${dateObj.getFullYear()}-${String(dateObj.getMonth()+1).padStart(2,'0')}`;const ws=weekStart(dateObj);return `${ws.getFullYear()}-${String(ws.getMonth()+1).padStart(2,'0')}-${String(ws.getDate()).padStart(2,'0')}`}
+function filtered(){const {start,end}=resolveRange();return records.filter(r=>{const x=d(r.date);if(!(x>=start&&x<=end)) return false; if(state.includeOwned===false && r.source==='Owned') return false; if(state.sourceFilter && state.sourceFilter!=='all' && r.source!==state.sourceFilter) return false; return true})} function daysInRange(){const {start,end}=resolveRange();return Math.round((end-start)/86400000)+1} function grainMode(){if(state.grain!=='auto')return state.grain;return daysInRange()<=120?'week':'month'} function weekStart(dateObj){const c=new Date(dateObj);const day=c.getDay();const diff=day===0?-6:1-day;c.setDate(c.getDate()+diff);return c} function bucket(dateObj,mode){if(mode==='month')return `${dateObj.getFullYear()}-${String(dateObj.getMonth()+1).padStart(2,'0')}`;const ws=weekStart(dateObj);return `${ws.getFullYear()}-${String(ws.getMonth()+1).padStart(2,'0')}-${String(ws.getDate()).padStart(2,'0')}`}
 function aggregateTrend(rows,mode){const map=new Map();rows.forEach(r=>{const key=bucket(d(r.date),mode);if(!map.has(key))map.set(key,{label:key,mentions:0,hv:0});const it=map.get(key);it.mentions+=1;if(r.score>=4)it.hv+=1});return [...map.values()].sort((a,b)=>a.label.localeCompare(b.label)).map(it=>({label:it.label,mentions:it.mentions,hvShare:it.mentions?it.hv/it.mentions*100:0}))}
 function groupBy(rows,fn){const map=new Map();rows.forEach(r=>{const k=fn(r);map.set(k,(map.get(k)||0)+1)});return [...map.entries()].map(([name,count])=>({name,count})).sort((a,b)=>b.count-a.count||a.name.localeCompare(b.name))}
 function sourceDensity(rows,opts){
@@ -436,6 +455,21 @@ function renderStatic(){
     sourceSel.title = state.lang==='ko' ? '\uD50C\uB7AB\uD3FC/\uC18C\uC2A4 \uD544\uD130' : 'Platform / Source filter';
   }
 
+  const ownedWrap = document.getElementById('includeOwnedWrap');
+  const ownedCb = document.getElementById('includeOwned');
+  const ownedLabel = document.getElementById('includeOwnedLabel');
+  if(ownedCb){
+    ownedCb.checked = state.includeOwned !== false;
+  }
+  if(ownedLabel){
+    ownedLabel.textContent = x.includeOwned || (state.lang==='ko' ? 'Owned \uD3EC\uD568' : 'Include owned');
+  }
+  if(ownedWrap){
+    ownedWrap.title = x.includeOwnedTip || (state.lang==='ko'
+      ? 'Owned(\uC790\uCCB4/\uACF5\uC2DD) \uB370\uC774\uD130\uB97C \uD3EC\uD568\uD569\uB2C8\uB2E4. \uB044\uBA74 \uC678\uBD80 \uC2E0\uD638 \uC911\uC2EC\uC73C\uB85C \uBD05\uB2C8\uB2E4.'
+      : 'Include owned/official pages in metrics. Turn off to focus on external signals.');
+  }
+
   const quoteSourceSel = document.getElementById('quoteSourceFilter');
   if(quoteSourceSel){
     const labelAll = state.lang==='ko' ? '\uC778\uC6A9: \uC804\uCCB4 \uD50C\uB7AB\uD3FC' : 'Quotes: all platforms';
@@ -482,8 +516,8 @@ function renderStatic(){
   $('sourceBadge').title = x.tips.sourceDensity;
   const densityTip = x.tips.sourceDensity + "\n\n" +
     (state.lang==='ko'
-      ? "표시 형식: 평균 4.0점 · 1건\n정렬: 1건짜리 고점수 소스가 과대노출되지 않도록 소표본 보정을 적용해요."
-      : "Display: Avg 4.0 · 1\nRanking: applies small-sample adjustment so 1-off high scores don’t dominate.");
+      ? "\uD45C\uC2DC: \uD3C9\uADE0 4.0 \u00B7 1\uAC74\n\uC21C\uC704: 1\uAC74\uC9DC\uB9AC \uACE0\uC810\uC774 \uACFC\uB300\uD3C9\uAC00\uB418\uC9C0 \uC54A\uB3C4\uB85D \uC18C\uD45C\uBCF8 \uBCF4\uC815(\uC0D8\uD50C \uC218 \uAC00\uC911\uCE58)\uC744 \uC801\uC6A9\uD574\uC694."
+      : "Display: Avg 4.0 \u00B7 1 mention\nRanking: applies small-sample adjustment so 1-off high scores don't dominate.");
   ensureHelpIn('sourceTitle','helpSourceDensity',densityTip);
 
   $('useTitle').textContent = x.useTitle;
@@ -687,21 +721,23 @@ function renderInsights(rows){
   const x = tr();
   const wrap = document.getElementById('insights');
   if(!wrap) return;
+
   const mentions = rows.length || 0;
   if(!mentions){
     wrap.innerHTML = `<div class="item"><p class="note" style="margin:0">${x.noData}</p></div>`;
     return;
   }
 
+  const owned = rows.filter(r=>r.source==='Owned').length;
+  const external = mentions - owned;
+  const ownedShare = mentions ? (owned/mentions*100) : 0;
+  const externalShare = mentions ? (external/mentions*100) : 0;
+
   const hv = rows.filter(r=>r.score>=4).length;
   const br = rows.filter(r=>r.explicit).length;
   const hvShare = mentions ? (hv/mentions*100) : 0;
   const brShare = mentions ? (br/mentions*100) : 0;
-  const delta = hvShare - brShare;
-
-  const owned = rows.filter(r=>r.source==='Owned').length;
-  const external = mentions - owned;
-  const externalShare = mentions ? (external/mentions*100) : 0;
+  const gap = hvShare - brShare;
 
   const topUse = groupBy(rows,r=>r.useCase)[0];
   const topUseLabel = topUse ? useLabel(topUse.name) : x.noData;
@@ -720,78 +756,97 @@ function renderInsights(rows){
   const top3 = sources.slice(0,3).reduce((s,it)=>s+it.count,0);
   const top3Share = mentions ? (top3/mentions*100) : 0;
 
-  const items = [];
-  const ownedShare = mentions ? (owned/mentions*100) : 0;
   const legacy = groupBy(rows,r=>r.useCase).find(u=>u.name==='legacy_confusion')?.count || 0;
   const legacyShare = mentions ? (legacy/mentions*100) : 0;
 
+  // Recent window vs previous window (inside the selected range)
+  const { start, end } = resolveRange();
+  const rangeDays = daysInRange();
+  const windowDays = Math.min(30, Math.max(7, Math.round(rangeDays/2)));
+  const curStart = new Date(end); curStart.setDate(end.getDate() - (windowDays - 1));
+  if(curStart < start) curStart.setTime(start.getTime());
+  const prevEnd = new Date(curStart); prevEnd.setDate(curStart.getDate() - 1);
+  const prevStart = new Date(prevEnd); prevStart.setDate(prevEnd.getDate() - (windowDays - 1));
+  const inRange = (r, a, b)=>{ const t=d(r.date); return t>=a && t<=b; };
+  const cur = rows.filter(r=>inRange(r, curStart, end));
+  const prev = rows.filter(r=>inRange(r, prevStart, prevEnd));
+  const curN = cur.length;
+  const prevN = prev.length;
+  const curHv = cur.filter(r=>r.score>=4).length;
+  const prevHv = prev.filter(r=>r.score>=4).length;
+  const curBr = cur.filter(r=>r.explicit).length;
+  const prevBr = prev.filter(r=>r.explicit).length;
+  const curHvShare = curN ? (curHv/curN*100) : 0;
+  const prevHvShare = prevN ? (prevHv/prevN*100) : 0;
+  const curBrShare = curN ? (curBr/curN*100) : 0;
+  const prevBrShare = prevN ? (prevBr/prevN*100) : 0;
+  const growth = prevN ? ((curN - prevN) / prevN * 100) : null;
+
+  const wantChannels = ['YouTube','Reddit','LinkedIn','X','Instagram'];
+  const present = new Set(rows.map(r=>r.source));
+  const missing = wantChannels.filter(c=>!present.has(c));
+  const missingText = missing.length ? missing.join(', ') : null;
+
+  const items = [];
   const add = (title, body)=>items.push({title, body});
 
   if(state.lang==='ko'){
-    if(delta >= 8){
-      add('\uBE0C\uB79C\uB4DC \uD68C\uC0C1\uC744 \uB04C\uC5B4\uC62C\uB9AC\uB294 \uAC83\uC774 1\uC21C\uC704\uC608\uC694',
-        `\uACE0\uAC00\uCE58\uB294 ${pct(hvShare)}\uC778\uB370 \uBE0C\uB79C\uB4DC \uC9C1\uC811 \uD68C\uC0C1\uC740 ${pct(brShare)}\uC608\uC694. \uCC28\uC774\uAC00 \uD06C\uB2C8 \u201C\uC4F0\uAC8C \uD558\uB294 \uAC83\u201D\uC740 \uB418\uB294\uB370 \u201C\uC774\uB984\uC744 \uC678\uC6B0\uAC8C\u201D\uD558\uB294 \uBD80\uBD84\uC740 \uC544\uC9C1 \uC57D\uD574\uC694. \uC678\uBD80 \uCEE8\uD150\uCE20/\uACF5\uC720 \uD45C\uAE30\uC5D0 \uD544\uC218\uB85C \u201CCLO-SET CONNECT\u201D \uD0A4\uC6CC\uB4DC\uB97C \uC2EC\uACE0, \uC0C1\uC704 \uC0AC\uC6A9 \uC2DC\uB098\uB9AC\uC624(${topUseLabel}) \uC911\uC2EC\uC758 \uD55C \uC904 \uBB38\uC7A5 CTA\uB97C \uACE0\uC815\uD558\uB294 \uAC83\uC744 \uCD94\uCC9C\uD574\uC694.`);
-    } else {
-      add('\uBE0C\uB79C\uB4DC \uD0A4\uC6CC\uB4DC\uB294 \uC798 \uD0C0\uACE0 \uC788\uC5B4\uC694',
-        `\uBE0C\uB79C\uB4DC \uC9C1\uC811 \uD68C\uC0C1\uC740 ${pct(brShare)}\uB85C \uD070 \uAC2D\uCC28\uB294 \uC544\uB2C8\uC5D0\uC694. \uB2E4\uC74C \uB2E8\uACC4\uB294 \u201C\uC5B4\uB5A4 \uAC00\uCE58\uB97C \uC8FC\uB294\uC9C0\u201D\uB97C \uB354 \uAC15\uD558\uAC8C \uB9CC\uB4DC\uB294 \uAC83\uC774 \uC88B\uC544\uC694.`);
-    }
+    add('\uC9C0\uAE08 \uB370\uC774\uD130, \uC774\uB807\uAC8C \uC77D\uC73C\uBA74 \uB429\uB2C8\uB2E4',
+      `\uD604\uC7AC \uD544\uD130 \uAE30\uC900 ${mentions}\uAC74\uC758 \uAC80\uC99D \uB808\uCF54\uB4DC\uB97C \uBCF4\uACE0 \uC788\uC5B4\uC694. \uACE0\uAC00\uCE58 \uBE44\uC728 ${pct(hvShare)}, \uBE0C\uB79C\uB4DC \uD68C\uC0C1 \uBE44\uC728 ${pct(brShare)}, \uC678\uBD80 \uBE44\uC911 ${pct(externalShare)}\uC785\uB2C8\uB2E4. \uC774 \uC139\uC158\uC740 \uB370\uC774\uD130\uAC00 \uCD94\uAC00\uB418\uAC70\uB098 \uD544\uD130\uB97C \uBC14\uAFB8\uBA74 \uC790\uB3D9\uC73C\uB85C \uC5C5\uB370\uC774\uD2B8\uB429\uB2C8\uB2E4.`);
 
-    if(ownedShare >= 55){
-      add('\uC678\uBD80 \uC18C\uC2A4 \uC2E0\uD638\uAC00 \uBD80\uC871\uD574\uC694 (\uB178\uCD9C/\uC785\uC18C\uBB38 \uC131\uACFC \uCE21\uC815\uC5D0 \uBD88\uB9AC)',
-        `Owned/\uACF5\uC2DD \uB808\uCF54\uB4DC\uAC00 ${pct(ownedShare)}\uB85C \uB9CE\uC544\uC694. \uB2E4\uC74C 2\uC8FC\uB294 \uC678\uBD80 \uCEE4\uBBA4\uB2C8\uD2F0\uC5D0\uC11C \u201C\uC2E4\uC81C \uC720\uC800 \uC5B8\uC5B4\u201D\uAC00 \uB098\uC624\uAC8C \uB9CC\uB4DC\uB294 \uAC83\uC774 \uD544\uC694\uD574\uC694. \uC608: ${topCommName} \uAC19\uC740 \uC0C1\uC704 \uCEE4\uBBA4\uB2C8\uD2F0\uC5D0 \u201C\uBB34\uB8CC \uC5D0\uC14B TOP 10 + \uC0AC\uC6A9\uBC95\u201D \uD615\uD0DC\uC758 \uB2E8\uAC74 \uAC8C\uC2DC\uBB3C\uC744 \uB2EC\uC544 \uD558\uB098\uC529 \uAC80\uC99D\uD574\uC694.`);
-    }
+    add('\uD56B\uD55C \uD3EC\uC778\uD2B8: \u2018\uC4F0\uBA70\uB4E0\uB2E4\u2019\uB294 \uB098\uC624\uB294\uB370, \u2018\uC774\uB984\u2019\uC740 \uC544\uC9C1 \uC57D\uD574\uC694',
+      gap >= 8
+        ? `\uACE0\uAC00\uCE58(${pct(hvShare)})\uAC00 \uBE0C\uB79C\uB4DC \uD68C\uC0C1(${pct(brShare)})\uBCF4\uB2E4 \uD070 \uAC04\uACA9\uC73C\uB85C \uC55E\uC11C\uC694(+${pct(gap)}p). \uC0C1\uC704 \uC0AC\uC6A9 \uC2DC\uB098\uB9AC\uC624(\u2018${topUseLabel}\u2019, ${pct(topUseShare)})\uC5D0\uC11C \uACF5\uC720 \uBB38\uAD6C\uB97C \uACE0\uC815\uD574\uC694. \uC608) \u201CCONNECT\uC5D0\uC11C ___ \uD574\uACB0\uD588\uC5B4\uC694\u201D \uD55C \uC904 \uD15C\uD50C\uB9BF`
+        : `\uACE0\uAC00\uCE58(${pct(hvShare)})\uC640 \uBE0C\uB79C\uB4DC \uD68C\uC0C1(${pct(brShare)})\uC758 \uACA9\uCC28\uAC00 \uC904\uACE0 \uC788\uC5B4\uC694. \uC774 \uD750\uB984\uC740 \u2018\uD55C \uC904 \uC99D\uAC70\u2019\uB97C \uB354 \uB298\uB9AC\uBA74 \uC26C\uC6CC\uC694. \uC0C1\uC704 \uC0AC\uC6A9 \uC2DC\uB098\uB9AC\uC624\uB97C \uC911\uC2EC\uC73C\uB85C \uBB38\uC7A5\uD615 \uC778\uC6A9\uC744 \uC758\uB3C4\uC801\uC73C\uB85C \uBAA8\uC544\uC8FC\uC138\uC694.`);
 
-    if(top3Share >= 65){
-      add('\uCC44\uB110 \uD3B8\uC911\uB3C4\uAC00 \uB192\uC544\uC694 (\uD0C0\uAC9F \uD655\uC7A5\uC774 \uD544\uC694)',
-        `\uC0C1\uC704 3\uAC1C \uC18C\uC2A4\uAC00 ${pct(top3Share)}\uB97C \uCC28\uC9C0\uD574\uC694. \uB2E4\uC74C\uC740 \uC5F0\uB3D9\uB418\uB294 \uACF5\uAC1C \uC11C\uD398\uC774\uC2A4(\uC608: YouTube \uC124\uBA85\uB780, Behance/ArtStation \uD504\uB85C\uC81D\uD2B8 \uD14D\uC2A4\uD2B8, Reddit \uAC80\uC0C9 \uC2E0\uD638)\uB97C \uC758\uB3C4\uC801\uC73C\uB85C \uD0A4\uC6CC\uC57C \uD574\uC694.`);
-    }
+    add('\uB2E4\uC74C \uC561\uC158: \uC678\uBD80 \uCC44\uB110\uC744 \uB298\uB824\uC57C \uC778\uC9C0\uB3C4\uAC00 \uB298\uC5B4\uC694',
+      ownedShare >= 70
+        ? `Owned \uBE44\uC911\uC774 ${pct(ownedShare)}\uB85C \uB192\uC544\uC694. \uC678\uBD80 \uCC44\uB110\uC5D0\uC11C \uC2E4\uC0AC\uC6A9 \uC5B8\uC5B4(\uC9C8\uBB38\u2192\uCD94\uCC9C\u2192\uD574\uACB0)\uB97C \uB9CC\uB4E4\uC5B4\uC57C \uBE0C\uB79C\uB4DC \uD68C\uC0C1\uC774 \uB530\uB77C\uC640\uC694. ${missingText ? `\uC544\uC9C1 \uBE48 \uCC44\uB110: ${missingText}.` : '\uD604\uC7AC \uD0C0\uAC9F \uCC44\uB110\uC740 \uBAA8\uB450 \uB4F1\uC7A5\uD558\uACE0 \uC788\uC5B4\uC694.'}`
+        : `\uC678\uBD80 \uBE44\uC911\uC774 ${pct(externalShare)}\uAE4C\uC9C0 \uC640\uC788\uC5B4\uC694. \uC774\uC81C\uB294 \uD2B9\uC815 \uCEE4\uBBA4\uB2C8\uD2F0(${topCommName}, ${pct(topCommShare)}) \uD3B8\uC911\uC744 \uB0AE\uCD94\uBA70 \uCC44\uB110\uC744 \uB113\uD600\uC694.`);
 
-    if(topUse && topUse.name === 'platform_positioning' && topUseShare >= 25){
-      add('\u201C\uD50C\uB7AB\uD3FC \uC18C\uAC1C\u201D\uC5D0\uC11C \u201C\uC2E4\uD589 \uCF58\uD150\uCE20\u201D\uB85C \uC62E\uACA8\uC57C \uD574\uC694',
-        `\uD604\uC7AC \uD1A4\uC740 '${topUseLabel}' \uBE44\uC911\uC774 \uD06C\uAC8C \uB4DC\uB7EC\uB098\uC694. \uB2E4\uC74C \uC561\uC158\uC740 \uB3C4\uAD6C\uAC00 \uC544\uB2C8\uB77C \uACB0\uACFC\uB85C \uC124\uB4DD\uD558\uB294 \uAC83: \u201C\uC5D0\uC14B \uCC3E\uAE30 \u2192 \uB2E4\uC6B4\uB85C\uB4DC \u2192 \uB0B4 \uD30C\uC774\uD504\uB77C\uC778\uC5D0 \uC801\uC6A9\u201D \uBBFC\uCC29\uD55C \uD1A0\uD53D\uC744 3\uAC1C \uC815\uD574\uC11C \uC544\uBB34\uAC70\uB098 \uAC8C\uC2DC\uD574\uC694(\uBB38\uC81C \uD574\uACB0\uD615).`);
+    add('\uCD94\uC138 \uCCB4\uD06C',
+      `\uCEE4\uBC84\uB9AC\uC9C0\uB294 ${activeMonths}\uAC1C\uC6D4(${earliest}\u2192${latest})\uC785\uB2C8\uB2E4. \uCD5C\uADFC ${windowDays}\uC77C\uC740 ${curN}\uAC74${growth!==null?` (\uC9C1\uC804 ${windowDays}\uC77C \uB300\uBE44 ${growth>0?'+':''}${growth.toFixed(0)}%)`:''}\uC774\uACE0, \uACE0\uAC00\uCE58 \uBE44\uC728\uC740 ${pct(curHvShare)}(\uC9C1\uC804 ${pct(prevHvShare)})\uC785\uB2C8\uB2E4.`);
+
+    if(top3Share >= 75){
+      add('\uB9AC\uC2A4\uD06C: \uC18C\uC2A4 \uD3B8\uC911\uC774 \uD06C\uBA74 \uC778\uC0AC\uC774\uD2B8\uB3C4 \uD2B8\uC5EC\uC694',
+        `Top-3 \uC18C\uC2A4\uAC00 ${pct(top3Share)}\uB97C \uCC28\uC9C0\uD574\uC694. \uCC44\uB110\uC744 \uB113\uD788\uBA74 \uC778\uC0AC\uC774\uD2B8\uAC00 \uB354 \uC548\uC815\uC801\uC73C\uB85C \uBCF4\uC785\uB2C8\uB2E4.`);
     }
 
     if(legacyShare >= 8){
-      add('\uC774\uB984/\uB9C1\uD06C \uD63C\uB3D9\uC744 \uC904\uC774\uBA74 \uC720\uC785 \uC190\uC2E4\uC774 \uC904\uC5B4\uC694',
-        `\uAE30\uC874/\uD63C\uB3D9(legacy) \uC5B8\uAE09\uC774 ${pct(legacyShare)}\uB098 \uB429\uB2C8\uB2E4. \uC0C1\uC704 \uC9C8\uBB38\uC744 \uBBF8\uB9AC \uC815\uB9AC\uD55C \u201C\uC8FC\uC18C/\uC774\uB984 \uAC00\uC774\uB4DC\u201D\uB97C \uACE0\uC815\uD558\uACE0, \uC720\uC800\uAC00 \uAC00\uC7A5 \uC790\uC8FC \uB9CC\uB098\uB294 \uACF5\uAC1C \uD398\uC774\uC9C0\uC5D0\uB3C4 \uD558\uB098\uC529 \uB123\uC5B4\uC8FC\uBA74 \uC88B\uC544\uC694.`);
+      add('\uD2B9\uC774\uC0AC\uD56D: \uB808\uAC70\uC2DC \uD63C\uB3D9\uC740 \uC774\uD0C8\uB85C \uC5F0\uACB0\uB429\uB2C8\uB2E4',
+        `\u2018\uAE30\uC874/\uD63C\uB3D9\u2019 \uC2E0\uD638\uAC00 ${pct(legacyShare)}\uC785\uB2C8\uB2E4. \uACF5\uAC1C\uC6A9 \uC9E7\uC740 \uAC00\uC774\uB4DC(\uC774\uB984 \uC815\uC758 + \uB9C1\uD06C)\uB97C \uB9CC\uB4E4\uACE0 \uACE0\uC815 \uB9C1\uD06C\uB85C \uBC30\uCE58\uD574\uC694.`);
     }
+  }else{
+    add('What changes when data changes',
+      `This section auto-recomputes from the filtered records: ${mentions} qualified records; high-value ${pct(hvShare)}; explicit brand recall ${pct(brShare)}; external share ${pct(externalShare)}.`);
 
-    add('\uC2E4\uD589 \uCCB4\uD06C\uB9AC\uC2A4\uD2B8 (\uB2E4\uC74C \uC8FC \uBB34\uC5C7\uC744 \uD560\uC9C0)',
-      `1) \uC0C1\uC704 \uC0AC\uC6A9 \uC2DC\uB098\uB9AC\uC624(${topUseLabel}) \uAE30\uC900\uC73C\uB85C \uB9C1\uD06C \uD3EC\uD568 \uD15C\uD50C\uB9BF 3\uAC1C \uC81C\uC791 \u2192 \uC678\uBD80 \uCEE4\uBBA4\uB2C8\uD2F0 2\uACF3\uC5D0 \uAC8C\uC2DC.\n2) \uD0A4\uC6CC\uB4DC '\uC5B4\uB5A4 \uAC8C \uBB34\uB8CC\uC57C/\uC5B4\uB5BB\uAC8C \uB2E4\uC6B4\uB85C\uB4DC\uD574' \uD615\uD0DC\uB85C \uD3EC\uC2A4\uD305.\n3) 7\uC77C \uB4A4: \uC678\uBD80 \uC18C\uC2A4 \uBE44\uC728(${pct(externalShare)})\uACFC \uBE0C\uB79C\uB4DC \uD68C\uC0C1(${pct(brShare)}) \uBCC0\uD654 \uD655\uC778.`);
-  } else {
-    if(delta >= 8){
-      add('Brand recall is the bottleneck',
-        `High-value usage is ${pct(hvShare)} while explicit brand recall is ${pct(brShare)}. Close the gap by standardizing “CLO-SET CONNECT” naming + a 1-line CTA on external content (YouTube descriptions, portfolio captions, community replies) aligned to the top use case (${topUseLabel}).`);
-    } else {
-      add('Brand recall is not the main issue',
-        `Brand recall is ${pct(brShare)} with no large gap vs utility. Next step is strengthening “what value” messaging and making it repeatable in the top use case (${topUseLabel}).`);
-    }
+    add('The main gap: people use it, but don\'t always name it',
+      gap >= 8
+        ? `High-value (${pct(hvShare)}) is well ahead of brand recall (${pct(brShare)}). Standardize share-ready wording around the top use case ("${topUseLabel}", ${pct(topUseShare)}) so CONNECT becomes the remembered destination.`
+        : `High-value (${pct(hvShare)}) and brand recall (${pct(brShare)}) are closer. Keep collecting ??얨NNECT is where I solved it??proof, anchored on "${topUseLabel}".`);
 
-    if(ownedShare >= 55){
-      add('External signal is thin (hard to read market pull)',
-        `Owned/official records are ${pct(ownedShare)}. Drive 2 weeks of external demand-language by seeding problem-solving posts in top communities (e.g., ${topCommName}) with “free assets + how-to” style content.`);
-    }
+    add('Channel strategy',
+      ownedShare >= 70
+        ? `Owned makes up ${pct(ownedShare)}. Prioritize external sources (YouTube, Reddit, LinkedIn, X).${missingText ? ` Missing: ${missingText}.` : ''}`
+        : `External share is ${pct(externalShare)}. Reduce concentration (top community: ${topCommName}, ${pct(topCommShare)}) by expanding into more communities and formats.`);
 
-    if(top3Share >= 65){
-      add('Channel concentration is high',
-        `Top-3 sources make up ${pct(top3Share)}. Diversify where public signals appear (YouTube, portfolios, forums, Reddit-adjacent) so insights aren’t skewed by a single surface.`);
-    }
+    add('Trend + coverage sanity check',
+      `Coverage: ${activeMonths} months (${earliest}??{latest}). Last ${windowDays} days: ${curN} records${growth!==null?` (${growth>0?'+':''}${growth.toFixed(0)}% vs previous ${windowDays}d)`:''}. High-value share moved ${pct(curHvShare)} (prev ${pct(prevHvShare)}).`);
 
-    if(topUse && topUse.name === 'platform_positioning' && topUseShare >= 25){
-      add('Shift from “positioning” to “execution” content',
-        `A large share is “Platform Positioning” (what CONNECT is / where to go). Create 3 tactical templates that show execution: find asset \u2192 download \u2192 apply in workflow, then measure lift in external mentions and high-value share.`);
+    if(top3Share >= 75){
+      add('Source concentration risk',
+        `Top-3 sources make up ${pct(top3Share)}. Expand where public signals appear so insights aren???skewed by a single surface.`);
     }
 
     if(legacyShare >= 8){
       add('Reduce legacy confusion leakage',
-        `Legacy confusion is ${pct(legacyShare)}. Publish a short public “naming + links” guide and reference it in high-traffic pages to prevent drop-off.`);
+        `Legacy confusion is ${pct(legacyShare)}. Publish a short naming + links guide and reference it in high-traffic pages to prevent drop-off.`);
     }
-
-    add('Next-week checklist',
-      `1) Ship 3 content templates tied to ${topUseLabel}.\n2) Post in 2 external communities.\n3) Re-check: external share (${pct(externalShare)}), brand recall (${pct(brShare)}), and coverage (${activeMonths} months: ${earliest}\u2192${latest}).`);
   }
 
-  wrap.innerHTML = items.map(it=>`<article class="item"><h3 style="margin:0 0 8px">${it.title}</h3><p class="note" style="margin:0">${it.body}</p></article>`).join('');
+  wrap.innerHTML = items
+    .map(it=>`<article class="item"><h3 style="margin:0 0 8px">${it.title}</h3><p class="note" style="margin:0; white-space:pre-line">${it.body}</p></article>`)
+    .join('');
 }
 function renderQuotes(rows){
   const x=tr();
@@ -861,10 +916,12 @@ $('applyRange').addEventListener('click',()=>{
   const sel = $opt('sourceFilter'); if(sel) sel.value='all';
   state.quoteSourceFilter='all';
   const qsel = $opt('quoteSourceFilter'); if(qsel) qsel.value='all';
-  state.quoteMode='top';
-  resetQuotePaging();
-  render();
-});
+    state.quoteMode='top';
+    state.includeOwned=true;
+    const o = $opt('includeOwned'); if(o) o.checked = true;
+    resetQuotePaging();
+    render();
+  });
 $('showTopBtn').addEventListener('click',()=>{ state.quoteMode='top'; resetQuotePaging(); render(); });
 $('showAllBtn').addEventListener('click',()=>{ state.quoteMode='all'; resetQuotePaging(); render(); });
 const sourceSel = $opt('sourceFilter');
@@ -879,6 +936,18 @@ const quoteSourceSel = $opt('quoteSourceFilter');
 if(quoteSourceSel){
   quoteSourceSel.addEventListener('change', e=>{
     state.quoteSourceFilter = e.target.value || 'all';
+    resetQuotePaging();
+    render();
+  });
+}
+const ownedCb = $opt('includeOwned');
+if(ownedCb){
+  ownedCb.addEventListener('change', e=>{
+    state.includeOwned = !!e.target.checked;
+    if(state.includeOwned === false && state.sourceFilter === 'Owned'){
+      state.sourceFilter = 'all';
+      const sel = $opt('sourceFilter'); if(sel) sel.value='all';
+    }
     resetQuotePaging();
     render();
   });
