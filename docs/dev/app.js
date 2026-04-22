@@ -166,12 +166,12 @@ const i18nKo=Object.assign({}, i18nEn, {
 });
 const i18n={en:i18nEn,ko:i18nKo};
 // Add small helper formatters/tips without touching the large object literals above.
-i18nEn.densityFmt = (d,m)=>`Avg ${d} 勇?${m}`;
-i18nKo.densityFmt = (d,m)=>`?????${d}??勇?${m}癲?;
-i18nEn.k3d = (n)=>`Score 4+ ${n}`;
-i18nEn.k5d = (d,m)=>`Avg ${d} 勇?${m}`;
-i18nEn.k6d = (c)=>`${c}`;
-i18nEn.quoteCount = (n)=>`${n} shown`;
+i18nEn.densityFmt = (d,m)=>('Avg ' + d + ' \u00B7 ' + m + ' mentions');
+i18nKo.densityFmt = (d,m)=>('\uD3C9\uADE0 ' + d + ' \u00B7 ' + m + '\uAC74');
+i18nEn.k3d = (n)=>('Score 4+ ' + n);
+i18nEn.k5d = (d,m)=>('Avg ' + d + ' \u00B7 ' + m + ' mentions');
+i18nEn.k6d = (c)=>(String(c));
+i18nEn.quoteCount = (n)=>(n + ' shown');
 i18nEn.useDetailHint = 'Hover a segment to see what it means.';
 i18nKo.useDetailHint = '\uB3C4\uB11B \uC601\uC5ED\uC5D0 \uD638\uBC84\uD558\uBA74 \uB73B\uACFC \uC608\uC2DC\uAC00 \uB098\uC640\uC694.';
 i18nEn.useShortMap = {
@@ -215,8 +215,8 @@ i18nEn.useDef = {
   comparison_evaluation: 'Comparing CONNECT vs alternatives (pros/cons, migration, evaluation).',
   avatar_deployment: 'Avatar/pose/motion usage tied to CONNECT content or workflow.',
   contest_participation: 'Contest-related participation tied to CONNECT.',
-  platform_positioning: 'Explaining/introducing CONNECT (what it is / where to go / ??????on CONNECT??. More ???띠묄itioning??than hands-on use.',
-  legacy_confusion: 'Legacy naming or migration confusion (e.g., ???毓쳌ect Clo-set??redirects).',
+  platform_positioning: 'Explaining/introducing CONNECT (what it is / where to go / ??????on CONNECT??. More ????좊쵂itioning??than hands-on use.',
+  legacy_confusion: 'Legacy naming or migration confusion (e.g., ???驪볦퀗ect Clo-set??redirects).',
   other: 'Other / long tail use cases collapsed for readability.'
 };
 i18nKo.useDef = {
@@ -516,8 +516,8 @@ function renderStatic(){
   $('sourceBadge').title = x.tips.sourceDensity;
   const densityTip = x.tips.sourceDensity + "\n\n" +
     (state.lang==='ko'
-      ? "??筌?六??嶺뚮Ĳ?뉛쭛? ?????4.0??勇?1癲?n?嶺뚮㉡?ｈ?? 1癲꾧퀗???ｍ맪?醫딅렓???關履??????獒뺤쉪琉??쎛 ??貫???嶺뚮ㅎ????? ????녳뵣?????⑤틳嫄???怨뚮옖???????ㅼ굣????⑤챶萸?"
-      : "Display: Avg 4.0 勇?1\nRanking: applies small-sample adjustment so 1-off high scores don???dominate.");
+      ? "\uD45C\uC2DC: \uD3C9\uADE0 4.0 \u00B7 1\uAC74\n\uC21C\uC704: 1\uAC74\uC9DC\uB9AC \uACE0\uC810\uC774 \uACFC\uB300\uD3C9\uAC00\uB418\uC9C0 \uC54A\uB3C4\uB85D \uC18C\uD45C\uBCF8 \uBCF4\uC815(\uC0D8\uD50C \uC218 \uAC00\uC911\uCE58)\uC744 \uC801\uC6A9\uD574\uC694."
+      : "Display: Avg 4.0 \u00B7 1 mention\nRanking: applies small-sample adjustment so 1-off high scores don't dominate.");
   ensureHelpIn('sourceTitle','helpSourceDensity',densityTip);
 
   $('useTitle').textContent = x.useTitle;
@@ -823,7 +823,7 @@ function renderInsights(rows){
     add('The main gap: people use it, but don\'t always name it',
       gap >= 8
         ? `High-value (${pct(hvShare)}) is well ahead of brand recall (${pct(brShare)}). Standardize share-ready wording around the top use case ("${topUseLabel}", ${pct(topUseShare)}) so CONNECT becomes the remembered destination.`
-        : `High-value (${pct(hvShare)}) and brand recall (${pct(brShare)}) are closer. Keep collecting ?쏞ONNECT is where I solved it??proof, anchored on "${topUseLabel}".`);
+        : `High-value (${pct(hvShare)}) and brand recall (${pct(brShare)}) are closer. Keep collecting ??얨NNECT is where I solved it??proof, anchored on "${topUseLabel}".`);
 
     add('Channel strategy',
       ownedShare >= 70
@@ -835,7 +835,7 @@ function renderInsights(rows){
 
     if(top3Share >= 75){
       add('Source concentration risk',
-        `Top-3 sources make up ${pct(top3Share)}. Expand where public signals appear so insights aren?셳 skewed by a single surface.`);
+        `Top-3 sources make up ${pct(top3Share)}. Expand where public signals appear so insights aren???skewed by a single surface.`);
     }
 
     if(legacyShare >= 8){
