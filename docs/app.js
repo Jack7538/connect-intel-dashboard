@@ -134,7 +134,7 @@ const i18nKo=Object.assign({}, i18nEn, {
   whiteTitle:"\uD654\uC774\uD2B8\uC2A4\uD398\uC774\uC2A4 \uCEE4\uBBA4\uB2C8\uD2F0",
   whiteBadge:"\uACF5\uB7B5 \uD0C0\uAC9F",
   whiteHeaders:["\uCEE4\uBBA4\uB2C8\uD2F0","\uB2C8\uC988","\uAC00\uC2DC\uC131","\uB2E4\uC74C \uC561\uC158"],
-  readout:{a:"\uAC00\uC7A5 \uB9CE\uC774 \uB4F1\uC7A5\uD558\uB294 \uC0AC\uC6A9 \uC2DC\uB098\uB9AC\uC624",b:"\uAC00\uCE58 \uBB50\uAC00 \uB192\uC740 \uC18C\uC2A4",c:"\uBE0C\uB79C\uB4DC \uD68C\uC0C1 vs \uC2E4\uC0AC\uC6A9",d:"\uB370\uC774\uD130 \uCEE4\uBC84\uB9AC\uC9C0",aBody:(u)=>`\uD604\uC7AC \uB370\uC774\uD130\uC5D0\uC11C '${u}' \uC5B8\uAE09\uC774 \uAC00\uC7A5 \uB9CE\uC544\uC694. CONNECT\uB294 \uBE0C\uB79C\uB4DC \uD68C\uC0C1\uBCF4\uB2E4 \uC2E4\uC0AC\uC6A9 \uBB38\uC81C \uD574\uACB0 \uBA74\uC5D0\uC11C \uB354 \uB450\uB4DC\uB7EC\uC9C0\uB294 \uC911\uC785\uB2C8\uB2E4.`,bBody:(s)=>`\uD604\uC7AC \uB370\uC774\uD130\uC5D0\uC11C '${s}'\uAC00 \uAC00\uCE58 \uBB00\uB3C4\uAC00 \uAC00\uC7A5 \uB192\uC544\uC694. \uC18C\uC2A4 \uBBF9\uC2A4\uB294 \uC544\uC9C1 \uD3B8\uC911\uB418\uC5B4 \uC788\uC9C0\uB9CC, \uC2E4\uC0AC\uC6A9 \uC5B8\uC5B4\uB294 \uC5EC\uAE30\uC5D0\uC11C \uAC00\uC7A5 \uC120\uBA85\uD558\uAC8C \uB098\uC640\uC694.`,cBody:(b,h)=>`\uBE0C\uB79C\uB4DC \uC9C1\uC811 \uC5B8\uAE09\uC740 ${b}, \uACE0\uAC00\uCE58 \uC2E4\uC0AC\uC6A9\uC740 ${h}\uC608\uC694. \uC544\uC9C1\uC740 '\uC720\uD2F8\uB9AC\uD2F0 \u2192 \uBE0C\uB79C\uB4DC \uD68C\uC0C1'\uC758 \uACA9\uCC28\uAC00 \uC788\uC5B4 \uBCF4\uC785\uB2C8\uB2E4.`,dBody:(m,t,p)=>`\uD604\uC7AC \uD544\uD130\uB294 \uCD1D ${m}\uAC1C \uC6D4 \uB2E8\uC704\uB85C \uB370\uC774\uD130\uAC00 \uC788\uC5B4\uC694. \uAC00\uC7A5 \uD070 \uB2EC\uC740 ${t}(${p})\uC785\uB2C8\uB2E4. \uD2B9\uC815 \uB2EC\uC5D0 \uD3B8\uC911\uB418\uBA74 \uAC70\uAE30\uB85C\uB9CC \uC778\uC0AC\uC774\uD2B8\uAC00 \uCE5C\uC6C3\uD560 \uC218 \uC788\uC73C\uB2C8, \uBE48 \uAE30\uAC04\uC744 \uC6B0\uC120 \uCC44\uC6CC\uC694.`},
+  readout:{a:"\uAC00\uC7A5 \uB9CE\uC774 \uB4F1\uC7A5\uD558\uB294 \uC0AC\uC6A9 \uC2DC\uB098\uB9AC\uC624",b:"\uAC00\uCE58 \uBC00\uB3C4\uAC00 \uB192\uC740 \uC18C\uC2A4",c:"\uBE0C\uB79C\uB4DC \uD68C\uC0C1 vs \uC2E4\uC0AC\uC6A9",d:"\uB370\uC774\uD130 \uCEE4\uBC84\uB9AC\uC9C0",aBody:(u)=>`\uD604\uC7AC \uB370\uC774\uD130\uC5D0\uC11C '${u}' \uC5B8\uAE09\uC774 \uAC00\uC7A5 \uB9CE\uC544\uC694. CONNECT\uB294 \uBE0C\uB79C\uB4DC \uD68C\uC0C1\uBCF4\uB2E4 \uC2E4\uC0AC\uC6A9 \uBB38\uC81C \uD574\uACB0 \uBA74\uC5D0\uC11C \uB354 \uB450\uB4DC\uB7EC\uC9C0\uB294 \uC911\uC785\uB2C8\uB2E4.`,bBody:(s)=>`\uD604\uC7AC \uB370\uC774\uD130\uC5D0\uC11C '${s}'\uAC00 \uAC00\uCE58 \uBC00\uB3C4\uAC00 \uAC00\uC7A5 \uB192\uC544\uC694. (\uB2E8, 1\uAC74 \uCC28\uC774\uB85C \uACFC\uB300\uD3C9\uAC00\uB418\uC9C0 \uC54A\uB3C4\uB85D \uC18C\uD45C\uBCF8 \uBCF4\uC815\uC744 \uC801\uC6A9\uD588\uC5B4\uC694.)`,cBody:(b,h)=>`\uBE0C\uB79C\uB4DC \uC9C1\uC811 \uC5B8\uAE09\uC740 ${b}, \uACE0\uAC00\uCE58 \uC2E4\uC0AC\uC6A9\uC740 ${h}\uC608\uC694. \uC544\uC9C1\uC740 '\uC720\uD2F8\uB9AC\uD2F0 \u2192 \uBE0C\uB79C\uB4DC \uD68C\uC0C1'\uC758 \uACA9\uCC28\uAC00 \uC788\uC5B4 \uBCF4\uC785\uB2C8\uB2E4.`,dBody:(m,t,p)=>`\uD604\uC7AC \uD544\uD130\uB294 \uCD1D ${m}\uAC1C \uC6D4 \uB2E8\uC704\uB85C \uB370\uC774\uD130\uAC00 \uC788\uC5B4\uC694. \uAC00\uC7A5 \uD070 \uB2EC\uC740 ${t}(${p})\uC785\uB2C8\uB2E4. \uD2B9\uC815 \uB2EC\uC5D0 \uD3B8\uC911\uB418\uBA74 \uAC70\uAE30\uB85C\uB9CC \uC778\uC0AC\uC774\uD2B8\uAC00 \uCE5C\uC6C3\uD560 \uC218 \uC788\uC73C\uB2C8, \uBE48 \uAE30\uAC04\uC744 \uC6B0\uC120 \uCC44\uC6CC\uC694.`},
   matrix:{a:["\uBE0C\uB79C\uB4DC \uC9C1\uC811 \uC5B8\uAE09","\uB808\uCF54\uB4DC \uC911 CONNECT\uB97C \uC774\uB984\uC73C\uB85C \uC9C1\uC811 \uBD80\uB974\uB294 \uBE44\uC728"],b:["\uC2E4\uC0AC\uC6A9\uC740 \uAC15\uD55C\uB370 \uBE0C\uB79C\uB4DC \uC5B8\uAE09\uC740 \uC5C6\uC74C","\uAC00\uCE58 \uC810\uC218\uB294 \uB192\uC9C0\uB9CC \uBE0C\uB79C\uB4DC \uD68C\uC0C1\uC740 \uC57D\uD55C \uACBD\uC6B0"],c:["\uBE0C\uB79C\uB4DC-\uAC00\uCE58 \uC77C\uCE58","\uBE0C\uB79C\uB4DC \uD68C\uC0C1\uACFC \uC2E4\uC0AC\uC6A9 \uAC00\uCE58\uAC00 \uD568\uAED8 \uB4F1\uC7A5\uD558\uB294 \uACBD\uC6B0"],d:["\uD3EC\uC9C0\uC154\uB2DD \uB9AC\uC2A4\uD06C","\uC720\uD2F8\uB9AC\uD2F0\uAC00 \uBE0C\uB79C\uB4DC \uD68C\uC0C1\uC744 \uC9C0\uC18D\uC801\uC73C\uB85C \uC555\uB3C4\uD558\uB294 \uC9C0\uC810"]},
   useMap:{asset_browsing:"\uC5D0\uC14B \uD0D0\uC0C9",workflow_efficiency:"\uC6CC\uD06C\uD50C\uB85C \uD6A8\uC728",purchase:"\uAD6C\uB9E4",download:"\uB2E4\uC6B4\uB85C\uB4DC",fabric_sourcing:"\uC18C\uC7AC/\uC6D0\uB2E8 \uC18C\uC2F1",creator_posting:"\uD06C\uB9AC\uC5D0\uC774\uD130 \uAC8C\uC2DC",commercial_project:"\uC0C1\uC5C5 \uD504\uB85C\uC81D\uD2B8",comparison_evaluation:"\uBE44\uAD50/\uAC80\uD1A0",avatar_deployment:"\uC544\uBC14\uD0C0 \uC801\uC6A9",contest_participation:"\uCF58\uD14C\uC2A4\uD2B8 \uCC38\uC5EC",platform_positioning:"\uD50C\uB7AB\uD3FC \uD3EC\uC9C0\uC154\uB2DD",legacy_confusion:"\uAE30\uC874/\uD63C\uB3D9"},
   typeLabels:{source:"\uC18C\uC2A4",use:"\uC0AC\uC6A9 \uC2DC\uB098\uB9AC\uC624"},
@@ -241,7 +241,34 @@ function recomputeBounds(){if(!records||!records.length){return;}minDate=records
 function resolveRange(){let s,e;if(state.start&&state.end){s=d(state.start);e=d(state.end)}else{e=maxDate;if(state.preset==='7d'){s=new Date(e);s.setDate(e.getDate()-6)}else if(state.preset==='30d'){s=new Date(e);s.setDate(e.getDate()-29)}else if(state.preset==='90d'){s=new Date(e);s.setDate(e.getDate()-89)}else if(state.preset==='ytd'){s=new Date(e.getFullYear(),0,1)}else{s=minDate}}if(s<minDate)s=minDate;if(e>maxDate)e=maxDate;if(e<s)[s,e]=[e,s];return{start:s,end:e}}
 function filtered(){const {start,end}=resolveRange();return records.filter(r=>{const x=d(r.date);return x>=start&&x<=end})} function daysInRange(){const {start,end}=resolveRange();return Math.round((end-start)/86400000)+1} function grainMode(){if(state.grain!=='auto')return state.grain;return daysInRange()<=120?'week':'month'} function weekStart(dateObj){const c=new Date(dateObj);const day=c.getDay();const diff=day===0?-6:1-day;c.setDate(c.getDate()+diff);return c} function bucket(dateObj,mode){if(mode==='month')return `${dateObj.getFullYear()}-${String(dateObj.getMonth()+1).padStart(2,'0')}`;const ws=weekStart(dateObj);return `${ws.getFullYear()}-${String(ws.getMonth()+1).padStart(2,'0')}-${String(ws.getDate()).padStart(2,'0')}`}
 function aggregateTrend(rows,mode){const map=new Map();rows.forEach(r=>{const key=bucket(d(r.date),mode);if(!map.has(key))map.set(key,{label:key,mentions:0,hv:0});const it=map.get(key);it.mentions+=1;if(r.score>=4)it.hv+=1});return [...map.values()].sort((a,b)=>a.label.localeCompare(b.label)).map(it=>({label:it.label,mentions:it.mentions,hvShare:it.mentions?it.hv/it.mentions*100:0}))}
-function groupBy(rows,fn){const map=new Map();rows.forEach(r=>{const k=fn(r);map.set(k,(map.get(k)||0)+1)});return [...map.entries()].map(([name,count])=>({name,count})).sort((a,b)=>b.count-a.count||a.name.localeCompare(b.name))} function sourceDensity(rows){const map=new Map();rows.forEach(r=>{if(!map.has(r.source))map.set(r.source,{name:r.source,mentions:0,total:0});const it=map.get(r.source);it.mentions+=1;it.total+=r.score});const colors=['#b55b38','#2d6f65','#6d5e92','#d89b2b','#5b6778'];return [...map.values()].sort((a,b)=>(b.total/b.mentions)-(a.total/a.mentions)).map((it,i)=>({name:it.name,mentions:it.mentions,density:it.total/it.mentions,color:colors[i%colors.length]}))}
+function groupBy(rows,fn){const map=new Map();rows.forEach(r=>{const k=fn(r);map.set(k,(map.get(k)||0)+1)});return [...map.entries()].map(([name,count])=>({name,count})).sort((a,b)=>b.count-a.count||a.name.localeCompare(b.name))}
+function sourceDensity(rows,opts){
+  opts = opts || {};
+  const priorMean = typeof opts.priorMean === 'number' ? opts.priorMean : 3;
+  const priorN = typeof opts.priorN === 'number' ? opts.priorN : 3;
+  const map=new Map();
+  rows.forEach(r=>{
+    if(!map.has(r.source)) map.set(r.source,{name:r.source,mentions:0,total:0});
+    const it=map.get(r.source);
+    it.mentions+=1;
+    it.total+=r.score;
+  });
+  const colors=['#b55b38','#2d6f65','#6d5e92','#d89b2b','#5b6778'];
+  const items=[...map.values()].map((it)=> {
+    const avg = it.mentions ? (it.total / it.mentions) : 0;
+    const shrunk = (it.total + priorMean * priorN) / (it.mentions + priorN);
+    const rank = shrunk * Math.sqrt(it.mentions || 1);
+    return {name:it.name,mentions:it.mentions,density:avg,rank};
+  });
+  return items
+    .sort((a,b)=>b.rank-a.rank||b.mentions-a.mentions||b.density-a.density||a.name.localeCompare(b.name))
+    .map((it,i)=>({name:it.name,mentions:it.mentions,density:it.density,color:colors[i%colors.length]}));
+}
+function bestSource(rows){
+  const all = sourceDensity(rows);
+  const filtered = all.filter(s=>s.mentions>=2);
+  return (filtered.length ? filtered : all)[0];
+}
 function renderStatic(){
   const x = tr();
   document.documentElement.lang = state.lang;
@@ -337,7 +364,11 @@ function renderStatic(){
   $('sourceTitle').title = x.tips.sourceDensity;
   $('sourceNote').title = x.tips.sourceDensity;
   $('sourceBadge').title = x.tips.sourceDensity;
-  ensureHelpIn('sourceTitle','helpSourceDensity',x.tips.sourceDensity + `\n\n${state.lang==='ko'?'표시 형식: 평균 4.0점 · 1건':'Format: Avg 4.0 · 1'}`);
+  const densityTip = x.tips.sourceDensity + "\n\n" +
+    (state.lang==='ko'
+      ? "표시 형식: 평균 4.0점 · 1건\n정렬: 1건짜리 고점수 소스가 과대노출되지 않도록 소표본 보정을 적용해요."
+      : "Display: Avg 4.0 · 1\nRanking: applies small-sample adjustment so 1-off high scores don’t dominate.");
+  ensureHelpIn('sourceTitle','helpSourceDensity',densityTip);
 
   $('useTitle').textContent = x.useTitle;
   $('useNote').textContent = x.useNote;
@@ -364,7 +395,7 @@ function renderKpis(rows){
   const people=new Set(rows.map(r=>r.account)).size;
   const hv=rows.filter(r=>r.score>=4).length;
   const br=rows.filter(r=>r.explicit).length;
-  const topS=sourceDensity(rows)[0];
+  const topS=bestSource(rows);
   const topU=groupBy(rows,r=>r.useCase)[0];
 
   $('k1').textContent=mentions;
@@ -381,7 +412,7 @@ function renderKpis(rows){
   $('k6d').textContent=topU?(x.k6d?x.k6d(topU.count):`${topU.count}`):x.noData;
 }
 function renderTables(rows){const x=tr();const volume=[[x.rowLabels.q[0],rows.length,x.rowLabels.q[1]],[x.rowLabels.u[0],new Set(rows.map(r=>r.account)).size,x.rowLabels.u[1]],[x.rowLabels.h[0],rows.filter(r=>r.score>=4).length,x.rowLabels.h[1]],[x.rowLabels.b[0],rows.filter(r=>r.explicit).length,x.rowLabels.b[1]],[x.rowLabels.l[0],rows.filter(r=>r.score<=2).length,x.rowLabels.l[1]]];$('volumeSummary').innerHTML=volume.map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td></tr>`).join('');const breakdown=[];groupBy(rows,r=>r.source).slice(0,4).forEach(it=>breakdown.push([x.typeLabels.source,it.name,it.count]));groupBy(rows,r=>r.useCase).slice(0,6).forEach(it=>breakdown.push([x.typeLabels.use,useLabel(it.name),it.count]));$('countBreakdown').innerHTML=breakdown.map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td></tr>`).join('')}
-function renderReadout(rows){const x=tr();const mentions=rows.length||0;if(!mentions){$('readout').innerHTML=`<p class="note">${x.noData}</p>`;return}const hv=rows.filter(r=>r.score>=4).length;const br=rows.filter(r=>r.explicit).length;const topS=sourceDensity(rows)[0]?.name||x.noData;const topU=useLabel(groupBy(rows,r=>r.useCase)[0]?.name||x.noData);const byMonth=groupBy(rows,r=>String(r.date||'').slice(0,7)).filter(b=>b.name&&b.name.length===7);const mCount=byMonth.length||1;const topM=byMonth[0]?.name||x.noData;const topShare=byMonth[0]?.count?pct(byMonth[0].count/mentions*100):pct(0);const cards=[{title:x.readout.a,body:x.readout.aBody(topU)},{title:x.readout.b,body:x.readout.bBody(topS)},{title:x.readout.c,body:x.readout.cBody(pct(br/mentions*100),pct(hv/mentions*100))},{title:x.readout.d||"Coverage",body:(x.readout.dBody?x.readout.dBody(mCount,topM,topShare):`Active months: ${mCount}. Top month: ${topM} (${topShare}).`)}];$('readout').innerHTML=cards.map(c=>`<article class="item"><h3>${c.title}</h3><p>${c.body}</p></article>`).join('')}
+function renderReadout(rows){const x=tr();const mentions=rows.length||0;if(!mentions){$('readout').innerHTML=`<p class="note">${x.noData}</p>`;return}const hv=rows.filter(r=>r.score>=4).length;const br=rows.filter(r=>r.explicit).length;const topS=bestSource(rows)?.name||x.noData;const topU=useLabel(groupBy(rows,r=>r.useCase)[0]?.name||x.noData);const byMonth=groupBy(rows,r=>String(r.date||'').slice(0,7)).filter(b=>b.name&&b.name.length===7);const mCount=byMonth.length||1;const topM=byMonth[0]?.name||x.noData;const topShare=byMonth[0]?.count?pct(byMonth[0].count/mentions*100):pct(0);const cards=[{title:x.readout.a,body:x.readout.aBody(topU)},{title:x.readout.b,body:x.readout.bBody(topS)},{title:x.readout.c,body:x.readout.cBody(pct(br/mentions*100),pct(hv/mentions*100))},{title:x.readout.d||"Coverage",body:(x.readout.dBody?x.readout.dBody(mCount,topM,topShare):`Active months: ${mCount}. Top month: ${topM} (${topShare}).`)}];$('readout').innerHTML=cards.map(c=>`<article class="item"><h3>${c.title}</h3><p>${c.body}</p></article>`).join('')}
 function renderTrend(points,mode){
   const x=tr();
   $('trendTitle').textContent=x.trend[mode];
@@ -417,7 +448,10 @@ function renderTrend(points,mode){
 }
 function renderSource(rows){
   const x=tr();
-  const items=sourceDensity(rows),svg=$('sourceChart');
+  const all=sourceDensity(rows);
+  const stable=all.filter(s=>s.mentions>=2);
+  const items=(stable.length?stable:all).slice(0,6);
+  const svg=$('sourceChart');
   if(!items.length){
     svg.innerHTML=`<text x="320" y="160" text-anchor="middle" font-size="16" fill="#66707a">${x.noData}</text>`;
     return;
