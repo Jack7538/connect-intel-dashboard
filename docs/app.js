@@ -272,18 +272,18 @@ function ensureVizStyles(){
     "#useLegend .legend-item{border-radius:12px;padding:6px 8px;transition:background .12s ease,box-shadow .12s ease,transform .12s ease}" +
     "#useLegend .legend-item.is-dim{opacity:.55}" +
     "#useLegend .legend-item.is-active{background:rgba(28,37,45,.06);box-shadow:0 10px 18px rgba(28,37,45,.10);transform:translateY(-1px)}" +
-    ".use-grid{display:grid;grid-template-columns:1.25fr .75fr;gap:16px;align-items:start}" +
-    ".use-viz{display:flex;flex-direction:column;gap:10px;align-items:stretch}" +
+    ".use-grid{display:grid;grid-template-columns:1.25fr .75fr;grid-template-areas:'chart detail' 'legend legend';gap:16px;align-items:start}" +
+    ".use-viz{grid-area:chart;display:flex;flex-direction:column;gap:10px;align-items:flex-start}" +
     ".use-viz #useChart{max-width:520px}" +
-    ".use-viz #useLegend{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px 14px;margin-top:0;align-items:start}" +
-    ".use-viz #useLegend .legend-item{padding:6px 8px;display:grid;grid-template-columns:10px 1fr auto;gap:8px;align-items:baseline}" +
-    ".use-viz #useLegend .legend-item span{min-width:0}" +
-    ".use-viz #useLegend .legend-item span:nth-child(2){overflow:hidden;text-overflow:ellipsis;white-space:nowrap}" +
-    ".use-viz #useLegend .legend-metric{font-variant-numeric:tabular-nums}" +
+    ".use-legend-wide{grid-area:legend;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px 14px;margin-top:0;align-items:start}" +
+    ".use-legend-wide .legend-item{padding:6px 8px;display:grid;grid-template-columns:10px 1fr auto;gap:8px;align-items:baseline}" +
+    ".use-legend-wide .legend-item span{min-width:0}" +
+    ".use-legend-wide .legend-item span:nth-child(2){overflow:hidden;text-overflow:ellipsis;white-space:nowrap}" +
+    ".use-legend-wide .legend-metric{font-variant-numeric:tabular-nums}" +
     ".use-detail{position:sticky;top:14px}" +
     ".use-detail .kpi{font-variant-numeric:tabular-nums}" +
-    "@media (max-width:1120px){.use-grid{grid-template-columns:1fr}.use-viz #useChart{max-width:none}.use-viz #useLegend{grid-template-columns:repeat(2,minmax(0,1fr))}.use-detail{position:static}}" +
-    "@media (max-width:720px){.use-viz #useLegend{grid-template-columns:1fr}.use-viz #useLegend .legend-item span:nth-child(2){white-space:normal}}";
+    "@media (max-width:1120px){.use-grid{grid-template-columns:1fr;grid-template-areas:'chart' 'detail' 'legend'}.use-viz #useChart{max-width:none}.use-legend-wide{grid-template-columns:repeat(2,minmax(0,1fr))}.use-detail{position:static}}" +
+    "@media (max-width:720px){.use-legend-wide{grid-template-columns:1fr}.use-legend-wide .legend-item span:nth-child(2){white-space:normal}}";
   document.head.appendChild(style);
 }
 function ensureHelpIn(targetId, helpId, tip){
