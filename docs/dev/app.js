@@ -88,7 +88,7 @@ const whiteRows={
     ["\uC720\uD29C\uBE0C \uD29C\uD1A0\uB9AC\uC5BC/\uB313\uAE00","\uB192\uC74C","\uB0AE\uC74C","\uC124\uBA85/\uB313\uAE00\uC5D0 \uB0A8\uB294 \uD0A4\uC6CC\uB4DC \uAE30\uBC18\uC73C\uB85C \uAC80\uC0C9 \uBC94\uC704\uB97C \uD655\uC7A5\uD574\uC694."]
   ]
 };
-const i18nEn={heroTitle:"CONNECT Awareness And Usage Dashboard",heroLead:"Purpose: track verified public-web awareness and usage signals for CONNECT, then spot where utility shows up vs brand recall.",statusEyebrow:"Current State",statusTitle:"This is a first-pass public backfill dashboard.",statusBody:"The dataset reflects verified public-web evidence, not a full market census. It is enough to establish a baseline and begin weekly accumulation.",presets:{"7d":"Last 7D","30d":"Last 30D","90d":"Last 90D",ytd:"YTD",all:"All"},grain:{auto:"Auto Grain",week:"Weekly Grain",month:"Monthly Grain"},rangePrefix:"Selected Range:",applyRange:"Apply Custom Range",resetAll:"Reset To All",volumeTitle:"Volume Summary",volumeNote:"Absolute counts are shown alongside ratio-based interpretation.",volumeBadge:"Absolute Counts",volumeHeaders:["Metric","Count","Description"],countTitle:"Source / Use Case Counts",countNote:"This shows where the current filtered evidence is concentrated.",countBadge:"Count Breakdown",countHeaders:["Type","Item","Count"],legend1:"Qualified mentions",legend2:"High-value share",tips:{qualified:"Qualified mentions = number of qualified records in the selected time bucket.",hvShare:"High-value share = % of records with value score >= 4 in the bucket.",sourceDensity:"Source value density = average value score (1-5) per source; higher means more practical usage language."},readoutTitle:"Current Readout",readoutBadge:"Leadership Notes",sourceTitle:"Source Value Density",sourceNote:"This compares how much practical value each source carries in the current filtered data.",sourceBadge:"Source Prioritization",useTitle:"Use Case Mix",useNote:"This shows what kinds of problems people connect to CONNECT.",useBadge:"Messaging Input",matrixTitle:"Brand Recall vs Utility Gap",matrixBadge:"Positioning Risk",whiteTitle:"White Space Communities",whiteBadge:"Infiltration Targets",whiteHeaders:["Community","Need","Visibility","Recommended Action"],quoteTitle:"Actual User Quotes",quoteNote:"Default is Top 8 (sorted by value score). Use Show All to review every filtered record.",showTop:"Top 8 Only",showAll:"Show All",footnote:"This is a first-pass public backfill dataset. Treat the numbers as verified public records collected so far, not as total market awareness.",k1:"Filtered, qualified CONNECT mentions in the selected period",k2:"Deduplicated account count in the selected period",k4:"Share of mentions that explicitly call CONNECT by name",noData:"No data in the selected range.",quotesShown:(a,b)=>`${a} shown / ${b} filtered`,rowLabels:{q:["Qualified Mentions","Filtered records classified as real CONNECT-related mentions"],u:["Unique People","Deduplicated account count in the selected period"],h:["High-Value Mentions","Mentions tied to actual use, upload, purchase, workflow shortcut, or creator action"],b:["Explicit Brand Recall","Mentions that directly name CONNECT as a platform or destination"],l:["Low-Value Mentions","Low-information showcase or owned-surface records"]},typeLabels:{source:"Source",use:"Use Case"},useMap:{asset_browsing:"Asset Browsing",workflow_efficiency:"Workflow Efficiency",purchase:"Purchase",download:"Download",fabric_sourcing:"Fabric Sourcing",creator_posting:"Creator Posting",commercial_project:"Commercial Project",comparison_evaluation:"Comparison Evaluation",avatar_deployment:"Avatar Deployment",contest_participation:"Contest Participation",platform_positioning:"Platform Positioning",legacy_confusion:"Legacy Confusion"},readout:{a:"Top current use case",b:"Most value-dense source",c:"Brand recall vs practical usage",aBody:(u)=>`${u} is the most frequent current use case. CONNECT is still appearing more as a practical problem-solving surface than as a broadly recalled brand.`,bBody:(s)=>`${s} is the strongest current source in this dataset. The source mix is still narrow, but it remains the clearest place where practical usage language appears.`,cBody:(b,h)=>`Explicit brand recall is ${b}, while high-value usage is ${h}. Utility still appears to be ahead of brand memory.`},matrix:{a:["Explicit brand recall","Share of records that call CONNECT directly by name"],b:["High-value usage without clear brand recall","Records where practical value is strong even when brand memory is weak"],c:["Brand-value alignment","Records where strong usage and clear CONNECT recall appear together"],d:["Positioning risk","Risk that utility continues to outrun brand memory"]},openSource:"Open source",interp:"Interpretation",trend:{week:"Weekly Trend",month:"Monthly Trend"},trendNote:{week:"The filtered data is grouped by week.",month:"The filtered data is grouped by month."},centerTop:"Current Data",centerBottom:"Use Cases",score:"Score",riskHigh:"High",riskMid:"Mid",ey:{fatal:"Dashboard Error",connect:"CONNECT Intelligence",k1:"Qualified Mentions",k2:"Unique People",k3:"High-Value Share",k4:"Brand Recall Share",k5:"Top Source",k6:"Top Use Case",volume:"Volume Summary",counts:"Top Counts",trend:"Trend",readout:"Readout",sourceMix:"Source Mix",useCases:"Use Cases",matrix:"Brand vs Utility",white:"White Space",quotes:"Quote Review"}};
+const i18nEn={heroTitle:"CONNECT Awareness And Usage Dashboard",heroLead:"Purpose: track verified public-web awareness and usage signals for CONNECT, then spot where utility shows up vs brand recall.",statusEyebrow:"Current State",statusTitle:"This is a first-pass public backfill dashboard.",statusBody:"The dataset reflects verified public-web evidence, not a full market census. It is enough to establish a baseline and begin weekly accumulation.",presets:{"7d":"Last 7D","30d":"Last 30D","90d":"Last 90D",ytd:"YTD",all:"All"},grain:{auto:"Auto Grain",week:"Weekly Grain",month:"Monthly Grain"},rangePrefix:"Selected Range:",includeOwned:"Include Owned",includeOwnedTip:"Include owned/official pages in metrics. Turn off to focus on external signals.",applyRange:"Apply Custom Range",resetAll:"Reset To All",volumeTitle:"Volume Summary",volumeNote:"Absolute counts are shown alongside ratio-based interpretation.",volumeBadge:"Absolute Counts",volumeHeaders:["Metric","Count","Description"],countTitle:"Source / Use Case Counts",countNote:"This shows where the current filtered evidence is concentrated.",countBadge:"Count Breakdown",countHeaders:["Type","Item","Count"],legend1:"Qualified mentions",legend2:"High-value share",tips:{qualified:"Qualified mentions = number of qualified records in the selected time bucket.",hvShare:"High-value share = % of records with value score >= 4 in the bucket.",sourceDensity:"Source value density = average value score (1-5) per source; higher means more practical usage language."},readoutTitle:"Current Readout",readoutBadge:"Leadership Notes",sourceTitle:"Source Value Density",sourceNote:"This compares how much practical value each source carries in the current filtered data.",sourceBadge:"Source Prioritization",useTitle:"Use Case Mix",useNote:"This shows what kinds of problems people connect to CONNECT.",useBadge:"Messaging Input",matrixTitle:"Brand Recall vs Utility Gap",matrixBadge:"Positioning Risk",whiteTitle:"White Space Communities",whiteBadge:"Infiltration Targets",whiteHeaders:["Community","Need","Visibility","Recommended Action"],quoteTitle:"Actual User Quotes",quoteNote:"Default is Top 8 (sorted by value score). Use Show All to review every filtered record.",showTop:"Top 8 Only",showAll:"Show All",footnote:"This is a first-pass public backfill dataset. Treat the numbers as verified public records collected so far, not as total market awareness.",k1:"Filtered, qualified CONNECT mentions in the selected period",k2:"Deduplicated account count in the selected period",k4:"Share of mentions that explicitly call CONNECT by name",noData:"No data in the selected range.",quotesShown:(a,b)=>`${a} shown / ${b} filtered`,rowLabels:{q:["Qualified Mentions","Filtered records classified as real CONNECT-related mentions"],u:["Unique People","Deduplicated account count in the selected period"],h:["High-Value Mentions","Mentions tied to actual use, upload, purchase, workflow shortcut, or creator action"],b:["Explicit Brand Recall","Mentions that directly name CONNECT as a platform or destination"],l:["Low-Value Mentions","Low-information showcase or owned-surface records"]},typeLabels:{source:"Source",use:"Use Case"},useMap:{asset_browsing:"Asset Browsing",workflow_efficiency:"Workflow Efficiency",purchase:"Purchase",download:"Download",fabric_sourcing:"Fabric Sourcing",creator_posting:"Creator Posting",commercial_project:"Commercial Project",comparison_evaluation:"Comparison Evaluation",avatar_deployment:"Avatar Deployment",contest_participation:"Contest Participation",platform_positioning:"Platform Positioning",legacy_confusion:"Legacy Confusion"},readout:{a:"Top current use case",b:"Most value-dense source",c:"Brand recall vs practical usage",aBody:(u)=>`${u} is the most frequent current use case. CONNECT is still appearing more as a practical problem-solving surface than as a broadly recalled brand.`,bBody:(s)=>`${s} is the strongest current source in this dataset. The source mix is still narrow, but it remains the clearest place where practical usage language appears.`,cBody:(b,h)=>`Explicit brand recall is ${b}, while high-value usage is ${h}. Utility still appears to be ahead of brand memory.`},matrix:{a:["Explicit brand recall","Share of records that call CONNECT directly by name"],b:["High-value usage without clear brand recall","Records where practical value is strong even when brand memory is weak"],c:["Brand-value alignment","Records where strong usage and clear CONNECT recall appear together"],d:["Positioning risk","Risk that utility continues to outrun brand memory"]},openSource:"Open source",interp:"Interpretation",trend:{week:"Weekly Trend",month:"Monthly Trend"},trendNote:{week:"The filtered data is grouped by week.",month:"The filtered data is grouped by month."},centerTop:"Current Data",centerBottom:"Use Cases",score:"Score",riskHigh:"High",riskMid:"Mid",ey:{fatal:"Dashboard Error",connect:"CONNECT Intelligence",k1:"Qualified Mentions",k2:"Unique People",k3:"High-Value Share",k4:"Brand Recall Share",k5:"Top Source",k6:"Top Use Case",volume:"Volume Summary",counts:"Top Counts",trend:"Trend",readout:"Readout",sourceMix:"Source Mix",useCases:"Use Cases",matrix:"Brand vs Utility",white:"White Space",quotes:"Quote Review"}};
 const i18nKo=Object.assign({}, i18nEn, {
   heroTitle:"CONNECT \uC778\uC9C0\uB3C4 \uBC0F \uC0AC\uC6A9\uAC00\uCE58 \uB300\uC26C\uBCF4\uB4DC",
   heroLead:"\uBAA9\uC801: \uACF5\uAC1C \uC6F9\uC5D0\uC11C \uD655\uC778\uB41C CONNECT \uC778\uC9C0\uB3C4/\uC0AC\uC6A9 \uC2E0\uD638\uB97C \uC218\uC9D1\uD558\uACE0, \uC720\uD2F8\uB9AC\uD2F0(\uC2E4\uC0AC\uC6A9)\uC640 \uBE0C\uB79C\uB4DC \uD68C\uC0C1\uC744 \uBE44\uAD50\uD569\uB2C8\uB2E4.",
@@ -166,10 +166,10 @@ const i18nKo=Object.assign({}, i18nEn, {
 });
 const i18n={en:i18nEn,ko:i18nKo};
 // Add small helper formatters/tips without touching the large object literals above.
-i18nEn.densityFmt = (d,m)=>`Avg ${d} 鸚?${m}`;
-i18nKo.densityFmt = (d,m)=>`?????${d}??鸚?${m}濾?;
+i18nEn.densityFmt = (d,m)=>`Avg ${d} 勇?${m}`;
+i18nKo.densityFmt = (d,m)=>`?????${d}??勇?${m}癲?;
 i18nEn.k3d = (n)=>`Score 4+ ${n}`;
-i18nEn.k5d = (d,m)=>`Avg ${d} 鸚?${m}`;
+i18nEn.k5d = (d,m)=>`Avg ${d} 勇?${m}`;
 i18nEn.k6d = (c)=>`${c}`;
 i18nEn.quoteCount = (n)=>`${n} shown`;
 i18nEn.useDetailHint = 'Hover a segment to see what it means.';
@@ -215,8 +215,8 @@ i18nEn.useDef = {
   comparison_evaluation: 'Comparing CONNECT vs alternatives (pros/cons, migration, evaluation).',
   avatar_deployment: 'Avatar/pose/motion usage tied to CONNECT content or workflow.',
   contest_participation: 'Contest-related participation tied to CONNECT.',
-  platform_positioning: 'Explaining/introducing CONNECT (what it is / where to go / ??????on CONNECT??. More ??猶칢itioning??than hands-on use.',
-  legacy_confusion: 'Legacy naming or migration confusion (e.g., ???뾫nect Clo-set??redirects).',
+  platform_positioning: 'Explaining/introducing CONNECT (what it is / where to go / ??????on CONNECT??. More ???띠묄itioning??than hands-on use.',
+  legacy_confusion: 'Legacy naming or migration confusion (e.g., ???毓쳌ect Clo-set??redirects).',
   other: 'Other / long tail use cases collapsed for readability.'
 };
 i18nKo.useDef = {
@@ -262,7 +262,7 @@ i18nKo.tips.quoteScore =
   "2: \uC774\uB984\uB9CC \uD55C \uBC88 \uB098\uC624\uAC70\uB098 \uB9C9\uC5F0\uD574\uC694(\uC815\uBCF4 \uBD80\uC871).\n" +
   "1: \uC18C\uC720 \uC11C\uD398\uC774\uC2A4/\uD45C\uC2DC\uC6A9 \uB4F1 \uC2E4\uC9C8 \uC2E0\uD638\uAC00 \uAC70\uC758 \uC5C6\uC5B4\uC694.";
 
-const state={lang:'en',preset:'all',start:null,end:null,grain:'auto',quoteMode:'top',quotePage:1,sourceFilter:'all',quoteSourceFilter:'all'};
+const state={lang:'en',preset:'all',start:null,end:null,grain:'auto',quoteMode:'top',quotePage:1,sourceFilter:'all',quoteSourceFilter:'all',includeOwned:true};
 const $=id=>{const el=document.getElementById(id);if(!el)throw new Error(`Missing element: #${id}`);return el};
 const $opt=id=>document.getElementById(id);
 const d=v=>new Date(`${v}T00:00:00`);
@@ -333,7 +333,7 @@ function tr(){return i18n[state.lang]||i18n.en} function useLabel(k){return tr()
 function useShortLabel(k){const x=tr();return (x.useShortMap && x.useShortMap[k]) || useLabel(k)}
 function recomputeBounds(){if(!records||!records.length){return;}minDate=records.reduce((m,r)=>d(r.date)<m?d(r.date):m,d(records[0].date));maxDate=records.reduce((m,r)=>d(r.date)>m?d(r.date):m,d(records[0].date))}
 function resolveRange(){let s,e;if(state.start&&state.end){s=d(state.start);e=d(state.end)}else{e=maxDate;if(state.preset==='7d'){s=new Date(e);s.setDate(e.getDate()-6)}else if(state.preset==='30d'){s=new Date(e);s.setDate(e.getDate()-29)}else if(state.preset==='90d'){s=new Date(e);s.setDate(e.getDate()-89)}else if(state.preset==='ytd'){s=new Date(e.getFullYear(),0,1)}else{s=minDate}}if(s<minDate)s=minDate;if(e>maxDate)e=maxDate;if(e<s)[s,e]=[e,s];return{start:s,end:e}}
-function filtered(){const {start,end}=resolveRange();return records.filter(r=>{const x=d(r.date);if(!(x>=start&&x<=end)) return false; if(state.sourceFilter && state.sourceFilter!=='all' && r.source!==state.sourceFilter) return false; return true})} function daysInRange(){const {start,end}=resolveRange();return Math.round((end-start)/86400000)+1} function grainMode(){if(state.grain!=='auto')return state.grain;return daysInRange()<=120?'week':'month'} function weekStart(dateObj){const c=new Date(dateObj);const day=c.getDay();const diff=day===0?-6:1-day;c.setDate(c.getDate()+diff);return c} function bucket(dateObj,mode){if(mode==='month')return `${dateObj.getFullYear()}-${String(dateObj.getMonth()+1).padStart(2,'0')}`;const ws=weekStart(dateObj);return `${ws.getFullYear()}-${String(ws.getMonth()+1).padStart(2,'0')}-${String(ws.getDate()).padStart(2,'0')}`}
+function filtered(){const {start,end}=resolveRange();return records.filter(r=>{const x=d(r.date);if(!(x>=start&&x<=end)) return false; if(state.includeOwned===false && r.source==='Owned') return false; if(state.sourceFilter && state.sourceFilter!=='all' && r.source!==state.sourceFilter) return false; return true})} function daysInRange(){const {start,end}=resolveRange();return Math.round((end-start)/86400000)+1} function grainMode(){if(state.grain!=='auto')return state.grain;return daysInRange()<=120?'week':'month'} function weekStart(dateObj){const c=new Date(dateObj);const day=c.getDay();const diff=day===0?-6:1-day;c.setDate(c.getDate()+diff);return c} function bucket(dateObj,mode){if(mode==='month')return `${dateObj.getFullYear()}-${String(dateObj.getMonth()+1).padStart(2,'0')}`;const ws=weekStart(dateObj);return `${ws.getFullYear()}-${String(ws.getMonth()+1).padStart(2,'0')}-${String(ws.getDate()).padStart(2,'0')}`}
 function aggregateTrend(rows,mode){const map=new Map();rows.forEach(r=>{const key=bucket(d(r.date),mode);if(!map.has(key))map.set(key,{label:key,mentions:0,hv:0});const it=map.get(key);it.mentions+=1;if(r.score>=4)it.hv+=1});return [...map.values()].sort((a,b)=>a.label.localeCompare(b.label)).map(it=>({label:it.label,mentions:it.mentions,hvShare:it.mentions?it.hv/it.mentions*100:0}))}
 function groupBy(rows,fn){const map=new Map();rows.forEach(r=>{const k=fn(r);map.set(k,(map.get(k)||0)+1)});return [...map.entries()].map(([name,count])=>({name,count})).sort((a,b)=>b.count-a.count||a.name.localeCompare(b.name))}
 function sourceDensity(rows,opts){
@@ -455,6 +455,21 @@ function renderStatic(){
     sourceSel.title = state.lang==='ko' ? '\uD50C\uB7AB\uD3FC/\uC18C\uC2A4 \uD544\uD130' : 'Platform / Source filter';
   }
 
+  const ownedWrap = document.getElementById('includeOwnedWrap');
+  const ownedCb = document.getElementById('includeOwned');
+  const ownedLabel = document.getElementById('includeOwnedLabel');
+  if(ownedCb){
+    ownedCb.checked = state.includeOwned !== false;
+  }
+  if(ownedLabel){
+    ownedLabel.textContent = x.includeOwned || (state.lang==='ko' ? 'Owned \uD3EC\uD568' : 'Include owned');
+  }
+  if(ownedWrap){
+    ownedWrap.title = x.includeOwnedTip || (state.lang==='ko'
+      ? 'Owned(\uC790\uCCB4/\uACF5\uC2DD) \uB370\uC774\uD130\uB97C \uD3EC\uD568\uD569\uB2C8\uB2E4. \uB044\uBA74 \uC678\uBD80 \uC2E0\uD638 \uC911\uC2EC\uC73C\uB85C \uBD05\uB2C8\uB2E4.'
+      : 'Include owned/official pages in metrics. Turn off to focus on external signals.');
+  }
+
   const quoteSourceSel = document.getElementById('quoteSourceFilter');
   if(quoteSourceSel){
     const labelAll = state.lang==='ko' ? '\uC778\uC6A9: \uC804\uCCB4 \uD50C\uB7AB\uD3FC' : 'Quotes: all platforms';
@@ -501,8 +516,8 @@ function renderStatic(){
   $('sourceBadge').title = x.tips.sourceDensity;
   const densityTip = x.tips.sourceDensity + "\n\n" +
     (state.lang==='ko'
-      ? "??戮?뻣 ?筌먦끇六? ?????4.0??鸚?1濾?n?筌먲퐣議? 1濾곌쑬?삣퐲?좊뎨???μ쪠??????裕욄뤆?쎛 ??λ닑??筌뤾쑵???? ???낆┣????怨뺛걫???곌랜??????⑤챷???怨몃뭵."
-      : "Display: Avg 4.0 鸚?1\nRanking: applies small-sample adjustment so 1-off high scores don???dominate.");
+      ? "??筌?六??嶺뚮Ĳ?뉛쭛? ?????4.0??勇?1癲?n?嶺뚮㉡?ｈ?? 1癲꾧퀗???ｍ맪?醫딅렓???關履??????獒뺤쉪琉??쎛 ??貫???嶺뚮ㅎ????? ????녳뵣?????⑤틳嫄???怨뚮옖???????ㅼ굣????⑤챶萸?"
+      : "Display: Avg 4.0 勇?1\nRanking: applies small-sample adjustment so 1-off high scores don???dominate.");
   ensureHelpIn('sourceTitle','helpSourceDensity',densityTip);
 
   $('useTitle').textContent = x.useTitle;
@@ -808,7 +823,7 @@ function renderInsights(rows){
     add('The main gap: people use it, but don\'t always name it',
       gap >= 8
         ? `High-value (${pct(hvShare)}) is well ahead of brand recall (${pct(brShare)}). Standardize share-ready wording around the top use case ("${topUseLabel}", ${pct(topUseShare)}) so CONNECT becomes the remembered destination.`
-        : `High-value (${pct(hvShare)}) and brand recall (${pct(brShare)}) are closer. Keep collecting “CONNECT is where I solved it” proof, anchored on "${topUseLabel}".`);
+        : `High-value (${pct(hvShare)}) and brand recall (${pct(brShare)}) are closer. Keep collecting ?쏞ONNECT is where I solved it??proof, anchored on "${topUseLabel}".`);
 
     add('Channel strategy',
       ownedShare >= 70
@@ -816,11 +831,11 @@ function renderInsights(rows){
         : `External share is ${pct(externalShare)}. Reduce concentration (top community: ${topCommName}, ${pct(topCommShare)}) by expanding into more communities and formats.`);
 
     add('Trend + coverage sanity check',
-      `Coverage: ${activeMonths} months (${earliest}→${latest}). Last ${windowDays} days: ${curN} records${growth!==null?` (${growth>0?'+':''}${growth.toFixed(0)}% vs previous ${windowDays}d)`:''}. High-value share moved ${pct(curHvShare)} (prev ${pct(prevHvShare)}).`);
+      `Coverage: ${activeMonths} months (${earliest}??{latest}). Last ${windowDays} days: ${curN} records${growth!==null?` (${growth>0?'+':''}${growth.toFixed(0)}% vs previous ${windowDays}d)`:''}. High-value share moved ${pct(curHvShare)} (prev ${pct(prevHvShare)}).`);
 
     if(top3Share >= 75){
       add('Source concentration risk',
-        `Top-3 sources make up ${pct(top3Share)}. Expand where public signals appear so insights aren’t skewed by a single surface.`);
+        `Top-3 sources make up ${pct(top3Share)}. Expand where public signals appear so insights aren?셳 skewed by a single surface.`);
     }
 
     if(legacyShare >= 8){
@@ -901,10 +916,12 @@ $('applyRange').addEventListener('click',()=>{
   const sel = $opt('sourceFilter'); if(sel) sel.value='all';
   state.quoteSourceFilter='all';
   const qsel = $opt('quoteSourceFilter'); if(qsel) qsel.value='all';
-  state.quoteMode='top';
-  resetQuotePaging();
-  render();
-});
+    state.quoteMode='top';
+    state.includeOwned=true;
+    const o = $opt('includeOwned'); if(o) o.checked = true;
+    resetQuotePaging();
+    render();
+  });
 $('showTopBtn').addEventListener('click',()=>{ state.quoteMode='top'; resetQuotePaging(); render(); });
 $('showAllBtn').addEventListener('click',()=>{ state.quoteMode='all'; resetQuotePaging(); render(); });
 const sourceSel = $opt('sourceFilter');
@@ -919,6 +936,18 @@ const quoteSourceSel = $opt('quoteSourceFilter');
 if(quoteSourceSel){
   quoteSourceSel.addEventListener('change', e=>{
     state.quoteSourceFilter = e.target.value || 'all';
+    resetQuotePaging();
+    render();
+  });
+}
+const ownedCb = $opt('includeOwned');
+if(ownedCb){
+  ownedCb.addEventListener('change', e=>{
+    state.includeOwned = !!e.target.checked;
+    if(state.includeOwned === false && state.sourceFilter === 'Owned'){
+      state.sourceFilter = 'all';
+      const sel = $opt('sourceFilter'); if(sel) sel.value='all';
+    }
     resetQuotePaging();
     render();
   });
