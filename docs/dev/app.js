@@ -305,6 +305,15 @@ function renderStatic(){
     setEy('eyWhite', x.ey.white);
     setEy('eyQuotes', x.ey.quotes);
   }
+
+  const eyInsights = document.getElementById('eyInsights');
+  if (eyInsights) eyInsights.textContent = state.lang === 'ko' ? '\uC778\uC0AC\uC774\uD2B8' : 'Insights';
+  const insightsTitle = document.getElementById('insightsTitle');
+  if (insightsTitle) insightsTitle.textContent = state.lang === 'ko' ? '\uB370\uC774\uD130\uB85C \uBCF4\uB294 \uD575\uC2EC \uD3EC\uC778\uD2B8' : 'Key takeaways from the data';
+  const insightsNote = document.getElementById('insightsNote');
+  if (insightsNote) insightsNote.textContent = state.lang === 'ko'
+    ? '\uD604\uC7AC \uD544\uD130(\uAE30\uAC04/\uC870\uAC74)\uC5D0 \uB9DE\uCDB0 \uC694\uC57D\uD574\uC694.'
+    : 'Summarized for the current filters (range + settings).';
   const linkException = document.getElementById('linkException');
   const linkOps = document.getElementById('linkOps');
   const linkLog = document.getElementById('linkLog');
@@ -521,6 +530,60 @@ function renderUse(rows){
 }
 function renderMatrix(rows){const x=tr();const total=rows.length||1,explicit=rows.filter(r=>r.explicit).length/total*100,utilNoBrand=rows.filter(r=>r.score>=4&&!r.explicit).length/total*100,aligned=rows.filter(r=>r.score>=4&&r.explicit).length/total*100,risk=utilNoBrand>explicit?x.riskHigh:x.riskMid;const cards=[{title:x.matrix.a[0],value:pct(explicit),body:x.matrix.a[1],cls:explicit<35?'low':'mid'},{title:x.matrix.b[0],value:pct(utilNoBrand),body:x.matrix.b[1],cls:utilNoBrand>40?'mid':'low'},{title:x.matrix.c[0],value:pct(aligned),body:x.matrix.c[1],cls:aligned>25?'mid':'low'},{title:x.matrix.d[0],value:risk,body:x.matrix.d[1],cls:risk===x.riskHigh?'low':'mid'}];$('matrix').innerHTML=cards.map(c=>`<article class="item"><span class="metric-chip ${c.cls}">${c.value}</span><h3 style="margin-top:12px">${c.title}</h3><p>${c.body}</p></article>`).join('')}
 function renderWhite(){$('whiteTable').innerHTML=whiteRows[state.lang].map(r=>`<tr>${r.map(c=>`<td>${c}</td>`).join('')}</tr>`).join('')}
+function renderInsights(rows){
+  const x = tr();
+  const wrap = document.getElementById('insights');
+  if(!wrap) return;
+  const mentions = rows.length || 0;
+  if(!mentions){
+    wrap.innerHTML = `<div class="item"><p class="note" style="margin:0">${x.noData}</p></div>`;
+    return;
+  }
+
+  const hv = rows.filter(r=>r.score>=4).length;
+  const br = rows.filter(r=>r.explicit).length;
+  const hvShare = mentions ? (hv/mentions*100) : 0;
+  const brShare = mentions ? (br/mentions*100) : 0;
+  const delta = hvShare - brShare;
+
+  const owned = rows.filter(r=>r.source==='Owned').length;
+  const external = mentions - owned;
+  const externalShare = mentions ? (external/mentions*100) : 0;
+
+  const topUse = groupBy(rows,r=>r.useCase)[0];
+  const topUseLabel = topUse ? useLabel(topUse.name) : x.noData;
+  const topUseShare = topUse ? (topUse.count/mentions*100) : 0;
+
+  const topComm = groupBy(rows,r=>r.community)[0];
+  const topCommName = topComm ? topComm.name : x.noData;
+  const topCommShare = topComm ? (topComm.count/mentions*100) : 0;
+
+  const byMonth = groupBy(rows,r=>String(r.date||'').slice(0,7)).filter(b=>b.name&&b.name.length===7);
+  const activeMonths = byMonth.length || 1;
+  const earliest = byMonth.length ? byMonth.map(m=>m.name).sort()[0] : x.noData;
+  const latest = byMonth.length ? byMonth.map(m=>m.name).sort().slice(-1)[0] : x.noData;
+
+  const sources = groupBy(rows,r=>r.source);
+  const top3 = sources.slice(0,3).reduce((s,it)=>s+it.count,0);
+  const top3Share = mentions ? (top3/mentions*100) : 0;
+
+  const lines = [];
+  if(state.lang==='ko'){
+    lines.push(`\uD0D1 \uC0AC\uC6A9 \uCF00\uC774\uC2A4\uB294 <strong>${topUseLabel}</strong>\uC608\uC694. \uC120\uD0DD \uB370\uC774\uD130\uC758 ${pct(topUseShare)}(${topUse?topUse.count:0}\uAC74)\uC744 \uCC28\uC9C0\uD574\uC694.`);
+    lines.push(`\uACE0\uAC00\uCE58 \uBE44\uC728\uC740 ${pct(hvShare)}, \uBE0C\uB79C\uB4DC \uD68C\uC0C1 \uBE44\uC728\uC740 ${pct(brShare)}\uC608\uC694. \uC720\uD2F8\uB9AC\uD2F0\uAC00 \uBE0C\uB79C\uB4DC \uD68C\uC0C1\uBCF4\uB2E4 ${pct(Math.abs(delta))}\uD3EC\uC778\uD2B8 ${delta>=0?'\uC55E\uC11C\uC694':'\uB4A4\uCC98\uC838\uC694'}.`);
+    lines.push(`\uC678\uBD80 \uC18C\uC2A4 \uBE44\uC728\uC740 ${pct(externalShare)}(${external}\uAC74)\uC774\uACE0, Owned/\uACF5\uC2DD \uB808\uCF54\uB4DC\uB294 ${pct(mentions?owned/mentions*100:0)}(${owned}\uAC74)\uC608\uC694.`);
+    lines.push(`\uAC00\uC7A5 \uB9CE\uC774 \uBCF4\uC778 \uCEE4\uBBA4\uB2C8\uD2F0\uB294 <strong>${topCommName}</strong>\uC608\uC694 (${pct(topCommShare)}).`);
+    lines.push(`\uB370\uC774\uD130\uAC00 \uB4F1\uC7A5\uD558\uB294 \uC6D4\uC740 \uCD1D ${activeMonths}\uAC1C\uC608\uC694 (${earliest} \u2192 ${latest}). \uC0C1\uC704 3\uAC1C \uC18C\uC2A4\uAC00 ${pct(top3Share)}\uB97C \uCC28\uC9C0\uD574 \uD3B8\uC911\uB3C4\uAC00 \uB192\uC740 \uD3B8\uC785\uB2C8\uB2E4.`);
+  } else {
+    lines.push(`Top use case is <strong>${topUseLabel}</strong> (${pct(topUseShare)}, ${topUse?topUse.count:0} records).`);
+    lines.push(`High-value share is ${pct(hvShare)} vs brand recall share ${pct(brShare)} (gap: ${pct(Math.abs(delta))} points, utility ${delta>=0?'ahead':'behind'}).`);
+    lines.push(`External sources account for ${pct(externalShare)} (${external} records); owned/official is ${pct(mentions?owned/mentions*100:0)} (${owned} records).`);
+    lines.push(`Most frequent community is <strong>${topCommName}</strong> (${pct(topCommShare)}).`);
+    lines.push(`Coverage spans ${activeMonths} active months (${earliest} \u2192 ${latest}); top-3 sources make up ${pct(top3Share)} (high concentration).`);
+  }
+
+  wrap.innerHTML = `<ul class="note" style="margin:0;padding-left:18px">${lines.map(t=>`<li style="margin:0 0 8px">${t}</li>`).join('')}</ul>`;
+}
 function renderQuotes(rows){
   const x=tr();
   const sorted=[...rows].sort((a,b)=>b.score!==a.score?b.score-a.score:a.date.localeCompare(b.date));
@@ -535,7 +598,7 @@ function renderQuotes(rows){
   $('quotes').innerHTML=shown.length?shown.map(r=>`<details><summary><span>${r.source} &middot; ${r.community} &middot; ${useLabel(r.useCase)}</span><span class="metric-chip ${r.score>=4?'':r.score===3?'mid':'low'}" title="${scoreTip}">${x.score} ${r.score}</span></summary><p class="meta">${r.date}</p><blockquote>${r.excerpt}</blockquote><p><strong>${x.interp}:</strong> ${note(r)}</p><p><a href="${r.url}" target="_blank" rel="noreferrer">${x.openSource}</a></p></details>`).join(''):`<div class="item"><p>${x.noData}</p></div>`;
 }
 function updateInputs(){const {start,end}=resolveRange();$('rangeLabel').textContent=`${f(start)} ~ ${f(end)}`;$('startDate').value=f(start);$('endDate').value=f(end);document.querySelectorAll('.preset').forEach(btn=>btn.classList.toggle('active',btn.dataset.preset===state.preset&&!state.start&&!state.end))}
-function render(){renderStatic();updateInputs();const rows=filtered(),mode=grainMode();renderKpis(rows);renderTables(rows);renderReadout(rows);renderTrend(aggregateTrend(rows,mode),mode);renderSource(rows);renderUse(rows);renderMatrix(rows);renderWhite();renderQuotes(rows)}
+function render(){renderStatic();updateInputs();const rows=filtered(),mode=grainMode();renderKpis(rows);renderTables(rows);renderReadout(rows);renderInsights(rows);renderTrend(aggregateTrend(rows,mode),mode);renderSource(rows);renderUse(rows);renderMatrix(rows);renderWhite();renderQuotes(rows)}
 document.querySelectorAll('.preset').forEach(btn=>btn.addEventListener('click',()=>{state.preset=btn.dataset.preset;state.start=null;state.end=null;render()}));$('grain').addEventListener('change',e=>{state.grain=e.target.value;render()});$('applyRange').addEventListener('click',()=>{const s=$('startDate').value,e=$('endDate').value;if(!s||!e)return;state.start=s;state.end=e;render()});$('resetAll').addEventListener('click',()=>{state.preset='all';state.start=null;state.end=null;state.grain='auto';$('grain').value='auto';render()});$('showTopBtn').addEventListener('click',()=>{state.quoteMode='top';render()});$('showAllBtn').addEventListener('click',()=>{state.quoteMode='all';render()});$('langEnBtn').addEventListener('click',()=>{state.lang='en';render()});$('langKoBtn').addEventListener('click',()=>{state.lang='ko';render()});
 async function boot(){
   try{
