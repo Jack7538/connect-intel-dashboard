@@ -153,6 +153,38 @@ i18nEn.k3d = (n)=>`Score 4+ ${n}`;
 i18nEn.k5d = (d,m)=>`Avg ${d} · ${m}`;
 i18nEn.k6d = (c)=>`${c}`;
 i18nEn.quoteCount = (n)=>`${n} shown`;
+i18nEn.useDetailHint = 'Hover a segment to see what it means.';
+i18nKo.useDetailHint = '\uB3C4\uB11B \uC601\uC5ED\uC5D0 \uD638\uBC84\uD558\uBA74 \uB73B\uACFC \uC608\uC2DC\uAC00 \uB098\uC640\uC694.';
+i18nEn.useDef = {
+  asset_browsing: 'Looking for assets in CONNECT (store/library) as starting points or references.',
+  workflow_efficiency: 'Using CONNECT to save time (templates, shortcuts, how-to, faster iteration).',
+  purchase: 'Commercial intent: paid assets, pricing, buying decisions.',
+  download: 'Downloading/importing/exporting assets from CONNECT into a workflow.',
+  fabric_sourcing: 'Sourcing fabrics/materials/textures via CONNECT.',
+  creator_posting: 'Creators uploading or sharing work/portfolios that point to CONNECT.',
+  commercial_project: 'CONNECT referenced in a real client/commercial context.',
+  comparison_evaluation: 'Comparing CONNECT vs alternatives (pros/cons, migration, evaluation).',
+  avatar_deployment: 'Avatar/pose/motion usage tied to CONNECT content or workflow.',
+  contest_participation: 'Contest-related participation tied to CONNECT.',
+  platform_positioning: 'Explaining/introducing CONNECT (what it is / where to go / “it’s on CONNECT”). More “positioning” than hands-on use.',
+  legacy_confusion: 'Legacy naming or migration confusion (e.g., “Connect Clo-set” redirects).',
+  other: 'Other / long tail use cases collapsed for readability.'
+};
+i18nKo.useDef = {
+  asset_browsing: 'CONNECT \uC5D0\uC11C \uC5D0\uC14B\uC744 \uCC3E\uC544\uBCF4\uB294 \uC0C1\uD669(\uCC38\uACE0/\uC2DC\uC791 \uD15C\uD50C\uB9BF/\uB9AC\uC18C\uC2A4 \uD0D0\uC0C9).',
+  workflow_efficiency: '\uC791\uC5C5\uC744 \uBE60\uB974\uAC8C \uD558\uB824\uACE0 CONNECT\uB97C \uD65C\uC6A9\uD558\uB294 \uC0C1\uD669(\uC9C0\uB984\uAE38/\uD15C\uD50C\uB9BF/\uC5C5\uBB34 \uD301).',
+  purchase: '\uC720\uB8CC \uC5D0\uC14B \uAD6C\uB9E4 \uC758\uB3C4\uAC00 \uB4DC\uB7EC\uB09C \uC0C1\uD669(\uAC00\uACA9/\uAD6C\uB9E4/\uACB0\uC81C).',
+  download: 'CONNECT\uC5D0\uC11C \uB2E4\uC6B4\uB85C\uB4DC\uD558\uC5EC \uC4F0\uB294 \uC0C1\uD669(\uB0B4\uBCF4\uB0B4\uAE30/\uAC00\uC838\uC624\uAE30/\uC784\uD3EC\uD2B8).',
+  fabric_sourcing: '\uC18C\uC7AC/\uC6D0\uB2E8/\uD14D\uC2A4\uCC98 \uB4F1\uC744 CONNECT\uB85C \uC18C\uC2F1\uD558\uB294 \uC0C1\uD669.',
+  creator_posting: '\uD06C\uB9AC\uC5D0\uC774\uD130\uAC00 \uC791\uD488\uC744 \uAC8C\uC2DC\uD558\uAC70\uB098 \uD3EC\uD2B8\uD3F4\uB9AC\uC624\uB97C \uC5F0\uACB0\uD558\uB294 \uC0C1\uD669.',
+  commercial_project: '\uC2E4\uC81C \uC0C1\uC5C5/\uD074\uB77C\uC774\uC5B8\uD2B8 \uBB38\uB9E5\uC5D0\uC11C CONNECT\uAC00 \uB4F1\uC7A5\uD558\uB294 \uC0C1\uD669.',
+  comparison_evaluation: 'CONNECT\uB97C \uB2E4\uB978 \uB300\uC548\uACFC \uBE44\uAD50\uD558\uB294 \uC0C1\uD669(\uD3C9\uAC00/\uAC80\uD1A0/\uB9C8\uC774\uADF8\uB808\uC774\uC158).',
+  avatar_deployment: '\uC544\uBC14\uD0C0/\uD3EC\uC988/\uBAA8\uC158 \uB4F1 \uC2E4\uD589 \uC791\uC5C5\uACFC \uC5F0\uACB0\uB41C \uC0C1\uD669.',
+  contest_participation: '\uCF58\uD14C\uC2A4\uD2B8 \uCC38\uC5EC/\uC81C\uCD9C \uBB38\uB9E5\uC5D0\uC11C CONNECT\uAC00 \uB4F1\uC7A5\uD558\uB294 \uC0C1\uD669.',
+  platform_positioning: 'CONNECT\uB97C '\uC5B4\uB5A4 \uD50C\uB7AB\uD3FC\uC778\uC9C0'\uB85C \uC18C\uAC1C\uD558\uAC70\uB098 '\uC5B4\uB514\uB85C \uAC00\uBA74 \uB3FC'\uB77C\uACE0 \uC548\uB0B4\uD558\uB294 \uC0C1\uD669(\uC2E4\uC81C \uD65C\uC6A9 \uB514\uD14C\uC77C\uBCF4\uB2E4 \uD3EC\uC9C0\uC154\uB2DD \uC131\uACA9).',
+  legacy_confusion: '\uAE30\uC874 \uC774\uB984/\uB9C1\uD06C \uD63C\uB3D9\uC73C\uB85C \uC778\uD55C \uC5B8\uAE09(\uC774\uC804 \uC11C\uBE44\uC2A4 \uBA85\uCE6D, \uB9C1\uD06C \uC6B0\uD68C \uB4F1).',
+  other: '\uB108\uBB34 \uC798\uAC8C \uB098\uB258\uC9C4 \uD56D\uBAA9\uC740 \uAC04\uB2E8\uD788 \uBB36\uC5B4\uC11C \uD45C\uC2DC\uD574\uC694.'
+};
 
 i18nEn.tips.matrixPct =
   "Percentages are computed on the currently filtered records.\n\n" +
@@ -209,7 +241,11 @@ function ensureVizStyles(){
     "#useChart path.is-active{transform:scale(1.04);transform-box:fill-box;transform-origin:center;filter:drop-shadow(0 10px 14px rgba(28,37,45,.14));stroke:#1c252d;stroke-opacity:.18;stroke-width:2}" +
     "#useLegend .legend-item{border-radius:12px;padding:6px 8px;transition:background .12s ease,box-shadow .12s ease,transform .12s ease}" +
     "#useLegend .legend-item.is-dim{opacity:.55}" +
-    "#useLegend .legend-item.is-active{background:rgba(28,37,45,.06);box-shadow:0 10px 18px rgba(28,37,45,.10);transform:translateY(-1px)}";
+    "#useLegend .legend-item.is-active{background:rgba(28,37,45,.06);box-shadow:0 10px 18px rgba(28,37,45,.10);transform:translateY(-1px)}" +
+    ".use-grid{display:grid;grid-template-columns:1fr .95fr;gap:16px;align-items:start}" +
+    ".use-detail{position:sticky;top:14px}" +
+    ".use-detail .kpi{font-variant-numeric:tabular-nums}" +
+    "@media (max-width:1120px){.use-grid{grid-template-columns:1fr}.use-detail{position:static}}";
   document.head.appendChild(style);
 }
 function ensureHelpIn(targetId, helpId, tip){
@@ -314,6 +350,10 @@ function renderStatic(){
   if (insightsNote) insightsNote.textContent = state.lang === 'ko'
     ? '\uD604\uC7AC \uD544\uD130(\uAE30\uAC04/\uC870\uAC74)\uC5D0 \uB9DE\uCDB0 \uC694\uC57D\uD574\uC694.'
     : 'Summarized for the current filters (range + settings).';
+  const insightsBadge = document.getElementById('insightsBadge');
+  if (insightsBadge) insightsBadge.textContent = state.lang === 'ko' ? '\uC790\uB3D9 \uC0DD\uC131' : 'Auto';
+  const useDetailEyebrow = document.getElementById('useDetailEyebrow');
+  if (useDetailEyebrow) useDetailEyebrow.textContent = state.lang === 'ko' ? '\uC120\uD0DD\uD55C \uC0AC\uC6A9 \uC2DC\uB098\uB9AC\uC624' : 'Selected use case';
   const linkException = document.getElementById('linkException');
   const linkOps = document.getElementById('linkOps');
   const linkLog = document.getElementById('linkLog');
@@ -505,6 +545,21 @@ function renderUse(rows){
 
   const paths = Array.from(svg.querySelectorAll('path[data-use]'));
   const itemsEls = Array.from(legend.querySelectorAll('.legend-item[data-use]'));
+  const detailPct = document.getElementById('useDetailPct');
+  const detailTitle = document.getElementById('useDetailTitle');
+  const detailDef = document.getElementById('useDetailDef');
+  const defMap = x.useDef || {};
+  const hint = x.useDetailHint || (state.lang==='ko' ? '\uB3C4\uB11B \uC601\uC5ED \uC704\uC5D0 \uB9C8\uC6B0\uC2A4\uB97C \uC62C\uB9AC\uBA74 \uC815\uC758\uAC00 \uB098\uC640\uC694.' : 'Hover a segment to see the definition.');
+  const updateDetail = (name)=>{
+    if(!detailPct && !detailTitle && !detailDef) return;
+    const chosen = name || (slices[0] ? slices[0].name : null);
+    const s = slices.find(v=>v.name===chosen) || slices[0];
+    if(!s) return;
+    const p = total ? Math.round(s.count/total*100) : 0;
+    if(detailPct) detailPct.textContent = `${p}% (${s.count})`;
+    if(detailTitle) detailTitle.textContent = useLabel(s.name);
+    if(detailDef) detailDef.textContent = defMap[s.name] || hint;
+  };
   const setActive = (name)=>{
     paths.forEach(p=>{
       const on = p.getAttribute('data-use')===name;
@@ -516,6 +571,7 @@ function renderUse(rows){
       el.classList.toggle('is-active', on);
       el.classList.toggle('is-dim', !!name && !on);
     });
+    updateDetail(name);
   };
   paths.forEach(p=>{
     p.addEventListener('mouseenter', ()=>setActive(p.getAttribute('data-use')));
@@ -527,6 +583,8 @@ function renderUse(rows){
     el.addEventListener('mouseenter', ()=>setActive(el.getAttribute('data-use')));
     el.addEventListener('mouseleave', ()=>setActive(null));
   });
+
+  updateDetail(slices[0] ? slices[0].name : null);
 }
 function renderMatrix(rows){const x=tr();const total=rows.length||1,explicit=rows.filter(r=>r.explicit).length/total*100,utilNoBrand=rows.filter(r=>r.score>=4&&!r.explicit).length/total*100,aligned=rows.filter(r=>r.score>=4&&r.explicit).length/total*100,risk=utilNoBrand>explicit?x.riskHigh:x.riskMid;const cards=[{title:x.matrix.a[0],value:pct(explicit),body:x.matrix.a[1],cls:explicit<35?'low':'mid'},{title:x.matrix.b[0],value:pct(utilNoBrand),body:x.matrix.b[1],cls:utilNoBrand>40?'mid':'low'},{title:x.matrix.c[0],value:pct(aligned),body:x.matrix.c[1],cls:aligned>25?'mid':'low'},{title:x.matrix.d[0],value:risk,body:x.matrix.d[1],cls:risk===x.riskHigh?'low':'mid'}];$('matrix').innerHTML=cards.map(c=>`<article class="item"><span class="metric-chip ${c.cls}">${c.value}</span><h3 style="margin-top:12px">${c.title}</h3><p>${c.body}</p></article>`).join('')}
 function renderWhite(){$('whiteTable').innerHTML=whiteRows[state.lang].map(r=>`<tr>${r.map(c=>`<td>${c}</td>`).join('')}</tr>`).join('')}
