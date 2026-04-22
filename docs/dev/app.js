@@ -155,6 +155,36 @@ i18nEn.k6d = (c)=>`${c}`;
 i18nEn.quoteCount = (n)=>`${n} shown`;
 i18nEn.useDetailHint = 'Hover a segment to see what it means.';
 i18nKo.useDetailHint = '\uB3C4\uB11B \uC601\uC5ED\uC5D0 \uD638\uBC84\uD558\uBA74 \uB73B\uACFC \uC608\uC2DC\uAC00 \uB098\uC640\uC694.';
+i18nEn.useShortMap = {
+  asset_browsing: 'Assets',
+  workflow_efficiency: 'Workflow',
+  purchase: 'Purchase',
+  download: 'Download',
+  fabric_sourcing: 'Fabrics',
+  creator_posting: 'Creator',
+  commercial_project: 'Commercial',
+  comparison_evaluation: 'Compare',
+  avatar_deployment: 'Avatar',
+  contest_participation: 'Contest',
+  platform_positioning: 'Positioning',
+  legacy_confusion: 'Legacy',
+  other: 'Other'
+};
+i18nKo.useShortMap = {
+  asset_browsing: '\uC5D0\uC14B',
+  workflow_efficiency: '\uD6A8\uC728',
+  purchase: '\uAD6C\uB9E4',
+  download: '\uB2E4\uC6B4\uB85C\uB4DC',
+  fabric_sourcing: '\uC18C\uC7AC',
+  creator_posting: '\uD06C\uB9AC\uC5D0\uC774\uD130',
+  commercial_project: '\uC0C1\uC5C5',
+  comparison_evaluation: '\uBE44\uAD50',
+  avatar_deployment: '\uC544\uBC14\uD0C0',
+  contest_participation: '\uCF58\uD14C\uC2A4\uD2B8',
+  platform_positioning: '\uD3EC\uC9C0\uC154\uB2DD',
+  legacy_confusion: '\uD63C\uB3D9',
+  other: '\uAE30\uD0C0'
+};
 i18nEn.useDef = {
   asset_browsing: 'Looking for assets in CONNECT (store/library) as starting points or references.',
   workflow_efficiency: 'Using CONNECT to save time (templates, shortcuts, how-to, faster iteration).',
@@ -242,15 +272,15 @@ function ensureVizStyles(){
     "#useLegend .legend-item{border-radius:12px;padding:6px 8px;transition:background .12s ease,box-shadow .12s ease,transform .12s ease}" +
     "#useLegend .legend-item.is-dim{opacity:.55}" +
     "#useLegend .legend-item.is-active{background:rgba(28,37,45,.06);box-shadow:0 10px 18px rgba(28,37,45,.10);transform:translateY(-1px)}" +
-    ".use-grid{display:grid;grid-template-columns:1fr .95fr;gap:16px;align-items:start}" +
-    ".use-viz{display:grid;grid-template-columns:360px 1fr;gap:14px;align-items:start}" +
-    ".use-viz #useChart{max-width:360px}" +
-    ".use-viz #useLegend{grid-template-columns:1fr;max-height:320px;overflow:auto;padding-right:6px}" +
+    ".use-grid{display:grid;grid-template-columns:1.25fr .75fr;gap:16px;align-items:start}" +
+    ".use-viz{display:flex;flex-direction:column;gap:12px;align-items:flex-start}" +
+    ".use-viz #useChart{max-width:520px}" +
+    ".use-viz #useLegend{display:grid;grid-template-columns:1fr 1fr;gap:8px 14px;margin-top:0}" +
     ".use-viz #useLegend .legend-item{padding:6px 8px}" +
     ".use-viz #useLegend .legend-metric{font-variant-numeric:tabular-nums}" +
     ".use-detail{position:sticky;top:14px}" +
     ".use-detail .kpi{font-variant-numeric:tabular-nums}" +
-    "@media (max-width:1120px){.use-grid{grid-template-columns:1fr}.use-viz{grid-template-columns:1fr}.use-viz #useChart{max-width:none}.use-viz #useLegend{max-height:none}.use-detail{position:static}}";
+    "@media (max-width:1120px){.use-grid{grid-template-columns:1fr}.use-viz #useChart{max-width:none}.use-viz #useLegend{grid-template-columns:1fr}.use-detail{position:static}}";
   document.head.appendChild(style);
 }
 function ensureHelpIn(targetId, helpId, tip){
@@ -278,6 +308,7 @@ function showFatal(err){
 }
 let minDate=new Date();let maxDate=new Date();
 function tr(){return i18n[state.lang]||i18n.en} function useLabel(k){return tr().useMap[k]||k} function note(row){return state.lang==='ko'?(row.notesKo||row.notesEn||''):(row.notesEn||row.notesKo||'')} function pct(v){return `${Math.round(v)}%`} 
+function useShortLabel(k){const x=tr();return (x.useShortMap && x.useShortMap[k]) || useLabel(k)}
 function recomputeBounds(){if(!records||!records.length){return;}minDate=records.reduce((m,r)=>d(r.date)<m?d(r.date):m,d(records[0].date));maxDate=records.reduce((m,r)=>d(r.date)>m?d(r.date):m,d(records[0].date))}
 function resolveRange(){let s,e;if(state.start&&state.end){s=d(state.start);e=d(state.end)}else{e=maxDate;if(state.preset==='7d'){s=new Date(e);s.setDate(e.getDate()-6)}else if(state.preset==='30d'){s=new Date(e);s.setDate(e.getDate()-29)}else if(state.preset==='90d'){s=new Date(e);s.setDate(e.getDate()-89)}else if(state.preset==='ytd'){s=new Date(e.getFullYear(),0,1)}else{s=minDate}}if(s<minDate)s=minDate;if(e>maxDate)e=maxDate;if(e<s)[s,e]=[e,s];return{start:s,end:e}}
 function filtered(){const {start,end}=resolveRange();return records.filter(r=>{const x=d(r.date);if(!(x>=start&&x<=end)) return false; if(state.sourceFilter && state.sourceFilter!=='all' && r.source!==state.sourceFilter) return false; return true})} function daysInRange(){const {start,end}=resolveRange();return Math.round((end-start)/86400000)+1} function grainMode(){if(state.grain!=='auto')return state.grain;return daysInRange()<=120?'week':'month'} function weekStart(dateObj){const c=new Date(dateObj);const day=c.getDay();const diff=day===0?-6:1-day;c.setDate(c.getDate()+diff);return c} function bucket(dateObj,mode){if(mode==='month')return `${dateObj.getFullYear()}-${String(dateObj.getMonth()+1).padStart(2,'0')}`;const ws=weekStart(dateObj);return `${ws.getFullYear()}-${String(ws.getMonth()+1).padStart(2,'0')}-${String(ws.getDate()).padStart(2,'0')}`}
@@ -566,6 +597,8 @@ function renderUse(rows){
     items=[...top,{name:'other',count:other}];
   }
   const total=items.reduce((s,i)=>s+i.count,0);
+  const topLegend = allItems.slice(0,3);
+  const topLegendKeys = topLegend.map(it=>it.name);
   const colors=["#b55b38","#2d6f65","#6d5e92","#d89b2b","#5b6778","#8d6c4c"];
   const cx=170,cy=160,radius=132;
   function polar(a,r){const rad=Math.PI/180*a;return{x:cx+Math.cos(rad)*r,y:cy+Math.sin(rad)*r}}
@@ -577,17 +610,14 @@ function renderUse(rows){
     start+=angle;
     return{path,color:colors[idx%colors.length],name:it.name,count:it.count,angle,mid}
   });
-  const labelRadius = 98;
-  const labelMinAngle = 40; // show labels only when there's enough room
-  const labelMax = 4;
+  const labelRadius = 108;
+  const labelMinAngle = 28; // only when there's enough room
   const labels = slices
-    .filter(s=>s.angle>=labelMinAngle)
-    .sort((a,b)=>b.angle-a.angle)
-    .slice(0,labelMax)
+    .filter(s=>topLegendKeys.includes(s.name) && s.angle>=labelMinAngle)
     .map(s=>{
       const p = polar(s.mid, labelRadius);
-      const text = useLabel(s.name);
-      const fs = text.length > 10 ? 11 : 13;
+      const text = useShortLabel(s.name);
+      const fs = text.length > 10 ? 12 : 14;
       return `<text x="${p.x}" y="${p.y}" text-anchor="middle" dominant-baseline="middle" font-size="${fs}" font-weight="800" fill="#ffffff" stroke="rgba(28,37,45,.28)" stroke-width="4" paint-order="stroke" pointer-events="none">${text}</text>`;
     }).join("");
 
@@ -597,8 +627,15 @@ function renderUse(rows){
     `<circle cx="${cx}" cy="${cy}" r="64" fill="#fffaf4"></circle>` +
     `<text x="${cx}" y="${cy-6}" text-anchor="middle" font-size="14" fill="#66707a">${x.centerTop}</text>` +
     `<text x="${cx}" y="${cy+26}" text-anchor="middle" font-size="22" fill="#1c252d">${x.centerBottom}</text>`;
-  const more = allItems.length>items.length ? `<div class="meta">+${allItems.length-items.length} more</div>` : '';
-  legend.innerHTML=slices.map(s=>`<div class="legend-item" data-use="${s.name}"><i class="swatch" style="background:${s.color}"></i><span>${useLabel(s.name)}</span><span class="legend-metric">${Math.round(s.count/total*100)}% (${s.count})</span></div>`).join("") + more;
+  const more = allItems.length>3 ? `<div class="meta">+${allItems.length-3} more</div>` : '';
+  const sliceByName = new Map(slices.map(s=>[s.name,s]));
+  const legendHtml = topLegend.map((it,idx)=>{
+    const s = sliceByName.get(it.name);
+    if(!s) return '';
+    const pctN = total ? Math.round(s.count/total*100) : 0;
+    return `<div class="legend-item" data-use="${s.name}"><i class="swatch" style="background:${s.color}"></i><span>${useLabel(s.name)}</span><span class="legend-metric">${pctN}% (${s.count})</span></div>`;
+  }).join("");
+  legend.innerHTML = legendHtml + more;
 
   const paths = Array.from(svg.querySelectorAll('path[data-use]'));
   const itemsEls = Array.from(legend.querySelectorAll('.legend-item[data-use]'));
