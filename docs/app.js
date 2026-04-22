@@ -213,7 +213,7 @@ i18nKo.tips.quoteScore =
   "2: \uC774\uB984\uB9CC \uD55C \uBC88 \uB098\uC624\uAC70\uB098 \uB9C9\uC5F0\uD574\uC694(\uC815\uBCF4 \uBD80\uC871).\n" +
   "1: \uC18C\uC720 \uC11C\uD398\uC774\uC2A4/\uD45C\uC2DC\uC6A9 \uB4F1 \uC2E4\uC9C8 \uC2E0\uD638\uAC00 \uAC70\uC758 \uC5C6\uC5B4\uC694.";
 
-const state={lang:'en',preset:'all',start:null,end:null,grain:'auto',quoteMode:'top',quotePage:1,sourceFilter:'all'};
+const state={lang:'en',preset:'all',start:null,end:null,grain:'auto',quoteMode:'top',quotePage:1,sourceFilter:'all',quoteSourceFilter:'all'};
 const $=id=>{const el=document.getElementById(id);if(!el)throw new Error(`Missing element: #${id}`);return el};
 const $opt=id=>document.getElementById(id);
 const d=v=>new Date(`${v}T00:00:00`);
@@ -402,6 +402,20 @@ function renderStatic(){
     sourceSel.title = state.lang==='ko' ? '\uD50C\uB7AB\uD3FC/\uC18C\uC2A4 \uD544\uD130' : 'Platform / Source filter';
   }
 
+  const quoteSourceSel = document.getElementById('quoteSourceFilter');
+  if(quoteSourceSel){
+    const labelAll = state.lang==='ko' ? '\uC778\uC6A9: \uC804\uCCB4 \uD50C\uB7AB\uD3FC' : 'Quotes: all platforms';
+    const cur = state.quoteSourceFilter || 'all';
+    const sources = Array.from(new Set(records.map(r=>r.source))).sort((a,b)=>String(a).localeCompare(String(b)));
+    const opts = ['all', ...sources];
+    quoteSourceSel.innerHTML = opts.map(v=>{
+      const t = v==='all' ? labelAll : v;
+      return `<option value="${String(v).replace(/"/g,'&quot;')}">${String(t)}</option>`;
+    }).join('');
+    quoteSourceSel.value = opts.includes(cur) ? cur : 'all';
+    quoteSourceSel.title = state.lang==='ko' ? '\uC2E4\uC81C \uC720\uC800 \uC778\uC6A9 \uD50C\uB7AB\uD3FC \uD544\uD130' : 'Quote platform filter';
+  }
+
   $('rangePrefix').textContent = x.rangePrefix;
   $('applyRange').textContent = x.applyRange;
   $('resetAll').textContent = x.resetAll;
@@ -559,10 +573,30 @@ function renderUse(rows){
   const slices=items.map((it,idx)=>{
     const angle=it.count/total*360,p1=polar(start,radius),p2=polar(start+angle,radius),large=angle>180?1:0;
     const path=`M ${cx} ${cy} L ${p1.x} ${p1.y} A ${radius} ${radius} 0 ${large} 1 ${p2.x} ${p2.y} Z`;
+    const mid = start + angle/2;
     start+=angle;
-    return{path,color:colors[idx%colors.length],name:it.name,count:it.count}
+    return{path,color:colors[idx%colors.length],name:it.name,count:it.count,angle,mid}
   });
-  svg.innerHTML=`${slices.map(s=>`<path data-use="${s.name}" d="${s.path}" fill="${s.color}"></path>`).join("")}<circle cx="${cx}" cy="${cy}" r="64" fill="#fffaf4"></circle><text x="${cx}" y="${cy-6}" text-anchor="middle" font-size="14" fill="#66707a">${x.centerTop}</text><text x="${cx}" y="${cy+26}" text-anchor="middle" font-size="22" fill="#1c252d">${x.centerBottom}</text>`;
+  const labelRadius = 98;
+  const labelMinAngle = 40; // show labels only when there's enough room
+  const labelMax = 4;
+  const labels = slices
+    .filter(s=>s.angle>=labelMinAngle)
+    .sort((a,b)=>b.angle-a.angle)
+    .slice(0,labelMax)
+    .map(s=>{
+      const p = polar(s.mid, labelRadius);
+      const text = useLabel(s.name);
+      const fs = text.length > 10 ? 11 : 13;
+      return `<text x="${p.x}" y="${p.y}" text-anchor="middle" dominant-baseline="middle" font-size="${fs}" font-weight="800" fill="#ffffff" stroke="rgba(28,37,45,.28)" stroke-width="4" paint-order="stroke" pointer-events="none">${text}</text>`;
+    }).join("");
+
+  svg.innerHTML=
+    `${slices.map(s=>`<path data-use="${s.name}" d="${s.path}" fill="${s.color}"></path>`).join("")}` +
+    `${labels}` +
+    `<circle cx="${cx}" cy="${cy}" r="64" fill="#fffaf4"></circle>` +
+    `<text x="${cx}" y="${cy-6}" text-anchor="middle" font-size="14" fill="#66707a">${x.centerTop}</text>` +
+    `<text x="${cx}" y="${cy+26}" text-anchor="middle" font-size="22" fill="#1c252d">${x.centerBottom}</text>`;
   const more = allItems.length>items.length ? `<div class="meta">+${allItems.length-items.length} more</div>` : '';
   legend.innerHTML=slices.map(s=>`<div class="legend-item" data-use="${s.name}"><i class="swatch" style="background:${s.color}"></i><span>${useLabel(s.name)}</span><span class="legend-metric">${Math.round(s.count/total*100)}% (${s.count})</span></div>`).join("") + more;
 
@@ -723,7 +757,10 @@ function renderInsights(rows){
 }
 function renderQuotes(rows){
   const x=tr();
-  const sorted=[...rows].sort((a,b)=>b.score!==a.score?b.score-a.score:a.date.localeCompare(b.date));
+  const quoteRows = (state.quoteSourceFilter && state.quoteSourceFilter!=='all')
+    ? rows.filter(r=>r.source===state.quoteSourceFilter)
+    : rows;
+  const sorted=[...quoteRows].sort((a,b)=>b.score!==a.score?b.score-a.score:a.date.localeCompare(b.date));
   const pageSize = 10;
   const totalPages = Math.max(1, Math.ceil(sorted.length / pageSize));
   if(state.quotePage<1) state.quotePage=1;
@@ -734,7 +771,7 @@ function renderQuotes(rows){
   const shown = isPaged ? sorted.slice(from, to) : sorted.slice(0,8);
   const scoreTip = (x.tips && x.tips.quoteScore) ? String(x.tips.quoteScore).replace(/"/g,'&quot;') : '';
   $('quoteCount').textContent=(x.quoteCount?x.quoteCount(shown.length):`${shown.length} shown`);
-  $('quoteMeta').textContent=x.quotesShown(shown.length,rows.length);
+  $('quoteMeta').textContent=x.quotesShown(shown.length,quoteRows.length);
   $('showTopBtn').classList.toggle('active',state.quoteMode==='top');
   $('showAllBtn').classList.toggle('active',state.quoteMode==='all');
   $('showTopBtn').classList.toggle('subtle-btn',state.quoteMode!=='top');
@@ -776,7 +813,7 @@ $('applyRange').addEventListener('click',()=>{
   resetQuotePaging();
   render();
 });
-$('resetAll').addEventListener('click',()=>{
+  $('resetAll').addEventListener('click',()=>{
   state.preset='all';
   state.start=null;
   state.end=null;
@@ -784,6 +821,8 @@ $('resetAll').addEventListener('click',()=>{
   $('grain').value='auto';
   state.sourceFilter='all';
   const sel = $opt('sourceFilter'); if(sel) sel.value='all';
+  state.quoteSourceFilter='all';
+  const qsel = $opt('quoteSourceFilter'); if(qsel) qsel.value='all';
   state.quoteMode='top';
   resetQuotePaging();
   render();
@@ -794,6 +833,14 @@ const sourceSel = $opt('sourceFilter');
 if(sourceSel){
   sourceSel.addEventListener('change', e=>{
     state.sourceFilter = e.target.value || 'all';
+    resetQuotePaging();
+    render();
+  });
+}
+const quoteSourceSel = $opt('quoteSourceFilter');
+if(quoteSourceSel){
+  quoteSourceSel.addEventListener('change', e=>{
+    state.quoteSourceFilter = e.target.value || 'all';
     resetQuotePaging();
     render();
   });
