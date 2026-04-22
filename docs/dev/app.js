@@ -213,7 +213,7 @@ i18nKo.tips.quoteScore =
   "2: \uC774\uB984\uB9CC \uD55C \uBC88 \uB098\uC624\uAC70\uB098 \uB9C9\uC5F0\uD574\uC694(\uC815\uBCF4 \uBD80\uC871).\n" +
   "1: \uC18C\uC720 \uC11C\uD398\uC774\uC2A4/\uD45C\uC2DC\uC6A9 \uB4F1 \uC2E4\uC9C8 \uC2E0\uD638\uAC00 \uAC70\uC758 \uC5C6\uC5B4\uC694.";
 
-const state={lang:'en',preset:'all',start:null,end:null,grain:'auto',quoteMode:'top',quotePage:1,sourceFilter:'all'};
+const state={lang:'en',preset:'all',start:null,end:null,grain:'auto',quoteMode:'top',quotePage:1,sourceFilter:'all',quoteSourceFilter:'all'};
 const $=id=>{const el=document.getElementById(id);if(!el)throw new Error(`Missing element: #${id}`);return el};
 const $opt=id=>document.getElementById(id);
 const d=v=>new Date(`${v}T00:00:00`);
@@ -400,6 +400,20 @@ function renderStatic(){
     }).join('');
     sourceSel.value = opts.includes(cur) ? cur : 'all';
     sourceSel.title = state.lang==='ko' ? '\uD50C\uB7AB\uD3FC/\uC18C\uC2A4 \uD544\uD130' : 'Platform / Source filter';
+  }
+
+  const quoteSourceSel = document.getElementById('quoteSourceFilter');
+  if(quoteSourceSel){
+    const labelAll = state.lang==='ko' ? '\uC778\uC6A9: \uC804\uCCB4 \uD50C\uB7AB\uD3FC' : 'Quotes: all platforms';
+    const cur = state.quoteSourceFilter || 'all';
+    const sources = Array.from(new Set(records.map(r=>r.source))).sort((a,b)=>String(a).localeCompare(String(b)));
+    const opts = ['all', ...sources];
+    quoteSourceSel.innerHTML = opts.map(v=>{
+      const t = v==='all' ? labelAll : v;
+      return `<option value="${String(v).replace(/"/g,'&quot;')}">${String(t)}</option>`;
+    }).join('');
+    quoteSourceSel.value = opts.includes(cur) ? cur : 'all';
+    quoteSourceSel.title = state.lang==='ko' ? '\uC2E4\uC81C \uC720\uC800 \uC778\uC6A9 \uD50C\uB7AB\uD3FC \uD544\uD130' : 'Quote platform filter';
   }
 
   $('rangePrefix').textContent = x.rangePrefix;
@@ -723,7 +737,10 @@ function renderInsights(rows){
 }
 function renderQuotes(rows){
   const x=tr();
-  const sorted=[...rows].sort((a,b)=>b.score!==a.score?b.score-a.score:a.date.localeCompare(b.date));
+  const quoteRows = (state.quoteSourceFilter && state.quoteSourceFilter!=='all')
+    ? rows.filter(r=>r.source===state.quoteSourceFilter)
+    : rows;
+  const sorted=[...quoteRows].sort((a,b)=>b.score!==a.score?b.score-a.score:a.date.localeCompare(b.date));
   const pageSize = 10;
   const totalPages = Math.max(1, Math.ceil(sorted.length / pageSize));
   if(state.quotePage<1) state.quotePage=1;
@@ -734,7 +751,7 @@ function renderQuotes(rows){
   const shown = isPaged ? sorted.slice(from, to) : sorted.slice(0,8);
   const scoreTip = (x.tips && x.tips.quoteScore) ? String(x.tips.quoteScore).replace(/"/g,'&quot;') : '';
   $('quoteCount').textContent=(x.quoteCount?x.quoteCount(shown.length):`${shown.length} shown`);
-  $('quoteMeta').textContent=x.quotesShown(shown.length,rows.length);
+  $('quoteMeta').textContent=x.quotesShown(shown.length,quoteRows.length);
   $('showTopBtn').classList.toggle('active',state.quoteMode==='top');
   $('showAllBtn').classList.toggle('active',state.quoteMode==='all');
   $('showTopBtn').classList.toggle('subtle-btn',state.quoteMode!=='top');
@@ -776,7 +793,7 @@ $('applyRange').addEventListener('click',()=>{
   resetQuotePaging();
   render();
 });
-$('resetAll').addEventListener('click',()=>{
+  $('resetAll').addEventListener('click',()=>{
   state.preset='all';
   state.start=null;
   state.end=null;
@@ -784,6 +801,8 @@ $('resetAll').addEventListener('click',()=>{
   $('grain').value='auto';
   state.sourceFilter='all';
   const sel = $opt('sourceFilter'); if(sel) sel.value='all';
+  state.quoteSourceFilter='all';
+  const qsel = $opt('quoteSourceFilter'); if(qsel) qsel.value='all';
   state.quoteMode='top';
   resetQuotePaging();
   render();
@@ -794,6 +813,14 @@ const sourceSel = $opt('sourceFilter');
 if(sourceSel){
   sourceSel.addEventListener('change', e=>{
     state.sourceFilter = e.target.value || 'all';
+    resetQuotePaging();
+    render();
+  });
+}
+const quoteSourceSel = $opt('quoteSourceFilter');
+if(quoteSourceSel){
+  quoteSourceSel.addEventListener('change', e=>{
+    state.quoteSourceFilter = e.target.value || 'all';
     resetQuotePaging();
     render();
   });
