@@ -625,22 +625,78 @@ function renderInsights(rows){
   const top3 = sources.slice(0,3).reduce((s,it)=>s+it.count,0);
   const top3Share = mentions ? (top3/mentions*100) : 0;
 
-  const lines = [];
+  const items = [];
+  const ownedShare = mentions ? (owned/mentions*100) : 0;
+  const legacy = groupBy(rows,r=>r.useCase).find(u=>u.name==='legacy_confusion')?.count || 0;
+  const legacyShare = mentions ? (legacy/mentions*100) : 0;
+
+  const add = (title, body)=>items.push({title, body});
+
   if(state.lang==='ko'){
-    lines.push(`\uD0D1 \uC0AC\uC6A9 \uCF00\uC774\uC2A4\uB294 <strong>${topUseLabel}</strong>\uC608\uC694. \uC120\uD0DD \uB370\uC774\uD130\uC758 ${pct(topUseShare)}(${topUse?topUse.count:0}\uAC74)\uC744 \uCC28\uC9C0\uD574\uC694.`);
-    lines.push(`\uACE0\uAC00\uCE58 \uBE44\uC728\uC740 ${pct(hvShare)}, \uBE0C\uB79C\uB4DC \uD68C\uC0C1 \uBE44\uC728\uC740 ${pct(brShare)}\uC608\uC694. \uC720\uD2F8\uB9AC\uD2F0\uAC00 \uBE0C\uB79C\uB4DC \uD68C\uC0C1\uBCF4\uB2E4 ${pct(Math.abs(delta))}\uD3EC\uC778\uD2B8 ${delta>=0?'\uC55E\uC11C\uC694':'\uB4A4\uCC98\uC838\uC694'}.`);
-    lines.push(`\uC678\uBD80 \uC18C\uC2A4 \uBE44\uC728\uC740 ${pct(externalShare)}(${external}\uAC74)\uC774\uACE0, Owned/\uACF5\uC2DD \uB808\uCF54\uB4DC\uB294 ${pct(mentions?owned/mentions*100:0)}(${owned}\uAC74)\uC608\uC694.`);
-    lines.push(`\uAC00\uC7A5 \uB9CE\uC774 \uBCF4\uC778 \uCEE4\uBBA4\uB2C8\uD2F0\uB294 <strong>${topCommName}</strong>\uC608\uC694 (${pct(topCommShare)}).`);
-    lines.push(`\uB370\uC774\uD130\uAC00 \uB4F1\uC7A5\uD558\uB294 \uC6D4\uC740 \uCD1D ${activeMonths}\uAC1C\uC608\uC694 (${earliest} \u2192 ${latest}). \uC0C1\uC704 3\uAC1C \uC18C\uC2A4\uAC00 ${pct(top3Share)}\uB97C \uCC28\uC9C0\uD574 \uD3B8\uC911\uB3C4\uAC00 \uB192\uC740 \uD3B8\uC785\uB2C8\uB2E4.`);
+    if(delta >= 8){
+      add('\uBE0C\uB79C\uB4DC \uD68C\uC0C1\uC744 \uB04C\uC5B4\uC62C\uB9AC\uB294 \uAC83\uC774 1\uC21C\uC704\uC608\uC694',
+        `\uACE0\uAC00\uCE58\uB294 ${pct(hvShare)}\uC778\uB370 \uBE0C\uB79C\uB4DC \uC9C1\uC811 \uD68C\uC0C1\uC740 ${pct(brShare)}\uC608\uC694. \uCC28\uC774\uAC00 \uD06C\uB2C8 \u201C\uC4F0\uAC8C \uD558\uB294 \uAC83\u201D\uC740 \uB418\uB294\uB370 \u201C\uC774\uB984\uC744 \uC678\uC6B0\uAC8C\u201D\uD558\uB294 \uBD80\uBD84\uC740 \uC544\uC9C1 \uC57D\uD574\uC694. \uC678\uBD80 \uCEE8\uD150\uCE20/\uACF5\uC720 \uD45C\uAE30\uC5D0 \uD544\uC218\uB85C \u201CCLO-SET CONNECT\u201D \uD0A4\uC6CC\uB4DC\uB97C \uC2EC\uACE0, \uC0C1\uC704 \uC0AC\uC6A9 \uC2DC\uB098\uB9AC\uC624(${topUseLabel}) \uC911\uC2EC\uC758 \uD55C \uC904 \uBB38\uC7A5 CTA\uB97C \uACE0\uC815\uD558\uB294 \uAC83\uC744 \uCD94\uCC9C\uD574\uC694.`);
+    } else {
+      add('\uBE0C\uB79C\uB4DC \uD0A4\uC6CC\uB4DC\uB294 \uC798 \uD0C0\uACE0 \uC788\uC5B4\uC694',
+        `\uBE0C\uB79C\uB4DC \uC9C1\uC811 \uD68C\uC0C1\uC740 ${pct(brShare)}\uB85C \uD070 \uAC2D\uCC28\uB294 \uC544\uB2C8\uC5D0\uC694. \uB2E4\uC74C \uB2E8\uACC4\uB294 \u201C\uC5B4\uB5A4 \uAC00\uCE58\uB97C \uC8FC\uB294\uC9C0\u201D\uB97C \uB354 \uAC15\uD558\uAC8C \uB9CC\uB4DC\uB294 \uAC83\uC774 \uC88B\uC544\uC694.`);
+    }
+
+    if(ownedShare >= 55){
+      add('\uC678\uBD80 \uC18C\uC2A4 \uC2E0\uD638\uAC00 \uBD80\uC871\uD574\uC694 (\uB178\uCD9C/\uC785\uC18C\uBB38 \uC131\uACFC \uCE21\uC815\uC5D0 \uBD88\uB9AC)',
+        `Owned/\uACF5\uC2DD \uB808\uCF54\uB4DC\uAC00 ${pct(ownedShare)}\uB85C \uB9CE\uC544\uC694. \uB2E4\uC74C 2\uC8FC\uB294 \uC678\uBD80 \uCEE4\uBBA4\uB2C8\uD2F0\uC5D0\uC11C \u201C\uC2E4\uC81C \uC720\uC800 \uC5B8\uC5B4\u201D\uAC00 \uB098\uC624\uAC8C \uB9CC\uB4DC\uB294 \uAC83\uC774 \uD544\uC694\uD574\uC694. \uC608: ${topCommName} \uAC19\uC740 \uC0C1\uC704 \uCEE4\uBBA4\uB2C8\uD2F0\uC5D0 \u201C\uBB34\uB8CC \uC5D0\uC14B TOP 10 + \uC0AC\uC6A9\uBC95\u201D \uD615\uD0DC\uC758 \uB2E8\uAC74 \uAC8C\uC2DC\uBB3C\uC744 \uB2EC\uC544 \uD558\uB098\uC529 \uAC80\uC99D\uD574\uC694.`);
+    }
+
+    if(top3Share >= 65){
+      add('\uCC44\uB110 \uD3B8\uC911\uB3C4\uAC00 \uB192\uC544\uC694 (\uD0C0\uAC9F \uD655\uC7A5\uC774 \uD544\uC694)',
+        `\uC0C1\uC704 3\uAC1C \uC18C\uC2A4\uAC00 ${pct(top3Share)}\uB97C \uCC28\uC9C0\uD574\uC694. \uB2E4\uC74C\uC740 \uC5F0\uB3D9\uB418\uB294 \uACF5\uAC1C \uC11C\uD398\uC774\uC2A4(\uC608: YouTube \uC124\uBA85\uB780, Behance/ArtStation \uD504\uB85C\uC81D\uD2B8 \uD14D\uC2A4\uD2B8, Reddit \uAC80\uC0C9 \uC2E0\uD638)\uB97C \uC758\uB3C4\uC801\uC73C\uB85C \uD0A4\uC6CC\uC57C \uD574\uC694.`);
+    }
+
+    if(topUse && topUse.name === 'platform_positioning' && topUseShare >= 25){
+      add('\u201C\uD50C\uB7AB\uD3FC \uC18C\uAC1C\u201D\uC5D0\uC11C \u201C\uC2E4\uD589 \uCF58\uD150\uCE20\u201D\uB85C \uC62E\uACA8\uC57C \uD574\uC694',
+        `\uD604\uC7AC \uD1A4\uC740 '${topUseLabel}' \uBE44\uC911\uC774 \uD06C\uAC8C \uB4DC\uB7EC\uB098\uC694. \uB2E4\uC74C \uC561\uC158\uC740 \uB3C4\uAD6C\uAC00 \uC544\uB2C8\uB77C \uACB0\uACFC\uB85C \uC124\uB4DD\uD558\uB294 \uAC83: \u201C\uC5D0\uC14B \uCC3E\uAE30 \u2192 \uB2E4\uC6B4\uB85C\uB4DC \u2192 \uB0B4 \uD30C\uC774\uD504\uB77C\uC778\uC5D0 \uC801\uC6A9\u201D \uBBFC\uCC29\uD55C \uD1A0\uD53D\uC744 3\uAC1C \uC815\uD574\uC11C \uC544\uBB34\uAC70\uB098 \uAC8C\uC2DC\uD574\uC694(\uBB38\uC81C \uD574\uACB0\uD615).`);
+    }
+
+    if(legacyShare >= 8){
+      add('\uC774\uB984/\uB9C1\uD06C \uD63C\uB3D9\uC744 \uC904\uC774\uBA74 \uC720\uC785 \uC190\uC2E4\uC774 \uC904\uC5B4\uC694',
+        `\uAE30\uC874/\uD63C\uB3D9(legacy) \uC5B8\uAE09\uC774 ${pct(legacyShare)}\uB098 \uB429\uB2C8\uB2E4. \uC0C1\uC704 \uC9C8\uBB38\uC744 \uBBF8\uB9AC \uC815\uB9AC\uD55C \u201C\uC8FC\uC18C/\uC774\uB984 \uAC00\uC774\uB4DC\u201D\uB97C \uACE0\uC815\uD558\uACE0, \uC720\uC800\uAC00 \uAC00\uC7A5 \uC790\uC8FC \uB9CC\uB098\uB294 \uACF5\uAC1C \uD398\uC774\uC9C0\uC5D0\uB3C4 \uD558\uB098\uC529 \uB123\uC5B4\uC8FC\uBA74 \uC88B\uC544\uC694.`);
+    }
+
+    add('\uC2E4\uD589 \uCCB4\uD06C\uB9AC\uC2A4\uD2B8 (\uB2E4\uC74C \uC8FC \uBB34\uC5C7\uC744 \uD560\uC9C0)',
+      `1) \uC0C1\uC704 \uC0AC\uC6A9 \uC2DC\uB098\uB9AC\uC624(${topUseLabel}) \uAE30\uC900\uC73C\uB85C \uB9C1\uD06C \uD3EC\uD568 \uD15C\uD50C\uB9BF 3\uAC1C \uC81C\uC791 \u2192 \uC678\uBD80 \uCEE4\uBBA4\uB2C8\uD2F0 2\uACF3\uC5D0 \uAC8C\uC2DC.\n2) \uD0A4\uC6CC\uB4DC '\uC5B4\uB5A4 \uAC8C \uBB34\uB8CC\uC57C/\uC5B4\uB5BB\uAC8C \uB2E4\uC6B4\uB85C\uB4DC\uD574' \uD615\uD0DC\uB85C \uD3EC\uC2A4\uD305.\n3) 7\uC77C \uB4A4: \uC678\uBD80 \uC18C\uC2A4 \uBE44\uC728(${pct(externalShare)})\uACFC \uBE0C\uB79C\uB4DC \uD68C\uC0C1(${pct(brShare)}) \uBCC0\uD654 \uD655\uC778.`);
   } else {
-    lines.push(`Top use case is <strong>${topUseLabel}</strong> (${pct(topUseShare)}, ${topUse?topUse.count:0} records).`);
-    lines.push(`High-value share is ${pct(hvShare)} vs brand recall share ${pct(brShare)} (gap: ${pct(Math.abs(delta))} points, utility ${delta>=0?'ahead':'behind'}).`);
-    lines.push(`External sources account for ${pct(externalShare)} (${external} records); owned/official is ${pct(mentions?owned/mentions*100:0)} (${owned} records).`);
-    lines.push(`Most frequent community is <strong>${topCommName}</strong> (${pct(topCommShare)}).`);
-    lines.push(`Coverage spans ${activeMonths} active months (${earliest} \u2192 ${latest}); top-3 sources make up ${pct(top3Share)} (high concentration).`);
+    if(delta >= 8){
+      add('Brand recall is the bottleneck',
+        `High-value usage is ${pct(hvShare)} while explicit brand recall is ${pct(brShare)}. Close the gap by standardizing “CLO-SET CONNECT” naming + a 1-line CTA on external content (YouTube descriptions, portfolio captions, community replies) aligned to the top use case (${topUseLabel}).`);
+    } else {
+      add('Brand recall is not the main issue',
+        `Brand recall is ${pct(brShare)} with no large gap vs utility. Next step is strengthening “what value” messaging and making it repeatable in the top use case (${topUseLabel}).`);
+    }
+
+    if(ownedShare >= 55){
+      add('External signal is thin (hard to read market pull)',
+        `Owned/official records are ${pct(ownedShare)}. Drive 2 weeks of external demand-language by seeding problem-solving posts in top communities (e.g., ${topCommName}) with “free assets + how-to” style content.`);
+    }
+
+    if(top3Share >= 65){
+      add('Channel concentration is high',
+        `Top-3 sources make up ${pct(top3Share)}. Diversify where public signals appear (YouTube, portfolios, forums, Reddit-adjacent) so insights aren’t skewed by a single surface.`);
+    }
+
+    if(topUse && topUse.name === 'platform_positioning' && topUseShare >= 25){
+      add('Shift from “positioning” to “execution” content',
+        `A large share is “Platform Positioning” (what CONNECT is / where to go). Create 3 tactical templates that show execution: find asset \u2192 download \u2192 apply in workflow, then measure lift in external mentions and high-value share.`);
+    }
+
+    if(legacyShare >= 8){
+      add('Reduce legacy confusion leakage',
+        `Legacy confusion is ${pct(legacyShare)}. Publish a short public “naming + links” guide and reference it in high-traffic pages to prevent drop-off.`);
+    }
+
+    add('Next-week checklist',
+      `1) Ship 3 content templates tied to ${topUseLabel}.\n2) Post in 2 external communities.\n3) Re-check: external share (${pct(externalShare)}), brand recall (${pct(brShare)}), and coverage (${activeMonths} months: ${earliest}\u2192${latest}).`);
   }
 
-  wrap.innerHTML = `<ul class="note" style="margin:0;padding-left:18px">${lines.map(t=>`<li style="margin:0 0 8px">${t}</li>`).join('')}</ul>`;
+  wrap.innerHTML = items.map(it=>`<article class="item"><h3 style="margin:0 0 8px">${it.title}</h3><p class="note" style="margin:0">${it.body}</p></article>`).join('');
 }
 function renderQuotes(rows){
   const x=tr();
