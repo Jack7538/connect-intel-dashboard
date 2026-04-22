@@ -213,7 +213,7 @@ i18nKo.tips.quoteScore =
   "2: \uC774\uB984\uB9CC \uD55C \uBC88 \uB098\uC624\uAC70\uB098 \uB9C9\uC5F0\uD574\uC694(\uC815\uBCF4 \uBD80\uC871).\n" +
   "1: \uC18C\uC720 \uC11C\uD398\uC774\uC2A4/\uD45C\uC2DC\uC6A9 \uB4F1 \uC2E4\uC9C8 \uC2E0\uD638\uAC00 \uAC70\uC758 \uC5C6\uC5B4\uC694.";
 
-const state={lang:'en',preset:'all',start:null,end:null,grain:'auto',quoteMode:'top'};
+const state={lang:'en',preset:'all',start:null,end:null,grain:'auto',quoteMode:'top',quotePage:1,sourceFilter:'all'};
 const $=id=>{const el=document.getElementById(id);if(!el)throw new Error(`Missing element: #${id}`);return el};
 const $opt=id=>document.getElementById(id);
 const d=v=>new Date(`${v}T00:00:00`);
@@ -275,7 +275,7 @@ let minDate=new Date();let maxDate=new Date();
 function tr(){return i18n[state.lang]||i18n.en} function useLabel(k){return tr().useMap[k]||k} function note(row){return state.lang==='ko'?(row.notesKo||row.notesEn||''):(row.notesEn||row.notesKo||'')} function pct(v){return `${Math.round(v)}%`} 
 function recomputeBounds(){if(!records||!records.length){return;}minDate=records.reduce((m,r)=>d(r.date)<m?d(r.date):m,d(records[0].date));maxDate=records.reduce((m,r)=>d(r.date)>m?d(r.date):m,d(records[0].date))}
 function resolveRange(){let s,e;if(state.start&&state.end){s=d(state.start);e=d(state.end)}else{e=maxDate;if(state.preset==='7d'){s=new Date(e);s.setDate(e.getDate()-6)}else if(state.preset==='30d'){s=new Date(e);s.setDate(e.getDate()-29)}else if(state.preset==='90d'){s=new Date(e);s.setDate(e.getDate()-89)}else if(state.preset==='ytd'){s=new Date(e.getFullYear(),0,1)}else{s=minDate}}if(s<minDate)s=minDate;if(e>maxDate)e=maxDate;if(e<s)[s,e]=[e,s];return{start:s,end:e}}
-function filtered(){const {start,end}=resolveRange();return records.filter(r=>{const x=d(r.date);return x>=start&&x<=end})} function daysInRange(){const {start,end}=resolveRange();return Math.round((end-start)/86400000)+1} function grainMode(){if(state.grain!=='auto')return state.grain;return daysInRange()<=120?'week':'month'} function weekStart(dateObj){const c=new Date(dateObj);const day=c.getDay();const diff=day===0?-6:1-day;c.setDate(c.getDate()+diff);return c} function bucket(dateObj,mode){if(mode==='month')return `${dateObj.getFullYear()}-${String(dateObj.getMonth()+1).padStart(2,'0')}`;const ws=weekStart(dateObj);return `${ws.getFullYear()}-${String(ws.getMonth()+1).padStart(2,'0')}-${String(ws.getDate()).padStart(2,'0')}`}
+function filtered(){const {start,end}=resolveRange();return records.filter(r=>{const x=d(r.date);if(!(x>=start&&x<=end)) return false; if(state.sourceFilter && state.sourceFilter!=='all' && r.source!==state.sourceFilter) return false; return true})} function daysInRange(){const {start,end}=resolveRange();return Math.round((end-start)/86400000)+1} function grainMode(){if(state.grain!=='auto')return state.grain;return daysInRange()<=120?'week':'month'} function weekStart(dateObj){const c=new Date(dateObj);const day=c.getDay();const diff=day===0?-6:1-day;c.setDate(c.getDate()+diff);return c} function bucket(dateObj,mode){if(mode==='month')return `${dateObj.getFullYear()}-${String(dateObj.getMonth()+1).padStart(2,'0')}`;const ws=weekStart(dateObj);return `${ws.getFullYear()}-${String(ws.getMonth()+1).padStart(2,'0')}-${String(ws.getDate()).padStart(2,'0')}`}
 function aggregateTrend(rows,mode){const map=new Map();rows.forEach(r=>{const key=bucket(d(r.date),mode);if(!map.has(key))map.set(key,{label:key,mentions:0,hv:0});const it=map.get(key);it.mentions+=1;if(r.score>=4)it.hv+=1});return [...map.values()].sort((a,b)=>a.label.localeCompare(b.label)).map(it=>({label:it.label,mentions:it.mentions,hvShare:it.mentions?it.hv/it.mentions*100:0}))}
 function groupBy(rows,fn){const map=new Map();rows.forEach(r=>{const k=fn(r);map.set(k,(map.get(k)||0)+1)});return [...map.entries()].map(([name,count])=>({name,count})).sort((a,b)=>b.count-a.count||a.name.localeCompare(b.name))}
 function sourceDensity(rows,opts){
@@ -383,6 +383,20 @@ function renderStatic(){
   $('grain').options[1].text = x.grain.week;
   $('grain').options[2].text = x.grain.month;
 
+  const sourceSel = document.getElementById('sourceFilter');
+  if(sourceSel){
+    const labelAll = state.lang==='ko' ? '\uC804\uCCB4 \uD50C\uB7AB\uD3FC' : 'All platforms';
+    const cur = state.sourceFilter || 'all';
+    const sources = Array.from(new Set(records.map(r=>r.source))).sort((a,b)=>String(a).localeCompare(String(b)));
+    const opts = ['all', ...sources];
+    sourceSel.innerHTML = opts.map(v=>{
+      const t = v==='all' ? labelAll : v;
+      return `<option value="${String(v).replace(/"/g,'&quot;')}">${String(t)}</option>`;
+    }).join('');
+    sourceSel.value = opts.includes(cur) ? cur : 'all';
+    sourceSel.title = state.lang==='ko' ? '\uD50C\uB7AB\uD3FC/\uC18C\uC2A4 \uD544\uD130' : 'Platform / Source filter';
+  }
+
   $('rangePrefix').textContent = x.rangePrefix;
   $('applyRange').textContent = x.applyRange;
   $('resetAll').textContent = x.resetAll;
@@ -435,6 +449,10 @@ function renderStatic(){
   $('quoteNote').textContent = x.quoteNote;
   $('showTopBtn').textContent = x.showTop;
   $('showAllBtn').textContent = x.showAll;
+  const quotePrev = document.getElementById('quotePrev');
+  const quoteNext = document.getElementById('quoteNext');
+  if(quotePrev) quotePrev.textContent = state.lang==='ko' ? '\uC774\uC804' : 'Prev';
+  if(quoteNext) quoteNext.textContent = state.lang==='ko' ? '\uB2E4\uC74C' : 'Next';
   $('footnote').textContent = x.footnote;
   ensureHelpIn('quoteTitle','helpQuoteScore',x.tips.quoteScore || '');
 }
@@ -701,7 +719,14 @@ function renderInsights(rows){
 function renderQuotes(rows){
   const x=tr();
   const sorted=[...rows].sort((a,b)=>b.score!==a.score?b.score-a.score:a.date.localeCompare(b.date));
-  const shown=state.quoteMode==='top'?sorted.slice(0,8):sorted;
+  const pageSize = 10;
+  const totalPages = Math.max(1, Math.ceil(sorted.length / pageSize));
+  if(state.quotePage<1) state.quotePage=1;
+  if(state.quotePage>totalPages) state.quotePage=totalPages;
+  const isPaged = state.quoteMode !== 'top';
+  const from = isPaged ? (state.quotePage-1)*pageSize : 0;
+  const to = isPaged ? (from + pageSize) : 8;
+  const shown = isPaged ? sorted.slice(from, to) : sorted.slice(0,8);
   const scoreTip = (x.tips && x.tips.quoteScore) ? String(x.tips.quoteScore).replace(/"/g,'&quot;') : '';
   $('quoteCount').textContent=(x.quoteCount?x.quoteCount(shown.length):`${shown.length} shown`);
   $('quoteMeta').textContent=x.quotesShown(shown.length,rows.length);
@@ -709,11 +734,71 @@ function renderQuotes(rows){
   $('showAllBtn').classList.toggle('active',state.quoteMode==='all');
   $('showTopBtn').classList.toggle('subtle-btn',state.quoteMode!=='top');
   $('showAllBtn').classList.toggle('subtle-btn',state.quoteMode!=='all');
+
+  const prevBtn = document.getElementById('quotePrev');
+  const nextBtn = document.getElementById('quoteNext');
+  const pageInfo = document.getElementById('quotePageInfo');
+  if(prevBtn) prevBtn.style.display = isPaged ? '' : 'none';
+  if(nextBtn) nextBtn.style.display = isPaged ? '' : 'none';
+  if(pageInfo) pageInfo.style.display = isPaged ? '' : 'none';
+  if(pageInfo) pageInfo.textContent = state.lang==='ko'
+    ? `${state.quotePage} / ${totalPages} \uD398\uC774\uC9C0`
+    : `Page ${state.quotePage} / ${totalPages}`;
+  if(prevBtn) prevBtn.disabled = !isPaged || state.quotePage<=1;
+  if(nextBtn) nextBtn.disabled = !isPaged || state.quotePage>=totalPages;
   $('quotes').innerHTML=shown.length?shown.map(r=>`<details><summary><span>${r.source} &middot; ${r.community} &middot; ${useLabel(r.useCase)}</span><span class="metric-chip ${r.score>=4?'':r.score===3?'mid':'low'}" title="${scoreTip}">${x.score} ${r.score}</span></summary><p class="meta">${r.date}</p><blockquote>${r.excerpt}</blockquote><p><strong>${x.interp}:</strong> ${note(r)}</p><p><a href="${r.url}" target="_blank" rel="noreferrer">${x.openSource}</a></p></details>`).join(''):`<div class="item"><p>${x.noData}</p></div>`;
 }
 function updateInputs(){const {start,end}=resolveRange();$('rangeLabel').textContent=`${f(start)} ~ ${f(end)}`;$('startDate').value=f(start);$('endDate').value=f(end);document.querySelectorAll('.preset').forEach(btn=>btn.classList.toggle('active',btn.dataset.preset===state.preset&&!state.start&&!state.end))}
 function render(){renderStatic();updateInputs();const rows=filtered(),mode=grainMode();renderKpis(rows);renderTables(rows);renderReadout(rows);renderInsights(rows);renderTrend(aggregateTrend(rows,mode),mode);renderSource(rows);renderUse(rows);renderMatrix(rows);renderWhite();renderQuotes(rows)}
-document.querySelectorAll('.preset').forEach(btn=>btn.addEventListener('click',()=>{state.preset=btn.dataset.preset;state.start=null;state.end=null;render()}));$('grain').addEventListener('change',e=>{state.grain=e.target.value;render()});$('applyRange').addEventListener('click',()=>{const s=$('startDate').value,e=$('endDate').value;if(!s||!e)return;state.start=s;state.end=e;render()});$('resetAll').addEventListener('click',()=>{state.preset='all';state.start=null;state.end=null;state.grain='auto';$('grain').value='auto';render()});$('showTopBtn').addEventListener('click',()=>{state.quoteMode='top';render()});$('showAllBtn').addEventListener('click',()=>{state.quoteMode='all';render()});$('langEnBtn').addEventListener('click',()=>{state.lang='en';render()});$('langKoBtn').addEventListener('click',()=>{state.lang='ko';render()});
+function resetQuotePaging(){ state.quotePage = 1; }
+document.querySelectorAll('.preset').forEach(btn=>btn.addEventListener('click',()=>{
+  state.preset=btn.dataset.preset;
+  state.start=null;
+  state.end=null;
+  resetQuotePaging();
+  render();
+}));
+$('grain').addEventListener('change',e=>{
+  state.grain=e.target.value;
+  resetQuotePaging();
+  render();
+});
+$('applyRange').addEventListener('click',()=>{
+  const s=$('startDate').value,e=$('endDate').value;
+  if(!s||!e) return;
+  state.start=s;
+  state.end=e;
+  resetQuotePaging();
+  render();
+});
+$('resetAll').addEventListener('click',()=>{
+  state.preset='all';
+  state.start=null;
+  state.end=null;
+  state.grain='auto';
+  $('grain').value='auto';
+  state.sourceFilter='all';
+  const sel = $opt('sourceFilter'); if(sel) sel.value='all';
+  state.quoteMode='top';
+  resetQuotePaging();
+  render();
+});
+$('showTopBtn').addEventListener('click',()=>{ state.quoteMode='top'; resetQuotePaging(); render(); });
+$('showAllBtn').addEventListener('click',()=>{ state.quoteMode='all'; resetQuotePaging(); render(); });
+const sourceSel = $opt('sourceFilter');
+if(sourceSel){
+  sourceSel.addEventListener('change', e=>{
+    state.sourceFilter = e.target.value || 'all';
+    resetQuotePaging();
+    render();
+  });
+}
+const prevBtn = $opt('quotePrev');
+const nextBtn = $opt('quoteNext');
+if(prevBtn) prevBtn.addEventListener('click', ()=>{ state.quotePage = Math.max(1, (state.quotePage||1)-1); render(); });
+if(nextBtn) nextBtn.addEventListener('click', ()=>{ state.quotePage = (state.quotePage||1)+1; render(); });
+$('langEnBtn').addEventListener('click',()=>{ state.lang='en'; render(); });
+$('langKoBtn').addEventListener('click',()=>{ state.lang='ko'; render(); });
 async function boot(){
   try{
     setDataLoad('embedded', true, embeddedRecords.length, '');
