@@ -243,9 +243,14 @@ function ensureVizStyles(){
     "#useLegend .legend-item.is-dim{opacity:.55}" +
     "#useLegend .legend-item.is-active{background:rgba(28,37,45,.06);box-shadow:0 10px 18px rgba(28,37,45,.10);transform:translateY(-1px)}" +
     ".use-grid{display:grid;grid-template-columns:1fr .95fr;gap:16px;align-items:start}" +
+    ".use-viz{display:grid;grid-template-columns:360px 1fr;gap:14px;align-items:start}" +
+    ".use-viz #useChart{max-width:360px}" +
+    ".use-viz #useLegend{grid-template-columns:1fr;max-height:320px;overflow:auto;padding-right:6px}" +
+    ".use-viz #useLegend .legend-item{padding:6px 8px}" +
+    ".use-viz #useLegend .legend-metric{font-variant-numeric:tabular-nums}" +
     ".use-detail{position:sticky;top:14px}" +
     ".use-detail .kpi{font-variant-numeric:tabular-nums}" +
-    "@media (max-width:1120px){.use-grid{grid-template-columns:1fr}.use-detail{position:static}}";
+    "@media (max-width:1120px){.use-grid{grid-template-columns:1fr}.use-viz{grid-template-columns:1fr}.use-viz #useChart{max-width:none}.use-viz #useLegend{max-height:none}.use-detail{position:static}}";
   document.head.appendChild(style);
 }
 function ensureHelpIn(targetId, helpId, tip){
@@ -548,7 +553,7 @@ function renderUse(rows){
   }
   const total=items.reduce((s,i)=>s+i.count,0);
   const colors=["#b55b38","#2d6f65","#6d5e92","#d89b2b","#5b6778","#8d6c4c"];
-  const cx=180,cy=158,radius=108;
+  const cx=170,cy=160,radius=132;
   function polar(a,r){const rad=Math.PI/180*a;return{x:cx+Math.cos(rad)*r,y:cy+Math.sin(rad)*r}}
   let start=-90;
   const slices=items.map((it,idx)=>{
@@ -557,7 +562,7 @@ function renderUse(rows){
     start+=angle;
     return{path,color:colors[idx%colors.length],name:it.name,count:it.count}
   });
-  svg.innerHTML=`${slices.map(s=>`<path data-use="${s.name}" d="${s.path}" fill="${s.color}"></path>`).join("")}<circle cx="${cx}" cy="${cy}" r="52" fill="#fffaf4"></circle><text x="${cx}" y="${cy-4}" text-anchor="middle" font-size="14" fill="#66707a">${x.centerTop}</text><text x="${cx}" y="${cy+24}" text-anchor="middle" font-size="22" fill="#1c252d">${x.centerBottom}</text>`;
+  svg.innerHTML=`${slices.map(s=>`<path data-use="${s.name}" d="${s.path}" fill="${s.color}"></path>`).join("")}<circle cx="${cx}" cy="${cy}" r="64" fill="#fffaf4"></circle><text x="${cx}" y="${cy-6}" text-anchor="middle" font-size="14" fill="#66707a">${x.centerTop}</text><text x="${cx}" y="${cy+26}" text-anchor="middle" font-size="22" fill="#1c252d">${x.centerBottom}</text>`;
   const more = allItems.length>items.length ? `<div class="meta">+${allItems.length-items.length} more</div>` : '';
   legend.innerHTML=slices.map(s=>`<div class="legend-item" data-use="${s.name}"><i class="swatch" style="background:${s.color}"></i><span>${useLabel(s.name)}</span><span class="legend-metric">${Math.round(s.count/total*100)}% (${s.count})</span></div>`).join("") + more;
 
